@@ -12,7 +12,10 @@
 ;;TODO Handle preview images. Compute blurb from article
 
 (defn build-path [& parts]
-  (str/join "/" parts))
+  "Return folder-like uri from path PARTS"
+  (as-> parts $
+       (str/join "/" $)
+       (str/replace $ #"/{2,}" "/")))
 
 (defn get-resource [resource]
   "Return file object from given RESOURCE"
@@ -24,17 +27,18 @@
     (slurp res)
     ""))
 
-(defn read-edn-resource [edn-resource]
+#_(defn read-edn-resource [edn-resource]
   "Return edn resource"
   (read-string (read-resource edn-resource)))
 
-(defn- get-contents [root]
+(defn get-contents [root]
   "Return a list of files objects associated with those under the given ROOT. Excludes root file object from result"
   (if-let [root (get-resource root)]
     (->> root
          file-seq
          rest
-         (remove #(str/starts-with? (.getName %) ".")))))
+         (remove #(str/starts-with? (.getName %) ".")))
+    '()))
 
 (defn- get-content-names [root]
   "Return a list of files names associated with those under the given ROOT. Excludes root file object from result"
@@ -54,7 +58,7 @@
    #"\..*$" ""))
 
 (defn parse-url [file-name prefix]
-  "Return url for a given FILE-NAME"
+  "Return url for a given FILE-NAME by prefixing it with PREFIX and appending a '/'"
   ;;TODO. It'd be great to make this more robust to allow different options for building urls from file names.
   (str (build-path prefix (str/replace file-name #"\..*$" "")) "/"))
 
