@@ -1,22 +1,20 @@
 (ns eat.pages.index
   (:require [hiccup.core :refer [html]]))
 
-(defn get-post-link [post]
-  (:url post))
-
-(defn- render-post [post]
+(defn- render-post-link [post]
   (html
    [:li
-    [:a {:href (get-post-link post)} (:title post)]]))
+    [:a {:href (:url post)} (:title post)]]))
 
 (defn- render-index-page [content]
   (html
    [:h2 "Welcome to our blog!"]
    [:div.post-list
     [:ul
-     (map render-post (reverse (:posts content)))]]))
+     (map render-post-link (:posts content))]]))
 
 (defn get-index-page [content]
   {"/"
    {:title "Estamos Aqui Travel"
-    :body (render-index-page content)}})
+    :content (render-index-page content)
+    :url "/"}})

@@ -5,6 +5,7 @@
 
 (defn create-pages [content]
   (merge-page-sources
-   {:general-pages (get-index-page content)
+   {:index (get-index-page content)
     :posts (get-post-pages content)}))
+
 

@@ -10,15 +10,15 @@
             [ring.middleware.content-type :refer [wrap-content-type]]   
             [clojure.string :as str]
             [eat.pages :refer [create-pages]]
-            [eat.content :refer [load-content!]]   
-            [eat.layout :refer [render-page]]))
+            [eat.content :refer [load-content]]
+            [eat.layout :refer [add-commons]]))
 
 (defn get-assets []
   (assets/load-assets "public" [#".*"]))
 
 (defn prepare-page [page content request]
   (-> page
-      (render-page content request)))
+      (add-commons content request)))
 
 (defn update-map
   ([m fv]
@@ -29,7 +29,7 @@
            (map fv (vals m)))))
 
 (defn get-pages []
-  (let [content (load-content!)]
+  (let [content (load-content)]
     (-> content
         create-pages
         (update-map #(partial prepare-page % content)))))
@@ -58,5 +58,3 @@
     (stasis/export-pages (get-pages) export-directory {:optimus-assets assets})
     (println "Done")
     (println)))
-
-(get-pages)

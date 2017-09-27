@@ -1,13 +1,10 @@
 (ns eat.content
-  (:require [eat.io :refer [load-edn build-edn!]]))
+  (:require [eat.io :refer [build-pages build-posts]]))
 
-;; TODO: Build this into a config file
+(def pages-root "templates/md/pages")
+(def posts-root "templates/md/posts")
 
-(def root "templates/md/posts")
-(def target "resources/posts.edn")
-
-(defn load-content! []
-  (build-edn! root target)
-  {:posts (load-edn "posts.edn")})
-
+(defn load-content []
+  {:pages (build-pages pages-root)
+   :posts (build-posts posts-root)})
 

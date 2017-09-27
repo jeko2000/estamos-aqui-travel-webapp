@@ -1,9 +1,8 @@
 (ns eat.layout
   (:require [hiccup.page :refer [html5]]
-            [eat.io :refer [get-resource]]
             [optimus.link :as link]))
 
-(defn render-page [page content request]
+(defn add-commons [page content request]
   (html5
    [:head
     [:meta {:charset "utf-8"}]
@@ -14,6 +13,6 @@
    [:body
      ;;Add body scripts    
     [:div#main.body
-     (:body page)]
+     (:content page)]
     [:div#footer
      "This is a footer"]]))

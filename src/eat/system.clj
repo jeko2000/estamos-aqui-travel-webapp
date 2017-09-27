@@ -19,7 +19,6 @@
     (info "Stopping app."))
   (dissoc system :server :handler))
 
-
 (defn create-system []
   {:port 8080
    :start start

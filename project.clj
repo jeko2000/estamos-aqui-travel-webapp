@@ -1,5 +1,5 @@
-(defproject eat "0.1.0"
-  :description "This is a web application representing our blog, Estamos Aqui Travel"
+(defproject eat "0.1.1"
+  :description "This is the web application that builds our our blog, Estamos Aqui Travel"
   :url "http://estamosaquitravel.com"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [stasis "1.0.0"]
