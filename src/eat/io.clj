@@ -56,7 +56,7 @@
 (defn parse-url [file-name prefix]
   "Return url for a given FILE-NAME"
   ;;TODO. It'd be great to make this more robust to allow different options for building urls from file names.
-  (build-path prefix (str/replace file-name #"\..*$" "")))
+  (str (build-path prefix (str/replace file-name #"\..*$" "")) "/"))
 
 (defn read-file-metadata [file]
   "Attempt to return clojure structure atop given FILE"
