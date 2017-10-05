@@ -20,7 +20,7 @@
   (dissoc system :server :handler))
 
 (defn create-system []
-  {:port 3000
+  {:port 8080
    :start start
    :stop stop})
 

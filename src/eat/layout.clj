@@ -1,18 +1,26 @@
 (ns eat.layout
-  (:require [hiccup.page :refer [html5]]
-            [optimus.link :as link]))
+  (:require [stasis.core :refer [merge-page-sources slurp-directory slurp-resources]]
+            [eat.web.index :refer [index]]
+            [eat.web.post :refer [post]]))
 
-(defn add-commons [page content request]
-  (html5
-   [:head
-    [:meta {:charset "utf-8"}]
-    [:meta {:name "viewport"
-            :content "width=device-width, initial-scale=1.0"}]
-    [:title (:title page)]
-    [:link {:rel "stylesheet" :href (link/file-path request "/styles/main.css")}]]
-   [:body
-     ;;Add body scripts    
-    [:div#main.body
-     (:content page)]
-    [:div#footer
-     "This is a footer"]]))
+(defn index-page [posts]
+  {"/" (index posts)})
+
+(defn post-page [[post-map next] posts]
+  [(:url post-map)
+   (post post-map next posts)])
+
+(defn post-pages [posts]
+  (->> posts
+       (partition-all 2 1)
+       (map #(post-page % posts))
+       (into {})))
+
+(defn get-pages [posts]
+  (merge-page-sources
+   {#_:assets #_(slurp-resources "public" #"^.*?\.(css|png|jpg)")
+    :index (index-page posts)
+    :posts (post-pages posts)}))
+
+
+

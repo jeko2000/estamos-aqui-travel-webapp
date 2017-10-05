@@ -1,6 +1,7 @@
-(ns eat.io
+(ns eat.posts
   (:require [clojure.string :as str]
-            [clojure.java.io :as io]))
+            [clojure.java.io :as io]
+            [me.raynes.cegdown :as md]))
 
 ;;TODO: Add this to config
 (def posts-prefix "/post")
@@ -8,8 +9,6 @@
 (def default-author "Shell")
 (def number-of-most-recent-posts 5)
 
-;;TODO Figure out tag management
-;;TODO Handle preview images. Compute blurb from article
 
 (defn build-path [& parts]
   "Return folder-like uri from path PARTS"
@@ -27,10 +26,6 @@
     (slurp res)
     ""))
 
-#_(defn read-edn-resource [edn-resource]
-  "Return edn resource"
-  (read-string (read-resource edn-resource)))
-
 (defn get-contents [root]
   "Return a list of files objects associated with those under the given ROOT. Excludes root file object from result"
   (if-let [root (get-resource root)]
@@ -40,22 +35,9 @@
          (remove #(str/starts-with? (.getName %) ".")))
     '()))
 
-(defn- get-content-names [root]
-  "Return a list of files names associated with those under the given ROOT. Excludes root file object from result"
-  (if-let [file-objects (get-contents root)]
-    (map #(.getName %) file-objects)))
-
-#_(defn- parse-raw-title [^String name]
-  (.substring name 11))
-
 (defn- parse-post-date [file-name]
   "Return a string representing a post's date. This assumes post files are named following yyyy-MM-dd-post-title.md"
   (.substring file-name 0 10))
-
-#_(defn- parse-title [raw-title]
-  (str/replace
-   (str/replace raw-title "-" " ")
-   #"\..*$" ""))
 
 (defn parse-url [file-name prefix]
   "Return url for a given FILE-NAME by prefixing it with PREFIX and appending a '/'"
@@ -83,19 +65,13 @@
   (let [post-name (.getName post)]
     (merge
      {:resource-name (str/replace (str post) #"^.*?resources/" "")
-      :content (read-file-content-without-metadata post)
-      :url (parse-url post-name posts-prefix)
-      :date (parse-post-date post-name)}
+      :content (md/to-html (read-file-content-without-metadata post))
+      :url  (parse-url post-name posts-prefix)
+      :date (parse-post-date post-name)
+      :preview "This is a sample preview.
+Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Nulla nec tortor. Donec id elit quis purus consectetur consequat."
+      :preview-img "img/900x300.png"}
      (read-file-metadata post))))
-
-(defn build-page-map [page]
-  (let [page-name (.getName page)]
-     {:resource-name (str/replace (str page) #"^.*?resources/" "")
-      :content (slurp page)
-      :url (parse-url page-name pages-prefix)}))
 
 (defn build-posts [posts-root]
   (sort-by :date (mapv build-post-map (get-contents posts-root))))
-(defn build-pages [pages-root]
-  (sort-by :date  (mapv build-page-map (get-contents pages-root))))
-

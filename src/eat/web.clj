@@ -9,35 +9,21 @@
             [prone.middleware :refer [wrap-exceptions]]
             [ring.middleware.content-type :refer [wrap-content-type]]   
             [clojure.string :as str]
-            [eat.pages :refer [create-pages]]
-            [eat.content :refer [load-content]]
-            [eat.layout :refer [add-commons]]))
+            [eat.layout :refer [get-pages]]
+            [eat.posts :refer [build-posts]]))
+
+(def posts-root "posts/md/posts")
+(def posts (build-posts posts-root))
 
 (defn get-assets []
-  (assets/load-assets "public" [#".*"]))
-
-(defn prepare-page [page content request]
-  (-> page
-      (add-commons content request)))
-
-(defn update-map
-  ([m fv]
-   (zipmap (keys m)
-           (map fv (vals m))))
-  ([m fk fv]
-   (zipmap (map fk (keys m))
-           (map fv (vals m)))))
-
-(defn get-pages []
-  (let [content (load-content)]
-    (-> content
-        create-pages
-        (update-map #(partial prepare-page % content)))))
+  (assets/load-assets "public" [#"img/.*"
+                                #"css/.*"
+                                #"js/.*"]))
 
 (def optimize optimizations/all)
 
 (defn create-app []
-  (-> get-pages
+  (-> (get-pages posts)
       stasis/serve-pages
       wrap-exceptions
       (optimus/wrap get-assets optimize serve-live-assets)
@@ -58,3 +44,4 @@
     (stasis/export-pages (get-pages) export-directory {:optimus-assets assets})
     (println "Done")
     (println)))
+
