@@ -1,20 +1,21 @@
 (ns eat.web.post
-  (:require [hiccup.element :refer [link-to]]
-            [eat.web.base :refer [base]]))
+  (:require [hiccup.element :refer [link-to unordered-list]]
+            [eat.web.base :refer [base]]
+            [eat.web.util :refer [urlize-tag]]))
 
-(defn post-content [post]
+(defn post-content [{:keys [url title tags date content]}]
   [:article {:class "post-meta"}
-   [:h2 (link-to (:url post) (:title post))]
+   [:h2 (link-to url title)]
    [:div {:class "row"}
     [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
-     [:span {:class "glyphicon glyphicon-pencil"}]
-     (if-let [tg (:tags post)] (clojure.string/join " " tg))]
-
+     (unordered-list {:class "list-inline"}
+                     (conj 
+                      (map #(link-to (urlize-tag %) %) tags)
+                      [:span {:class "glyphicon glyphicon-pencil"}]))]
     [:div {:class "post-meta-group-2 col-sm-6 col-md-6"}
-     [:span {:class "glyphicon glyphicon-pencil"}]
-     (:date post)]]
-   (:content post)])
-
+     [:span {:class "glyphicon glyphicon-time"}] " "
+     date]]
+   content])
 
 (defn comment-box []
   [:div {:class "well"}
@@ -54,4 +55,18 @@
                    [:hr]
                    (comments)
                    (comment-box))
-         :posts posts}))
+         :posts posts
+         :tags (:tags post)}))
+
+(defn post-page [[post-map next] posts]
+  [(:url post-map)
+   (fn [req]
+     (post post-map next posts))])
+
+(defn post-pages [posts]
+  (->> posts
+       (partition-all 2 1)
+       (map #(post-page % posts))
+       (into {})))
+
+

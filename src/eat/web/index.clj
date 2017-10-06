@@ -1,6 +1,7 @@
 (ns eat.web.index
   (:require [hiccup.element :refer [image link-to]]
-            [eat.web.base :refer [base]]))
+            [eat.web.base :refer [base previews]]
+            [eat.web.util :refer [get-all-tags]]))
 
 (defn carousel []
   [:div {:id "carousel-header" :class "carousel slide" :data-ride "carousel"}
@@ -37,47 +38,16 @@
 
 (defn quick-links []
   [:div {:id "quick-links" :class "site-content"}
-   [:div {:class "container top-section"}
+   [:div {:class "conteiner top-section"}
     [:div {:class "row"}
      [:div {:class "col-md-12"}
       (image {:class "img-responsive center-block"} "img/explore.png" "explore")]]
     [:br]
     [:div {:class "row"}
-     (repeat 8 
-             [:div {:class "col-sm-6 col-md-3"}
+     (repeat 4
+             [:div {:class "col-xs-6 col-sm-6 col-md-3"}
               [:div {:class "thumbnail"}
                (image "img/square.jpg" "about")]])]]])
-
-
-(defn- preview-post [{:keys [url title tags preview preview-img date]}]
-  [:article {:class "post-meta"}
-   [:h2 (link-to url title)]
-   [:div {:class "row"}
-    [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
-     [:span {:class "glyphicon glyphicon-pencil"}]
-     (clojure.string/join " " tags)] ;;Convert to links
-
-    [:div {:class "post-meta-group-2 col-sm-6 col-md-6"}
-     [:span {:class "glyphicon glyphicon-time"}] " "
-     date]]
-   (if preview-img
-     (link-to url
-              (image {:class "img-responsive"} preview-img)))
-   preview
-   [:div {:class "read-more"}
-    [:br]
-    (link-to url "Read More")]])
-
-(defn previews [posts]
-  [:div {:id "post-previews"}
-   [:h1 "Latest Posts"]
-   (interpose [:hr]
-              (map preview-post posts))
-   [:ul {:class "pager"}
-    [:li {:class "previous"}
-     [:a {:href "#"} "<- Older"]]
-    [:li {:class "next"}
-     [:a {:href "#"} "Next ->"]]]])
 
 (defn index [posts]
   (base {:title "Estamos Aqui Travel"
@@ -85,5 +55,10 @@
                        (carousel)
                        [:hr]
                        (quick-links))
-         :content (previews posts)
-         :posts posts}))
+         :content (previews posts "Latest Posts!")
+         :posts posts
+         :tags (get-all-tags posts)}))
+
+
+(defn index-page [posts]
+  {"/" (fn [req] (index posts))})

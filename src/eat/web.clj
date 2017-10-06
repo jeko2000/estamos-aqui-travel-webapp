@@ -44,4 +44,3 @@
     (stasis/export-pages (get-pages) export-directory {:optimus-assets assets})
     (println "Done")
     (println)))
-

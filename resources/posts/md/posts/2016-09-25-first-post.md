@@ -1,6 +1,6 @@
 {:title "First post"
  :author "Shell"
- :tags ["welcome colombia medellin"]
+ :tags ["lorem dolor medellin"]
  :date "2017-01-01"
 }
 
