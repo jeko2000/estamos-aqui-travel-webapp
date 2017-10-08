@@ -1,11 +1,11 @@
-(ns eat.web.post
-  (:require [hiccup.element :refer [link-to unordered-list]]
-            [eat.web.base :refer [base]]
-            [eat.web.util :refer [urlize-tag]]))
+(ns eat.layout.post
+  (:require [hiccup.element :refer [link-to unordered-list image]]
+            [eat.layout.base :refer [base]]
+            [eat.layout.util :refer [urlize-tag]]))
 
-(defn post-content [{:keys [url title tags date content]}]
+#_(defn post-content [{:keys [url title tags date content]}]
   [:article {:class "post-meta"}
-   [:h2 (link-to url title)]
+   [:h2 [:a {:href url} (clojure.string/upper-case title)] ]
    [:div {:class "row"}
     [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
      (unordered-list {:class "list-inline"}
@@ -16,6 +16,30 @@
      [:span {:class "glyphicon glyphicon-time"}] " "
      date]]
    content])
+
+(defn post-header [{:keys [url title tags date content author]}]
+  [:div {:class "post-header"}
+   #_(image {:class "img img-responsive"} "/img/1200x400/whatwedidbarranquilla_4_low.jpg" "image1")])
+
+(defn post-content [{:keys [url title tags date content author]}] ;;Best so far
+  [:div {:class "post-wrapper"}   
+   [:article
+    [:h2 [:a {:href url} (clojure.string/upper-case title)]]
+    [:div {:class "row"}
+     [:div {:class "post-meta"}
+      [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
+       (unordered-list {:class "list-inline"}
+                       (list                      
+                        [:span {:class "glyphicon glyphicon-pencil"}]
+                        author
+                        ))]
+      [:div {:class "post-meta-group-2 col-sm-6 col-md-6"}
+       [:span {:class "glyphicon glyphicon-time"}] " "
+       date]]]
+    [:div {:class "post-content"}
+     [:div {:clas "row"}
+      [:div {:class "col-md-12"}
+       content]]]]])
 
 (defn comment-box []
   [:div {:class "well"}
@@ -48,25 +72,23 @@
     [:p
      [:em "I don't believe in astrology but still your writing style is really great!"]]]])
 
-(defn post [curr-post next posts]
-  (base {:title (str (:title curr-post) " | Estamos Aqui Travel")
+(defn deleteme []
+  [:script "var images = document.getElementsByTagName('img');
+var i;
+
+for(i = 0; i < images.length; i++) {
+    images[i].className += ' img-responsive';
+}"])
+
+(defn post-page [layout-config curr-post posts]
+  (base layout-config
+        {:title (str (:title curr-post) " | Estamos Aqui Travel")
+;;         :pre-content (post-header curr-post)
          :content (list
                    (post-content curr-post)
                    [:hr]
-                   (comments)
-                   (comment-box))
+                   #_(deleteme)
+                   #_(comments)
+                   #_(comment-box))
          :posts posts
-         :tags (:tags post)}))
-
-(defn post-page [[post-map next] posts]
-  [(:url post-map)
-   (fn [req]
-     (post post-map next posts))])
-
-(defn post-pages [posts]
-  (->> posts
-       (partition-all 2 1)
-       (map #(post-page % posts))
-       (into {})))
-
-
+         :tags (:tags curr-post)}))

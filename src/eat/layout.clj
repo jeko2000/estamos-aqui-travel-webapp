@@ -1,15 +1,17 @@
 (ns eat.layout
-  (:require [stasis.core :refer [merge-page-sources slurp-directory slurp-resources]]
-            [eat.web.index :refer [index-page]]
-            [eat.web.post :refer [post-pages]]
-            [eat.web.tag :refer [tag-pages]]))
+  (:require [eat.layout.index :refer [index-page]]
+            [eat.layout.post :refer [post-page]]
+            [eat.layout.tag :refer [tag-page]]
+            [eat.config :refer [config]]
+            [eat.db.core :refer [posts get-post]]))
 
-(defn get-pages [posts]
-  (merge-page-sources
-   {#_:assets #_(slurp-resources "public" #"^.*?\.(css|png|jpg)")
-    :index (index-page posts)
-    :tags (tag-pages posts)
-    :posts (post-pages posts)}))
+(defn index []
+  (index-page (:layout config) (vals posts)))
 
+(defn post [url]
+  (let [post-obj (get-post url)]
+    (post-page (:layout config) post-obj (vals posts))))
 
+(defn tag [target-tag]
+  (tag-page (:layout config) target-tag (vals posts)))
 

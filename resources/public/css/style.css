@@ -89,10 +89,21 @@ body {
     color: #eeeeee;
 }
 
+#quick-links{
+    background-image: url("/img/mountain_background.jpg");
+    padding:80px;
+}
+
+
 /* Sidebar */
 #secondary{
     padding-top:20px;
 }
+
+.carousel img {
+    min-width: 100%;
+}
+
 
 /* Post styling */
 .read-more {
@@ -102,15 +113,73 @@ body {
     color: #696969;
     font-family: 'Maven Pro', sans-serif;
     font-weight: 700;
-    line-height: 1.2;
-    border-left: 3px solid #696969;
-    border-right: 3px solid #696969;
-    letter-spacing: 3px;
+    line-height: 0.7;
+    border-left: 2px solid #696969;
+    border-right: 2px solid #696969;
+    letter-spacing: 1px;
     display: inline-block;
     padding: 0 10px;
     text-transform: uppercase;
 }
+.post-content img {
+    display: block;
+    max-width:100%;
+}
 
+.img-fill{
+    display: block;
+    max-width:100%;
+    min-width:100%;
+}
+
+.img-preview{
+    margin: 0;
+    width:300px;
+    height:150px;
+    margin-right:auto;
+    margin-left:auto;
+}
+.preview-container{
+    overflow: hidden;
+    text-align:center;
+    text-overflow: ellipsis;
+}
+
+.row.display-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.display-flex > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-desc{
+    line-height: 21px;
+}
+
+.preview-bottom{
+    position: absolute;
+    bottom:0px;
+    padding: 0 15px;
+    right:0px;
+    
+}
+
+.content-fill {
+    padding:0;
+    width: 100%;
+    heights:100%;
+    left: 0;
+    bottom:0;
+    background-repeat: no-repeat;
+    background-position: top center;
+}
+
+
+article {
+    font-size: 15px;
+}
 
 #comments, #comments li {
     margin: 0;
@@ -146,6 +215,7 @@ body {
         color: #eeeeee;
         background-color: #251f28;
     }
+    
 }
 @media (min-width: 768px) {
     .post-meta-group-2{

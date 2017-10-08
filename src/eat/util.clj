@@ -1,4 +1,4 @@
-(ns eat.web.util
+(ns eat.util
   (:require [clojure.string :as str]
             [clojure.java.io :as io]))
 
@@ -13,10 +13,9 @@
   (-> resource io/resource io/file))
 
 (defn read-resource [resource]
-  "Return string representing contents from RESOURCE. If RESOURCE cannot be found, return empty string"
+  "Return string representing contents from RESOURCE. If RESOURCE cannot be found, return nil"
   (if-let [res (get-resource resource)]
-    (slurp res)
-    ""))
+    (slurp res)))
 
 (defn get-contents [root]
   "Return a list of files objects associated with those under the given ROOT. Excludes root file object from result"
@@ -27,19 +26,3 @@
          (remove #(str/starts-with? (.getName %) ".")))
     '()))
 
-(def tags-output-prefix "/tags") ;;Add to config
-
-(defn contains-tag? [tag post]
-  (if-let [tags (:tags post)]
-    (contains? tags tag)))
-
-(defn get-all-tags [posts]
-  (->> posts
-       (map :tags)
-       (apply clojure.set/union)
-       (remove nil?)))
-
-(defn urlize-tag [tag]
-  (as-> tag $
-      (clojure.string/replace $ #"\s+" "-")
-      (build-path tags-output-prefix $ "")))
