@@ -24,7 +24,7 @@
         (throw (AssertionError. (str "No readable metadata on top of file " (.getName file) "!")))))))
 
 (defn process-file-metadata [metadata]
-  (if (:tags metadata)
+  (if (and (:tags metadata) (not (set? metadata)))
     (update metadata :tags (fn [[s]] (set (clojure.string/split s #"\s+"))))
     metadata))
 
@@ -38,13 +38,19 @@
       full-page)))
 
 (defn build-post-map [post]
-  (let [post-name (.getName post)]
+  (let [post-name (.getName post)
+        file-contents-no-meta (read-file-content-without-metadata post)]
     (merge
      {:resource-name (str/replace (str post) #"^.*?resources/" "")
-      :content (md/to-html (read-file-content-without-metadata post))
-      :url  (parse-url post-name posts-prefix)}
+      :content (md/to-html file-contents-no-meta)
+      :url  (parse-url post-name posts-prefix)
+      :md file-contents-no-meta}
      ((comp process-file-metadata read-file-metadata) post))))
 
 (defn build-posts [posts-root]
   (sort-by :date (map build-post-map (get-contents posts-root))))
+
+(defn spit-file! [path file-name contents]
+  (if-let [res (get-resource path)]
+(spit (build-path (str res) file-name) contents :encoding "utf-8")))
 

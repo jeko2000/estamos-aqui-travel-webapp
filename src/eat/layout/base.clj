@@ -14,7 +14,7 @@
    [:title title]
    (include-css "/css/bootstrap.min.css" "/css/style.css")])
 
-(defn navigation []
+(defn navbar []
   [:header {:class "navbar navbar-default navbar-fixed-top" :role "banner"}
    [:div {:class "container"}
     [:div {:class "navbar-header"}
@@ -200,7 +200,7 @@
    [:html
     (head-tag title)
     [:body
-     (navigation)
+     (navbar)
      pre-content
      [:div {:class "content-wrapper"}
       [:div {:class "container"}

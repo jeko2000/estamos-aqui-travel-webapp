@@ -2,8 +2,10 @@
   (:require [compojure.core :refer [GET defroutes routes]]
             [compojure.route :as route]
             [ring.middleware.reload :refer [wrap-reload]]
+            [ring.middleware.params :refer [wrap-params]]
             [ring.util.response :as response]
-            [eat.layout :as layout]))
+            [eat.layout :as layout]
+            [eat.routes.admin :refer [admin-routes]]))
 
 (defroutes base-routes
   (GET "/" [] (layout/index)))
@@ -19,8 +21,10 @@
    base-routes
    post-routes
    tag-routes
+   admin-routes
    (route/resources "/")
    (route/not-found "Page not found")))
 
 (def handler (-> #'app-routes
-                 wrap-reload))
+                 wrap-reload
+                 wrap-params))
