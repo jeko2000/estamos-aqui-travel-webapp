@@ -1,10 +1,12 @@
 {:title "9 Things We Did in Barranquilla, Atlántico, Colombia"
 :author "Shell"
-:tags ["colombia barranquilla caribbean churches museums sightseeing"]
+:tags #{"colombia" "cartagena" "caribbean" "churches" "museums" "sightseeing" "food" "nightlife"}
 :date "2017-10-07"
 :preview "During our two night/three day stay in Barranquilla, we managed to pack in quite a number of activities. Where we tired by the end of day three? Yes. Was it worth it? Where we tired by the end of day three? Yes. Was it worth it? "
 :preview-img "/img/whatwedidbarranquilla_preview.jpg"
 }
+
+
 
 #9 Things We Did in Barranquilla, Atlántico, Colombia
 During our two night/three day stay in Barranquilla, we managed to pack in quite a number of activities. Where we tired by the end of day three? Yes. Was it worth it? Definitely. Below you’ll find a list of 9 things we did or saw in Barranquilla, ranked in order from least to most favorite, including cost and helpful tips for each. Please note: This list only includes the attractions we were able to cover during our stay, so feel free to do your own research to discover what we might have missed!

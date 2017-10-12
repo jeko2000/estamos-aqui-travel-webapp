@@ -1,4 +1,4 @@
-(ns eat.layout.base
+(ns eat.layout.user.base
   (:require [hiccup.core :refer [html]]
             [hiccup.page :refer [include-css include-js]]
             [hiccup.element :refer [unordered-list image link-to]]
@@ -181,32 +181,19 @@
     [:li {:class "next"}
      [:a {:href "#"} "Next ->"]]]])
 
-
-#_(defn previews [layout-config posts heading]
-  [:div {:id "post-previews"}
-   [:h1 heading]
-   [:div {:class "content"}
-    [:div {:class "row display-flex"}
-     (map #(preview-post layout-config %) posts)]]
-   [:ul {:class "pager"}
-    [:li {:class "previous"}
-     [:a {:href "#"} "<- Older"]]
-    [:li {:class "next"}
-     [:a {:href "#"} "Next ->"]]]])
-
-
-(defn base [layout-config {:keys [title pre-content content posts tags]}]  
-  (html
-   [:html
-    (head-tag title)
-    [:body
-     (navbar)
-     pre-content
-     [:div {:class "content-wrapper"}
-      [:div {:class "container"}
-       [:div {:class "row"}
-        [:div {:id "primary" :class "col-md-12"}
-         content]
-        (sidebar layout-config posts tags)]]]
-     (footer)
-     (body-js)]]))
+(defn base [layout-config {:keys [title pre-content content posts tags]}]
+  (let [col-width (if (or posts tags) 8 12)]
+    (html
+     [:html
+      (head-tag title)
+      [:body
+       (navbar)
+       pre-content
+       [:div {:class "content-wrapper"}
+        [:div {:class "container"}
+         [:div {:class "row"}
+          [:div {:id "primary" :class (str "col-md-" col-width)}
+           content]
+          (sidebar layout-config posts tags)]]]
+       (footer)
+       (body-js)]])))

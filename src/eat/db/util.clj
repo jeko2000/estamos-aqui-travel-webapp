@@ -23,18 +23,14 @@
       (catch Exception e
         (throw (AssertionError. (str "No readable metadata on top of file " (.getName file) "!")))))))
 
-(defn process-file-metadata [metadata]
-  (if (and (:tags metadata) (not (set? metadata)))
-    (update metadata :tags (fn [[s]] (set (clojure.string/split s #"\s+"))))
-    metadata))
-
 (defn read-file-content-without-metadata [file]
   "Return contents from FILE as a string without the file metadata on top.
-   If no metadata is found, then it returns the entire FILE's contents."  
+   If no metadata is found, then it returns the entire FILE's contents."
   (let [full-page (slurp file)
-        end-of-meta-data (str/index-of full-page "}")]
+        delim "\n\n\n"
+        end-of-meta-data (str/index-of full-page delim)]
     (if end-of-meta-data
-      (str/replace full-page #"^(.|\s)*?\}" "")
+      (subs full-page (+ end-of-meta-data (count delim)))
       full-page)))
 
 (defn build-post-map [post]
@@ -45,7 +41,7 @@
       :content (md/to-html file-contents-no-meta)
       :url  (parse-url post-name posts-prefix)
       :md file-contents-no-meta}
-     ((comp process-file-metadata read-file-metadata) post))))
+     (read-file-metadata post))))
 
 (defn build-posts [posts-root]
   (sort-by :date (map build-post-map (get-contents posts-root))))
@@ -54,3 +50,6 @@
   (if-let [res (get-resource path)]
 (spit (build-path (str res) file-name) contents :encoding "utf-8")))
 
+(defn copy-file! [file path file-name]
+  (if-let [res (get-resource path)]
+    (io/copy file (io/file (build-path (str res) file-name)))))

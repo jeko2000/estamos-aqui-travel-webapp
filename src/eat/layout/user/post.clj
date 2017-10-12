@@ -1,6 +1,6 @@
-(ns eat.layout.post
+(ns eat.layout.user.post
   (:require [hiccup.element :refer [link-to unordered-list image]]
-            [eat.layout.base :refer [base]]
+            [eat.layout.user.base :refer [base]]
             [eat.layout.util :refer [urlize-tag]]))
 
 #_(defn post-content [{:keys [url title tags date content]}]
@@ -72,14 +72,6 @@
     [:p
      [:em "I don't believe in astrology but still your writing style is really great!"]]]])
 
-(defn deleteme []
-  [:script "var images = document.getElementsByTagName('img');
-var i;
-
-for(i = 0; i < images.length; i++) {
-    images[i].className += ' img-responsive';
-}"])
-
 (defn post-page [layout-config curr-post posts]
   (base layout-config
         {:title (str (:title curr-post) " | Estamos Aqui Travel")
@@ -87,7 +79,6 @@ for(i = 0; i < images.length; i++) {
          :content (list
                    (post-content curr-post)
                    [:hr]
-                   #_(deleteme)
                    #_(comments)
                    #_(comment-box))
          :posts posts

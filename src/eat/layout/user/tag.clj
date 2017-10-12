@@ -1,5 +1,5 @@
-(ns eat.layout.tag
-  (:require [eat.layout.base :refer [base previews]]
+(ns eat.layout.user.tag
+  (:require [eat.layout.user.base :refer [base previews]]
             [eat.util :refer [build-path]]
             [eat.layout.util :refer [contains-tag? get-all-tags urlize-tag]]))
 

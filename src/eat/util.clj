@@ -26,3 +26,8 @@
          (remove #(str/starts-with? (.getName %) ".")))
     '()))
 
+(defn normalize-title [s]
+  (-> s
+      (str/lower-case)
+      (str/replace #"\s+" "-")
+      (str/replace #"[^a-z0-9áéíóú-]" "")))

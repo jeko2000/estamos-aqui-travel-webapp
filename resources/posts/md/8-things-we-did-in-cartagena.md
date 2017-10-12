@@ -1,10 +1,13 @@
 {:title "8 Things We Did in Cartagena, Bolívar, Colombia"
 :author "Shell"
-:tags ["colombia cartagena caribbean churches museums sightseeing food nightlife"]
+:tags #{"colombia" "cartagena" "caribbean" "churches" "museums" "sightseeing" "food" "nightlife"}
 :date "2017-10-7"
 :preview "During our two night/three day stay in Barranquilla, we managed to pack in quite a number of activities. Where we tired by the end of day three? Yes. Was it worth it?"
 :preview-img "/img/whatwedidcartagena_1_low.jpg"
 }
+
+
+
 #8 Things We Did in Cartagena, Bolívar, Colombia
 We stayed in Cartagena for four nights/five days, which gave us enough time to take a break after our marathon trip through Barranquilla. Below you’ll find a list of 8 things we did or saw in Cartagena, ranked in order from least to most favorite, including cost and helpful tips for each. Please note: This list only includes the attractions we were able to cover during our stay, so feel free to do your own research to discover what we might have missed!
 

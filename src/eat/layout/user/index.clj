@@ -1,6 +1,6 @@
-(ns eat.layout.index
+(ns eat.layout.user.index
   (:require [hiccup.element :refer [image link-to]]
-            [eat.layout.base :refer [base previews]]
+            [eat.layout.user.base :refer [base previews]]
             [eat.layout.util :refer [get-all-tags]]))
 
 (defn carousel []
