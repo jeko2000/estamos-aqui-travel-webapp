@@ -4,6 +4,7 @@
 :date "2017-10-07"
 :preview "During our two night/three day stay in Barranquilla, we managed to pack in quite a number of activities. Where we tired by the end of day three? Yes. Was it worth it? Where we tired by the end of day three? Yes. Was it worth it? "
 :preview-img "/img/whatwedidbarranquilla_preview.jpg"
+:title-img "/img/whatwedidbarranquilla_title.jpg"
 }
 
 

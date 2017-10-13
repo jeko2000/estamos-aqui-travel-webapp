@@ -14,5 +14,4 @@
 (def config
   (delay
    (merge @default-config
-          (env->map "PORT")
           (env->map "DATABASE_URL"))))

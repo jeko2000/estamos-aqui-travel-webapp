@@ -2,9 +2,10 @@
   (:require [eat.layout.user.base :refer [base]]
             [hiccup.element :refer [unordered-list image]]))
 
-(defn post-header [{:keys [preview-img title]}]
-  [:div {:class "post-header"}
-   (image {:class "img img-responsive"} "/img/1200x400/carousel_3.jpg" #_preview-img title)])
+(defn post-header [{:keys [title-img title]}]
+  (if title-img
+    [:div {:class "post-header"}
+     (image {:class "img img-responsive"} title-img title)]))
 
 (defn post-content [{:keys [url title tags date content author preview-img] :as post}] ;;Best so far
   [:div {:class "post-wrapper"}

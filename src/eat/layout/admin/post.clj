@@ -3,13 +3,13 @@
             [eat.layout.components :refer [set->string record->table-row]]
             [hiccup.form :as f]))
 
-(defn admin-post-form [{:keys [author md date preview preview-img tags title url]}]
+(defn admin-post-form [{:keys [author md date preview preview-img title-img tags title url]}]
   (f/form-to {:enctype "multipart/form-data"} ["POST" "/admin/edit"]
 
              [:div {:class "form-group"}
               (f/label "images" "Upload Images")
               (f/file-upload {:class "form-control" :multiple "true" :accept="image/*"} "file")]
-             
+
              [:div {:class "form-group"}
               (f/label "title" "Post Title")
               (f/text-field {:placeholder "Top 10 waterloo fails" :class "form-control"} "title" title)]
@@ -32,7 +32,11 @@
 
              [:div {:class "form-group"}
               (f/label "preview-img" "Post Preview Image")
-              (f/text-field {:placeholder "img/my-favorite-bench.jpg" :class "form-control"} "preview-img" preview-img)]                   
+              (f/text-field {:placeholder "img/my-favorite-bench.jpg" :class "form-control"} "preview-img" preview-img)]
+
+             [:div {:class "form-group"}
+              (f/label "title-img" "Post Title Image")
+              (f/text-field {:placeholder "img/my-favorite-bench.jpg" :class "form-control"} "title-img" title-img)]
 
              [:div {:class "form-group"}
               (f/label "tags" "Meta Tags")

@@ -19,8 +19,8 @@
 (defn get-post [url]
   (get *posts* url))
 
-(defn update-post! [{:strs [title author date preview preview-img tags content] :as params}]
-  (let [meta {:title title :author author :date date :preview preview :preview-img preview-img :tags (string->set tags)} ;Note that content is not part of meta
+(defn update-post! [{:strs [title author date preview preview-img title-img tags content] :as params}]
+  (let [meta {:title title :author author :date date :preview preview :preview-img preview-img :title-img title-img :tags (string->set tags)} ;Note that content is not part of meta
         cont (str meta "\n\n\n" content)]
     (spit-file! "posts/md" (normalize-title title) cont)))
 
