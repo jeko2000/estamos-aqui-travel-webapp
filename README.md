@@ -11,4 +11,4 @@ This project leverages from the following (and excellent) clojure libraries:
 * [Buddy](https://github.com/funcool/buddy) for Authentication & password hashing
 
 ## License
-Distributed under the [Eclipse Public License - v .10](https://www.eclipse.org/legal/epl-v10.html).
+Distributed under the [Eclipse Public License - v 1.0](https://www.eclipse.org/legal/epl-v10.html).
