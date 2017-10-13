@@ -1,8 +1,8 @@
 (ns eat.layout.user.base
-  (:require [hiccup.core :refer [html]]
+  (:require [eat.util :refer [tag->uri]]
+            [hiccup.core :refer [html]]
             [hiccup.page :refer [include-css include-js]]
-            [hiccup.element :refer [unordered-list image link-to]]
-            [eat.layout.util :refer [urlize-tag]]))
+            [hiccup.element :refer [unordered-list image link-to]]))
 
 (defn head-tag [title]
   [:head
@@ -56,7 +56,7 @@
          [:h4 "Tags"]]
         [:div {:class "panel-body"}
          (unordered-list {:class "list-inline"}
-                         (map #(link-to (urlize-tag % tags-output-prefix) %) tags))]])]))
+                         (map #(link-to (tag->uri % tags-output-prefix) %) tags))]])]))
 
 (defn footer []
   [:footer {:class "footer"}
@@ -78,7 +78,7 @@
     [:div {:class "post-meta-group-1 col-sm-12 col-md-12 text-center"}
      (unordered-list {:class "list-inline center-block"}
                      (conj 
-                      (map #(link-to (urlize-tag % tags-output-prefix) %) tags)
+                      (map #(link-to (tag->uri % tags-output-prefix) %) tags)
                       [:span {:class "glyphicon glyphicon-pencil"}]))]]   
    (if preview-img
      (link-to url
@@ -103,7 +103,7 @@
     [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
      (unordered-list {:class "list-inline"}
                      (conj 
-                      (map #(link-to (urlize-tag % tags-output-prefix) %) tags)
+                      (map #(link-to (tag->uri % tags-output-prefix) %) tags)
                       [:span {:class "glyphicon glyphicon-pencil"}]))]
     [:div {:class "post-meta-group-2 col-sm-6 col-md-6"}
      [:span {:class "glyphicon glyphicon-time"}] " "
@@ -126,7 +126,7 @@
         [:div {:class "post-meta-group-1"}
          (unordered-list {:class "list-inline"}
                          (conj 
-                          (map #(link-to (urlize-tag % tags-output-prefix) %) tags)
+                          (map #(link-to (tag->uri % tags-output-prefix) %) tags)
                           [:span {:class "glyphicon glyphicon-tags"}]))]]
        [:div {:class "post-meta-group-2 col-sm-3 col-md-3"}
         [:span {:class "glyphicon glyphicon-time"}] " "
@@ -159,7 +159,7 @@
      [:br]
      (link-to  url "Read More")]]])
 
-(defn- display-post-pair [layout-config [post-left & [post-mid post-right]]]
+(defn- display-post-group [layout-config [post-left & [post-mid post-right]]]
   [:div {:class "container"}
    [:div {:class "row"}
     (preview-post layout-config post-left)
@@ -173,7 +173,7 @@
    [:hr]
    [:div {:class "content"}
     [:div {:class "row display-flex"}
-     (map #(display-post-pair layout-config %)
+     (map #(display-post-group layout-config %)
           (partition-all 3 posts))]]
    #_[:ul {:class "pager"}
     [:li {:class "previous"}

@@ -1,7 +1,6 @@
 (ns eat.layout.user.index
-  (:require [hiccup.element :refer [image link-to]]
-            [eat.layout.user.base :refer [base previews]]
-            [eat.layout.util :refer [get-all-tags]]))
+  (:require [eat.layout.user.base :refer [base previews]]
+            [hiccup.element :refer [image]]))
 
 (defn carousel []
   [:div {:id "carousel-header" :class "carousel slide" :data-ride "carousel"}
@@ -43,9 +42,7 @@
     [:div {:class "row"}
      (repeat 6
              [:div {:class "col-xs-6 col-sm-4 col-md-4"}
-              (image {:class "img-thumbnail center-block"} "/img/600x400.png" "about")
-              #_[:p {:class "text-center"}
-               "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Nulla nec tortor. Donec id elit quis purus consectetur consequat."]])]]])
+              (image {:class "img-thumbnail center-block"} "/img/600x400.png" "about")])]]])
 
 (defn index-page [layout-config posts]
   (base layout-config
@@ -54,7 +51,4 @@
                        (carousel)
                        (quick-links))
          :content (list
-                   (previews layout-config posts "Recent Posts"))
-         ;;:posts posts
-         ;;:tags (get-all-tags posts)
-         }))
+                   (previews layout-config posts "Recent Posts"))}))

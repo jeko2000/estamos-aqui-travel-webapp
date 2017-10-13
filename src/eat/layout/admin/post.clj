@@ -1,7 +1,6 @@
 (ns eat.layout.admin.post
-  (:require [eat.layout.admin.base :refer [admin-base admin-modal]]
-            [eat.layout.util :refer [set->string record->table-row]]
-            [hiccup.element :refer [link-to]]
+  (:require [eat.layout.admin.base :refer [admin-base]]
+            [eat.layout.components :refer [set->string record->table-row]]
             [hiccup.form :as f]))
 
 (defn admin-post-form [{:keys [author md date preview preview-img tags title url]}]
@@ -43,15 +42,13 @@
 
 
 (defn admin-post-main [params]
-  [:section {:id "main"}
-   [:div {:class "container"}
-    [:div {:class "row"}
-     [:div {:class "col-md-12"}
-      [:div {:class "panel panel-default"}
-       [:div {:class "panel-heading"}
-        [:h3 {:class "panel-title"} "Post page"]]
-       [:hr]
-       (admin-post-form params)]]]]])
+  [:div {:class "row"}
+   [:div {:class "col-md-12"}
+    [:div {:class "panel panel-default"}
+     [:div {:class "panel-heading"}
+      [:h3 {:class "panel-title"} "Post page"]]
+     [:hr]
+     (admin-post-form params)]]])
 
 (defn admin-post-page [layout-config post-map]
   (admin-base layout-config

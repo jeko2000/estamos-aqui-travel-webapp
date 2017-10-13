@@ -31,3 +31,14 @@
       (str/lower-case)
       (str/replace #"\s+" "-")
       (str/replace #"[^a-z0-9áéíóú-]" "")))
+
+(defn tag->uri [tag tags-output-prefix]
+  (as-> tag $
+      (clojure.string/replace $ #"\s+" "-")
+      (build-path tags-output-prefix $)))
+
+(defn string->keyword [s]
+  (-> s
+      (str/replace #"(_|\.)" "-")
+      str/lower-case
+      keyword))

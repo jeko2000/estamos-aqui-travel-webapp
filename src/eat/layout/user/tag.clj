@@ -1,7 +1,6 @@
 (ns eat.layout.user.tag
   (:require [eat.layout.user.base :refer [base previews]]
-            [eat.util :refer [build-path]]
-            [eat.layout.util :refer [contains-tag? get-all-tags urlize-tag]]))
+            [eat.db.core :refer [contains-tag?]]))
 
  (defn tag-page [layout-config target-tag posts]
   (let [posts-with-tag (filter #(contains-tag? target-tag %) posts)]

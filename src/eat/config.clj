@@ -1,5 +1,18 @@
-(ns eat.config)
+(ns eat.config
+  (:require [eat.util :refer [get-resource string->keyword]]))
 
-(def config {:server {:port 3000}
-             :layout {:tags-output-prefix "/tags"
-                      :sidebar-latest-post-count 3}})
+(defn- env->map [env]
+  (if-let [env-val (System/getenv env)]
+    {(string->keyword env) env-val}))
+
+(def default-config
+  (delay
+   (if-let [conf (get-resource "default_config.edn")]
+     (-> conf slurp read-string)
+     (println "WARNING: failed to find default_config.edn"))))
+
+(def config
+  (delay
+   (merge @default-config
+          (env->map "PORT")
+          (env->map "DATABASE_URL"))))

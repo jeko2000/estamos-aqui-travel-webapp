@@ -1,8 +1,9 @@
 (ns eat.db.core
   (:require [eat.db.util :refer [build-posts spit-file! copy-file!]]
             [eat.util :refer [normalize-title]]
-            [eat.layout.util :refer [string->set]]
-            [buddy.hashers :as hashers]))
+            [eat.layout.components :refer [string->set]]
+            [buddy.hashers :as hashers]
+            [clojure.set :refer [union]]))
 
 (def posts-root "posts/md")
 (def posts-prefix "/post")
@@ -34,10 +35,15 @@
         (update-upload! upload)))))
 
 ;;tags
-(defn get-tags [posts]
-  (apply clojure.set/union (map :tags (vals posts))))
+(defn contains-tag? [tag post]
+  (if-let [tags (:tags post)]
+    (contains? tags tag)))
 
-
+(defn get-all-tags [posts]
+  (->> posts
+       (map :tags)
+       (apply union)
+       (remove nil?)))
 
 ;;users
 (def userstore (atom {})) ;;To mimick database
@@ -60,5 +66,3 @@
                                      (hashers/check password (:password user)))
                               (reduced user)))]
     (reduce reducer nil (vals @userstore))))
-
-

@@ -1,14 +1,11 @@
 (ns eat.db.util
-  (:require [clojure.java.io :as io]
+  (:require [eat.util :refer [build-path get-resource get-contents]]
+            [clojure.java.io :as io]
             [clojure.string :as str]
-            [eat.util :refer [build-path get-resource read-resource get-contents]]
             [me.raynes.cegdown :as md]))
 
 ;;TODO: Add this to config
 (def posts-prefix "/post")
-(def pages-prefix "/")
-(def default-author "Shell")
-(def number-of-most-recent-posts 5)
 
 (defn parse-url [file-name prefix]
   "Return url for a given FILE-NAME by prefixing it with PREFIX"
@@ -48,7 +45,7 @@
 
 (defn spit-file! [path file-name contents]
   (if-let [res (get-resource path)]
-(spit (build-path (str res) file-name) contents :encoding "utf-8")))
+    (spit (build-path (str res) file-name) contents :encoding "utf-8")))
 
 (defn copy-file! [file path file-name]
   (if-let [res (get-resource path)]

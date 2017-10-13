@@ -1,30 +1,15 @@
 (ns eat.layout.user.post
-  (:require [hiccup.element :refer [link-to unordered-list image]]
-            [eat.layout.user.base :refer [base]]
-            [eat.layout.util :refer [urlize-tag]]))
+  (:require [eat.layout.user.base :refer [base]]
+            [hiccup.element :refer [unordered-list image]]))
 
-#_(defn post-content [{:keys [url title tags date content]}]
-  [:article {:class "post-meta"}
-   [:h2 [:a {:href url} (clojure.string/upper-case title)] ]
-   [:div {:class "row"}
-    [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
-     (unordered-list {:class "list-inline"}
-                     (conj 
-                      (map #(link-to (urlize-tag %) %) tags)
-                      [:span {:class "glyphicon glyphicon-pencil"}]))]
-    [:div {:class "post-meta-group-2 col-sm-6 col-md-6"}
-     [:span {:class "glyphicon glyphicon-time"}] " "
-     date]]
-   content])
-
-(defn post-header [{:keys [url title tags date content author]}]
+(defn post-header [{:keys [preview-img title]}]
   [:div {:class "post-header"}
-   #_(image {:class "img img-responsive"} "/img/1200x400/whatwedidbarranquilla_4_low.jpg" "image1")])
+   (image {:class "img img-responsive"} "/img/1200x400/carousel_3.jpg" #_preview-img title)])
 
-(defn post-content [{:keys [url title tags date content author]}] ;;Best so far
-  [:div {:class "post-wrapper"}   
+(defn post-content [{:keys [url title tags date content author preview-img] :as post}] ;;Best so far
+  [:div {:class "post-wrapper"}
    [:article
-    [:h2 [:a {:href url} (clojure.string/upper-case title)]]
+    #_[:h2 {:class "text-uppercase"} title]
     [:div {:class "row"}
      [:div {:class "post-meta"}
       [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
@@ -75,7 +60,7 @@
 (defn post-page [layout-config curr-post posts]
   (base layout-config
         {:title (str (:title curr-post) " | Estamos Aqui Travel")
-;;         :pre-content (post-header curr-post)
+         :pre-content (post-header curr-post)
          :content (list
                    (post-content curr-post)
                    [:hr]

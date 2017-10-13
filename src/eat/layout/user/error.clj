@@ -15,4 +15,3 @@
          :content (error-main error status)
          :posts posts
          :tags tags}))
-
