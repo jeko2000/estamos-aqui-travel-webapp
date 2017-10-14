@@ -1,20 +1,12 @@
 (ns eat.db.migrate
   (:require [clojure.java.jdbc :as sql]))
 
-(def ^:dynamic *db* "jdbc:postgresql://localhost:5432/eat-db")
-
-(defn migrated? [db-spec]
-  (-> (sql/query db-spec ["select count(*) from information_schema.columns where table_name='posts'"])
-      first
-      :count
-      pos?))
-
 (def posts-table
   (sql/create-table-ddl
    :posts
    [[:id :serial]
     [:title :text "UNIQUE" "NOT NULL"]
-    [:author :text "UNIQUE" "NOT NULL"]
+    [:author :text "NOT NULL"]
     [:date :text "NOT NULL"]
     [:md :text "NOT NULL"]    
     [:content :text "NOT NULL"]
@@ -40,10 +32,14 @@
 (def migrations
   [initial-schema])
 
-(defn migrate! [db-spec]
-  (sql/with-db-transaction [t-conn db-spec]
-    (doseq [migration migrations]
-      (migration t-conn))))
+(defn migrated? [db-spec]
+  (-> (sql/query db-spec ["select count(*) from information_schema.columns where table_name='posts'"])
+      first
+      :count
+      pos?))
 
-;;(sql/db-do-commands *db* "DROP table users")
-;;(migrate! *db*)
+(defn migrate! [db-spec]
+  (if-not (migrated? db-spec)
+    (sql/with-db-transaction [t-conn db-spec]
+      (doseq [migration migrations]
+        (migration t-conn)))))

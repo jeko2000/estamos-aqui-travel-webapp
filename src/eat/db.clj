@@ -109,14 +109,3 @@
          (map :tags)
          (remove nil?)         
          (apply set/union))))
-
-#_(insert-post! *db* {:title "sample"
-                      :author "me"
-                      :date "2017-12-12"
-                      :md "##This is content"
-                      :preview "Prev"
-                      :preview_img "img/sample"
-                      :title_img "img/sample"
-                      :tags "tag1, tag2"})
-
-

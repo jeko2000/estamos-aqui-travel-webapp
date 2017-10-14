@@ -1,9 +1,9 @@
 (ns eat.routes.admin
   (:require [eat.layout :as layout]
-            [eat.db :refer [update-post! insert-post!]]
+            [eat.db :refer [update-post! insert-post! delete-post! find-post-by-url]]
             [eat.db.core :refer [*db*]]
+            [eat.util :refer [copy-file!]]
             [eat.auth :refer [autheticated?]]
-            [eat.db.util :refer [copy-file!]]
             [compojure.core :refer [GET POST defroutes context]]
             [ring.util.response :as response]
             [buddy.auth.accessrules :refer [restrict]]))
@@ -12,25 +12,42 @@
   (zipmap (map keyword (keys params))
           (vals params)))
 
-(defn handle-edit-post! [{:keys [params]}]
-  (update-post! *db* (keywordize-map params))
-  #_(copy-file! (:tempfile params) "public/img" (:filename params))
-  (response/redirect "/admin"))
+(defn- save-upload! [{:keys [tempfile filename] :as file}]
+  (copy-file! tempfile "public/img" filename))
+
+(defn- handle-image-uploads [{:strs [file]}]
+  (if (and (> (:size file) 0)
+           (not (empty? (:filename file))))
+    (let [uploads (if (vector? file) file (vector file))]
+      (doseq [upload uploads]
+        (save-upload! upload)))))
 
 (defn handle-new-post! [{:keys [params]}]
   (insert-post! *db* (keywordize-map params))
-  #_(copy-file! (:tempfile params) "public/img" (:filename params))
+  (handle-image-uploads params)
   (response/redirect "/admin"))
+
+(defn handle-edit-post! [{:keys [params]}]
+  (update-post! *db* (keywordize-map params))
+  (handle-image-uploads params)
+  (response/redirect "/admin"))
+
+(defn handle-delete-post! [{:keys [headers] :as req}]
+  (let [post (as-> headers $
+               (get $"referer")
+               (clojure.string/replace $ #".*/edit" "")
+               (find-post-by-url *db* $))]
+    (delete-post! *db* (:id post))
+    (response/redirect "/admin")))
 
 (defroutes restricted-routes
   (GET "/" [] (layout/admin))
-  (GET "/2" [] (layout/admin))           
   (GET "/edit/posts/:url" [url] (layout/edit-post (str "/posts/" url)))
   (GET "/new-post" [] layout/new-post)
   (POST "/edit-post" request (handle-edit-post! request))
-  (POST "/new-post" request (handle-new-post! request)))
+  (POST "/new-post" request (handle-new-post! request))
+  (POST "/delete-post" request (handle-delete-post! request)))
 
 (def admin-routes
   (context "/admin" []
            (restrict restricted-routes {:handler autheticated?})))
-

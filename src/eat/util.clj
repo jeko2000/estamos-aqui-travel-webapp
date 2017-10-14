@@ -42,3 +42,10 @@
       (str/replace #"(_|\.)" "-")
       str/lower-case
       keyword))
+
+(defn copy-file! [file path file-name]
+  (if-let [res (get-resource path)]
+    (io/copy file (io/file (build-path (str res) file-name)))))
+
+(defn update-upload! [{:keys [tempfile filename] :as file}]
+  (copy-file! tempfile "public/img" filename))
