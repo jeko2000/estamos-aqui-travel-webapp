@@ -12,7 +12,8 @@
    [:meta {:name "description"
            :content "Estamos Aqui Travel provides well-crafted images, tips, and recommendations South American travel."}]
    [:title title]
-   (include-css "/css/bootstrap.min.css" "/css/style.css")])
+   (include-css "/css/bootstrap.min.css" "/css/style.css"
+                "https://fonts.googleapis.com/css?family=Roboto")])
 
 (defn navbar []
   [:header {:class "navbar navbar-default navbar-fixed-top" :role "banner"}
@@ -24,9 +25,8 @@
       [:span {:class "icon-bar"}]
       [:span {:class "icon-bar"}]]
      #_(link-to {:class "navbar-brand"} "/" "ESTAMOS AQUI TRAVEL")
-     (link-to {:class "navbar-brand"} "/"
-              (image {:height "25"} "https://mdbootstrap.com/img/logo/mdb-transparent.png"))
-     ]
+     #_(link-to {:class "navbar-brand"} "/"
+              (image {:height "600" :class "center-block"} "/img/logo_large_png.png"))]
     
     [:div {:id "navbar" :class "collapse navbar-collapse" :role "navigation"}
      #_(unordered-list {:class "nav navbar-nav"}

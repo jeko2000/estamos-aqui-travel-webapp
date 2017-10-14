@@ -2,6 +2,7 @@
   (:require [eat.layout.admin.base :refer [admin-base]]
             [eat.layout.components :refer [record->table-row]]))
 
+
 (defn table [records]
   (let [headings (map name (keys (first records)))]
     [:table {:class "table table-hover table-striped"}
@@ -25,5 +26,5 @@
   (admin-base layout-config
               {:title "Admin"
                :user "Shelly"
-               :content (admin-main posts)
+               :content (list (admin-main posts))
                :create-content? true}))
