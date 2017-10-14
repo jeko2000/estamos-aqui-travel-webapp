@@ -25,4 +25,5 @@
   (admin-base layout-config
               {:title "Admin"
                :user "Shelly"
-               :content (admin-main posts)}))
+               :content (admin-main posts)
+               :create-content? true}))

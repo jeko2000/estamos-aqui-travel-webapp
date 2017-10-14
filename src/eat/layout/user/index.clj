@@ -13,17 +13,17 @@
    
    [:div {:class "carousel-inner" :role "listbox"}
     [:div {:class "item active"}
-     (image {:class "img img-responsive"} "/img/1200x400/carousel_1.jpg" "image1")]    
+     (image {:class "img img-responsive"} "/img/carousel_1.jpg" "carousel_1")]    
     [:div {:class "item"}
-     (image {:class "img img-responsive"} "/img/1200x400/carousel_2.jpg" "image2")]
+     (image {:class "img img-responsive"} "/img/carousel_2.jpg" "carousel_2")]
     [:div {:class "item"}
-     (image {:class "img img-responsive"} "/img/1200x400/carousel_3.jpg" "image3")]    
+     (image {:class "img img-responsive"} "/img/carousel_3.jpg" "carousel_3")]    
 
         [:div {:class "item"}
-     (image {:class "img img-responsive"} "/img/1200x400/carousel_4.jpg" "image4")]    
+     (image {:class "img img-responsive"} "/img/carousel_4.jpg" "carousel_4")]    
 
         [:div {:class "item"}
-     (image {:class "img img-responsive"} "/img/1200x400/carousel_5.jpg" "image5")]    ]
+     (image {:class "img img-responsive"} "/img/carousel_5.jpg" "carousel_5")]    ]
 
    [:a {:class "left carousel-control" :href "#carousel-header" :role "button" :data-slide "prev"}
     [:span {:class "glyphicon glyphicon-chevron-left" :aria-hidden "true"}]
@@ -42,7 +42,7 @@
     [:div {:class "row"}
      (repeat 6
              [:div {:class "col-xs-6 col-sm-4 col-md-4"}
-              (image {:class "img-thumbnail center-block"} "/img/600x400.png" "about")])]]])
+              (image {:class "img-thumbnail center-block"} "https://dummyimage.com/600x400/000/fff" "about")])]]])
 
 (defn index-page [layout-config posts]
   (base layout-config

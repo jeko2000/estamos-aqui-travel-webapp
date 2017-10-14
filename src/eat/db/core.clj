@@ -22,7 +22,7 @@
 (defn update-post! [{:strs [title author date preview preview-img title-img tags content] :as params}]
   (let [meta {:title title :author author :date date :preview preview :preview-img preview-img :title-img title-img :tags (string->set tags)} ;Note that content is not part of meta
         cont (str meta "\n\n\n" content)]
-    (spit-file! "posts/md" (normalize-title title) cont)))
+    (spit-file! "posts/md" (str (normalize-title title) ".md") cont)))
 
 (defn- update-upload! [{:keys [tempfile filename] :as file}]
   (copy-file! tempfile "public/img" filename))

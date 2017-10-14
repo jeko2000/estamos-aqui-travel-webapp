@@ -32,11 +32,11 @@
 
              [:div {:class "form-group"}
               (f/label "preview-img" "Post Preview Image")
-              (f/text-field {:placeholder "img/my-favorite-bench.jpg" :class "form-control"} "preview-img" preview-img)]
+              (f/text-field {:placeholder "/img/my-favorite-bench.jpg" :class "form-control"} "preview-img" preview-img)]
 
              [:div {:class "form-group"}
               (f/label "title-img" "Post Title Image")
-              (f/text-field {:placeholder "img/my-favorite-bench.jpg" :class "form-control"} "title-img" title-img)]
+              (f/text-field {:placeholder "/img/my-favorite-bench.jpg" :class "form-control"} "title-img" title-img)]
 
              [:div {:class "form-group"}
               (f/label "tags" "Meta Tags")
