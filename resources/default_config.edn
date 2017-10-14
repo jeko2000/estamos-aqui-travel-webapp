@@ -1,3 +1,4 @@
 {:server {:port 3000}
  :layout {:tags-output-prefix "/tags"
-          :sidebar-latest-post-count 3}}
+          :sidebar-latest-post-count 3}
+ :database-url "jdbc:postgresql://localhost:5432/eat-db"}

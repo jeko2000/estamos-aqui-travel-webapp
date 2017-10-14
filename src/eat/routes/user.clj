@@ -7,7 +7,7 @@
   (GET "/" [] (layout/index)))
 
 (defroutes post-routes
-  (GET "/post/:id" [id] (layout/post (str "/post/" id))))
+  (GET "/posts/:id" [id] (layout/post (str "/posts/" id))))
 
 (defroutes tag-routes
   (GET "/tags/:id" [id] (layout/tag id)))

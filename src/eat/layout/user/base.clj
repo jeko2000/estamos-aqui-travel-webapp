@@ -71,7 +71,7 @@
    (include-js "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"
                "/js/bootstrap.min.js")])
 
-#_(defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview-img date author]}]
+#_(defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview_img date author]}]
   [:article {:class "post-meta"}
    [:h2 {:class "text-center"} (link-to url title)]
    [:div {:class "row"}
@@ -80,9 +80,9 @@
                      (conj 
                       (map #(link-to (tag->uri % tags-output-prefix) %) tags)
                       [:span {:class "glyphicon glyphicon-pencil"}]))]]   
-   (if preview-img
+   (if preview_img
      (link-to url
-              (image {:class "img-thumbnail"} preview-img)))
+              (image {:class "img-thumbnail"} preview_img)))
    [:div {:class "row"}
     [:div {:class "post-meta-group-1 col-sm-9 col-md-9"}
      [:span {:class "glyphicon glyphicon-pencil"}]
@@ -96,7 +96,7 @@
     [:br]
     (link-to url "Read More")]])
 
-#_(defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview-img date]}]
+#_(defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview_img date]}]
   [:article {:class "post-meta"}
    [:h2 (link-to url title)]
    [:div {:class "row"}
@@ -108,16 +108,16 @@
     [:div {:class "post-meta-group-2 col-sm-6 col-md-6"}
      [:span {:class "glyphicon glyphicon-time"}] " "
      date]]
-   (if preview-img
+   (if preview_img
      (link-to url
-              (image {:class "img-responsive center-block"} preview-img)))
+              (image {:class "img-responsive center-block"} preview_img)))
    [:p
     preview]
    [:div {:class "read-more"}
     [:br]
     (link-to url "Read More")]])
 
-#_(defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview-img date author]}]
+#_(defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview_img date author]}]
   [:article
    [:h2 [:a {:href url} (clojure.string/upper-case title)] ]
    [:div {:class "post-meta"}
@@ -133,9 +133,9 @@
         date]]]
    [:div {:class "row"}
     [:div {:class "col-sm-4 col-md-4"}
-      (if preview-img
+      (if preview_img
         (link-to url
-                 (image {:class "img-responsive"} preview-img)))]
+                 (image {:class "img-responsive"} preview_img)))]
     
     [:div {:class "col-sm-8 col-md-8"}          
      [:p
@@ -146,11 +146,11 @@
     [:br]
     (link-to url "Read More")]])
 
-(defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview-img date author]}]
+(defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview_img date author]}]
   [:article {:class "preview-container col-md-4 col-sm-4 col-xs-4 text-center center-block"}
-   (if preview-img
+   (if preview_img
      (link-to url
-              (image {:class "img-responsive img-preview"} preview-img)))
+              (image {:class "img-responsive img-preview"} preview_img)))
    [:h3 {:class "h4 text-uppercase"} (link-to url title)]
    [:p {:class "preview-desc"}
     preview]

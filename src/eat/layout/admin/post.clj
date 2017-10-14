@@ -3,12 +3,15 @@
             [eat.layout.components :refer [set->string record->table-row]]
             [hiccup.form :as f]))
 
-(defn admin-post-form [{:keys [author md date preview preview-img title-img tags title url]}]
-  (f/form-to {:enctype "multipart/form-data"} ["POST" "/admin/edit"]
+(defn admin-post-form [post-to {:keys [id author md date preview preview_img title_img tags title url]}]
+  (f/form-to {:enctype "multipart/form-data"} ["POST" post-to]
 
              [:div {:class "form-group"}
               (f/label "images" "Upload Images")
               (f/file-upload {:class "form-control" :multiple "true" :accept="image/*"} "file")]
+
+             (if id
+               (f/hidden-field  "id" id))
 
              [:div {:class "form-group"}
               (f/label "title" "Post Title")
@@ -24,19 +27,19 @@
 
              [:div {:class "form-group"}
               (f/label "content" "Post Content")
-              (f/text-area {:placeholder "# Top 10 waterloo fails" :rows "25" :class "form-control"} "content" md)]
+              (f/text-area {:placeholder "# Top 10 waterloo fails" :rows "25" :class "form-control"} "md" md)]
 
              [:div {:class "form-group"}
               (f/label "preview" "Post Preview")
               (f/text-field {:placeholder "Let there be..." :class "form-control"} "preview" preview)]
 
              [:div {:class "form-group"}
-              (f/label "preview-img" "Post Preview Image")
-              (f/text-field {:placeholder "/img/my-favorite-bench.jpg" :class "form-control"} "preview-img" preview-img)]
+              (f/label "preview_img" "Post Preview Image")
+              (f/text-field {:placeholder "/img/my-favorite-bench.jpg" :class "form-control"} "preview_img" preview_img)]
 
              [:div {:class "form-group"}
-              (f/label "title-img" "Post Title Image")
-              (f/text-field {:placeholder "/img/my-favorite-bench.jpg" :class "form-control"} "title-img" title-img)]
+              (f/label "title_img" "Post Title Image")
+              (f/text-field {:placeholder "/img/my-favorite-bench.jpg" :class "form-control"} "title_img" title_img)]
 
              [:div {:class "form-group"}
               (f/label "tags" "Meta Tags")
@@ -45,17 +48,17 @@
               (f/submit-button {:class "btn btn-primary"} "Save changes")]))
 
 
-(defn admin-post-main [params]
+(defn admin-post-main [post-to params]
   [:div {:class "row"}
    [:div {:class "col-md-12"}
     [:div {:class "panel panel-default"}
      [:div {:class "panel-heading"}
       [:h3 {:class "panel-title"} "Post page"]]
      [:hr]
-     (admin-post-form params)]]])
+     (admin-post-form post-to params)]]])
 
-(defn admin-post-page [layout-config post-map]
+(defn admin-post-page [layout-config post-to post-map]
   (admin-base layout-config
               {:title "Edit Page"
                :user "Shelly"
-               :content (admin-post-main post-map)}))
+               :content (admin-post-main post-to post-map)}))

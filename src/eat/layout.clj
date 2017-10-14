@@ -5,32 +5,35 @@
             [eat.layout.user.login :refer [login-page]]
             [eat.layout.user.error :refer [error-page]]
             [eat.config :refer [config]]
-            [eat.db.core :refer [*posts* get-post get-all-tags]]
+            [eat.db :refer [find-post find-posts find-posts-with-tag find-post-by-url find-tags]]
+            [eat.db.core :refer [*db*]]
             [eat.layout.admin.index :refer [admin-page]]
             [eat.layout.admin.post :refer [admin-post-page]]))
 
 (defn index []
-  (index-page (:layout @config) (vals *posts*)))
+  (index-page (:layout @config) (find-posts *db*)))
 
 (defn post [url]
-  (let [post-obj (get-post url)]
-    (post-page (:layout @config) post-obj (vals *posts*))))
+  (let [post-obj (find-post-by-url *db* url)]
+    (post-page (:layout @config) post-obj (find-posts *db*))))
 
 (defn tag [target-tag]
-  (tag-page (:layout @config) target-tag (vals *posts*)))
+  (tag-page (:layout @config) target-tag (find-posts-with-tag *db* target-tag)))
 
 (defn admin []
-  (admin-page (:layout @config) (map #(select-keys % [:title :date :tags :url]) (vals *posts*))))
+  (admin-page (:layout @config) (map #(select-keys % [:title :date :tags :url]) (find-posts *db*))))
 
-(defn edit [url]
-  (let [post-obj (get-post url)]
-    (admin-post-page (:layout @config) post-obj)))
+(defn edit-post [url]
+  (let [post-obj (find-post-by-url *db* url)]  
+    (admin-post-page (:layout @config) "/admin/edit-post" post-obj)))
 
 (defn new-post [req]
-  (admin-post-page (:layout @config) {}))
+  (admin-post-page (:layout @config) "/admin/new-post"{}))
 
 (defn login [{:keys [flash] :as req}]
   (login-page (:layout @config) flash))
 
 (defn error [options]
-  (error-page (:layout @config) (assoc options :posts (vals *posts*) :tags (get-all-tags *posts*))))
+  (error-page (:layout @config) (assoc options :posts (find-posts *db*) :tags (find-tags (find-posts *db*)))))
+
+(find-post-by-url *db* "/posts/sample")

@@ -2,12 +2,12 @@
   (:require [eat.layout.user.base :refer [base]]
             [hiccup.element :refer [unordered-list image]]))
 
-(defn post-header [{:keys [title-img title]}]
-  (if title-img
+(defn post-header [{:keys [title_img title]}]
+  (if title_img
     [:div {:class "post-header"}
-     (image {:class "img img-responsive"} title-img title)]))
+     (image {:class "img img-responsive"} title_img title)]))
 
-(defn post-content [{:keys [url title tags date content author preview-img] :as post}] ;;Best so far
+(defn post-content [{:keys [url title tags date content author] :as post}] ;;Best so far
   [:div {:class "post-wrapper"}
    [:article
     #_[:h2 {:class "text-uppercase"} title]
