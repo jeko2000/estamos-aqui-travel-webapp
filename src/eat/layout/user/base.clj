@@ -13,7 +13,8 @@
            :content "Estamos Aqui Travel provides well-crafted images, tips, and recommendations South American travel."}]
    [:title title]
    (include-css "/css/bootstrap.min.css" "/css/style.css"
-                "https://fonts.googleapis.com/css?family=Roboto")])
+                "https://fonts.googleapis.com/css?family=Roboto"
+                "/css/font-awesome-4.7.0/css/font-awesome.min.css")])
 
 (defn navbar []
   [:header {:class "navbar navbar-default navbar-fixed-top" :role "banner"}
@@ -24,19 +25,15 @@
       [:span {:class "icon-bar"}]
       [:span {:class "icon-bar"}]
       [:span {:class "icon-bar"}]]
-     #_(link-to {:class "navbar-brand"} "/" "ESTAMOS AQUI TRAVEL")
      #_(link-to {:class "navbar-brand"} "/"
               (image {:height "600" :class "center-block"} "/img/logo_large_png.png"))]
     
     [:div {:id "navbar" :class "collapse navbar-collapse" :role "navigation"}
-     #_(unordered-list {:class "nav navbar-nav"}
+     (unordered-list {:class "nav navbar-nav"}
                      [(link-to "/" "Home")
-                      #_(link-to "destinations.html" "Destinations")
-                      #_(link-to "photography.html" "Photography")])
+                      (link-to "about-us.html" "About")])
      (unordered-list {:class "nav navbar-nav navbar-right"}                     
-                     [(link-to "/" "HOME")
-                      (link-to "about-us.html" "ABOUT")
-                      #_(link-to "contact.html" "Contact")])]]])
+                     [(link-to "/login" [:span {:class "glyphicon glyphicon-log-in"}] " Login")])]]])
 
 (defn sidebar [{:keys [sidebar-latest-post-count tags-output-prefix]} posts tags]
   (let [latest (take sidebar-latest-post-count posts)]
@@ -59,99 +56,47 @@
                          (map #(link-to (tag->uri % tags-output-prefix) %) tags))]])]))
 
 (defn footer []
-  [:footer {:class "footer"}
+  [:footer {:class "footer" :id "footer"}
    [:div {:class "container"}
-    [:hr]
-    [:p {:class "text-center"} ;;TODO: Add footer links!
-     "Copyright &copy; 2017"]
-    [:p "Upcoming link"]]])
+    [:div {:class "row"}
+     [:div {:class "col-sm-3"}
+      [:h2
+       [:div {:class "logo-wrap"}
+        (link-to "/"
+                 (image {:class "img img-resonsive"} "/img/logo_large_png_360.png"))]]]
+     [:div {:class "col-sm-2"}
+      [:h5 "Get started"]
+      (unordered-list 
+       [(link-to "/" "Home")
+        (link-to "/login" "Login")])]
+     [:div {:class "col-sm-2"}
+      [:h5 "About"]
+      (unordered-list 
+       [(link-to "/about-us" "About Us")])]
+     [:div {:class "col-sm-2"}
+      [:h5 "Support"]
+      (unordered-list 
+       [(link-to "/disclaimer" "Disclaimer")])]
+     [:div {:class "col-sm-2"}
+      [:div {:class "social-networks"}
+       (link-to {:class "instagram"}
+                "https://www.instagram.com/estamosaqui_travel"  [:i {:class "fa fa-instagram"}])
+     (link-to {:class "github"}
+                "https://github.com/jeko2000/estamos-aqui-travel-webapp" [:i {:class "fa fa-github"}])]]]]
+   [:div {:class "footer-copyright"}
+    [:p "© 2017 Copyright Estamos Aqui Travel"]]])
 
 (defn body-js []
   [:div
    (include-js "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"
                "/js/bootstrap.min.js")])
 
-#_(defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview_img date author]}]
-  [:article {:class "post-meta"}
-   [:h2 {:class "text-center"} (link-to url title)]
-   [:div {:class "row"}
-    [:div {:class "post-meta-group-1 col-sm-12 col-md-12 text-center"}
-     (unordered-list {:class "list-inline center-block"}
-                     (conj 
-                      (map #(link-to (tag->uri % tags-output-prefix) %) tags)
-                      [:span {:class "glyphicon glyphicon-pencil"}]))]]   
-   (if preview_img
-     (link-to url
-              (image {:class "img-thumbnail"} preview_img)))
-   [:div {:class "row"}
-    [:div {:class "post-meta-group-1 col-sm-9 col-md-9"}
-     [:span {:class "glyphicon glyphicon-pencil"}]
-     " " author]
-    [:div {:class "post-meta-group-2 col-sm-3 col-md-3"}
-     [:span {:class "glyphicon glyphicon-time"}] " "
-     date]]
-   [:p
-    preview]
-   [:div {:class "read-more"}
-    [:br]
-    (link-to url "Read More")]])
-
-#_(defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview_img date]}]
-  [:article {:class "post-meta"}
-   [:h2 (link-to url title)]
-   [:div {:class "row"}
-    [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
-     (unordered-list {:class "list-inline"}
-                     (conj 
-                      (map #(link-to (tag->uri % tags-output-prefix) %) tags)
-                      [:span {:class "glyphicon glyphicon-pencil"}]))]
-    [:div {:class "post-meta-group-2 col-sm-6 col-md-6"}
-     [:span {:class "glyphicon glyphicon-time"}] " "
-     date]]
-   (if preview_img
-     (link-to url
-              (image {:class "img-responsive center-block"} preview_img)))
-   [:p
-    preview]
-   [:div {:class "read-more"}
-    [:br]
-    (link-to url "Read More")]])
-
-#_(defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview_img date author]}]
-  [:article
-   [:h2 [:a {:href url} (clojure.string/upper-case title)] ]
-   [:div {:class "post-meta"}
-      [:div {:class "row"}
-       [:div {:class "col-sm-9 col-md-9"}
-        [:div {:class "post-meta-group-1"}
-         (unordered-list {:class "list-inline"}
-                         (conj 
-                          (map #(link-to (tag->uri % tags-output-prefix) %) tags)
-                          [:span {:class "glyphicon glyphicon-tags"}]))]]
-       [:div {:class "post-meta-group-2 col-sm-3 col-md-3"}
-        [:span {:class "glyphicon glyphicon-time"}] " "
-        date]]]
-   [:div {:class "row"}
-    [:div {:class "col-sm-4 col-md-4"}
-      (if preview_img
-        (link-to url
-                 (image {:class "img-responsive"} preview_img)))]
-    
-    [:div {:class "col-sm-8 col-md-8"}          
-     [:p
-      preview
-      " " [:span {:class "glyphicon glyphicon-pencil"}]
-     " " author]]]
-   [:div {:class "read-more"}
-    [:br]
-    (link-to url "Read More")]])
-
 (defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview_img date author]}]
   [:article {:class "preview-container col-md-4 col-sm-4 col-xs-4 text-center center-block"}
    (if preview_img
      (link-to url
               (image {:class "img-responsive img-preview"} preview_img)))
-   [:h3 {:class "h4 text-uppercase"} (link-to url title)]
+   [:h3 {:class "preview-title"} (link-to url title)]
    [:p {:class "preview-desc"}
     preview]
    [:div {:class "preview-bottom"}
@@ -169,7 +114,7 @@
    
 (defn previews [layout-config posts heading]
   [:div {:id "post-previews"}
-   [:h3 {:class "text-center text-uppercase"} heading]
+   [:h2 {:class "text-center text-uppercase"} heading]
    [:hr]
    [:div {:class "content"}
     [:div {:class "row display-flex"}
