@@ -1,6 +1,6 @@
 (ns eat.layout.user.post
   (:require [eat.layout.user.base :refer [base]]
-            [hiccup.element :refer [unordered-list image]]))
+            [hiccup.element :refer [unordered-list image link-to]]))
 
 (defn post-header [{:keys [title_img title]}]
   (if title_img
@@ -10,24 +10,26 @@
       [:div {:class "post-title-wrapper"}
        [:h2 {:class "post-title"} title]]]]))
 
+(defn instagram-boost []
+  [:h3 "Did you find this information useful? Leave us a comment and follow us on"
+   (link-to "https://www.instagram.com/estamosaqui_travel/" "Instagram") " for announcements on upcoming posts!"])
+
 (defn post-content [{:keys [url title tags date content author] :as post}] ;;Best so far
   [:div {:class "post-wrapper"}
    [:article
     [:div {:class "row"}
      [:div {:class "post-meta"}
-      [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
-       (unordered-list {:class "list-inline"}
-                       (list                      
-                        [:span {:class "glyphicon glyphicon-pencil"}]
-                        author
-                        ))]
-      [:div {:class "post-meta-group-2 col-sm-6 col-md-6"}
-       [:span {:class "glyphicon glyphicon-time"}] " "
-       date]]]
+      [:div {:class "col-md-12"}
+       #_[:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
+        [:span {:class "glyphicon glyphicon-pencil"}] " " author]
+       [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
+        [:span {:class "glyphicon glyphicon-time"}] " "
+        date]]]]
     [:div {:class "post-content"}
      [:div {:clas "row"}
       [:div {:class "col-md-12"}
-       content]]]]])
+       content
+       (instagram-boost)]]]]])
 
 (defn comment-box []
   [:div {:class "well"}

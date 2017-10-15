@@ -183,12 +183,20 @@ a:focus, a:hover{
 }
 .post-header{
     position:relative;
+    margin-bottom:25px;
+}
+.post-meta-group-1 {
+    margin-bottom: 25px;
+    opacity: 0.6;
 }
 .post-content img {
     display: block;
     max-width:100%;
 }
-
+.post-content p {
+    font-size: 15px;
+    line-height: 28px;
+}
 .img-fill{
     display: block;
     max-width:100%;
