@@ -1,5 +1,6 @@
 (ns eat.layout.user.login
   (:require [eat.layout.user.base :refer [base]]
+            [eat.layout.components :refer [sticky-footer-fix]]
             [hiccup.form :as f]))
 
 (defn login-form []
@@ -24,4 +25,5 @@
 (defn login-page [layout-config {:keys [error]}]
   (base layout-config
         {:title "Login"
-         :content (login-main error)}))
+         :content (login-main error)
+         :js (sticky-footer-fix)}))

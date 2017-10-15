@@ -19,6 +19,10 @@
    [:td (set->string tags)]
    [:td (link-to {:class "btn btn-default"} (str "admin/edit" url) "Edit")]])
 
+(defn sticky-footer-fix []
+  [:script
+   "$(document).ready(function(){$('#wrapper').css({'padding-bottom':$('#footer').height()});});"])
+
 (defn yes-no-modal [modal-id modal-text post-to]
   [:div {:class "modal fade" :id modal-id :tabindex "-1" :role "dialog" :aria-labelledby "modal"}
    [:div {:class "modal-dialog" :role "document"}

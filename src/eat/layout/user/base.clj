@@ -126,7 +126,7 @@
     [:li {:class "next"}
      [:a {:href "#"} "Next ->"]]]])
 
-(defn base [layout-config {:keys [title pre-content content posts tags]}]
+(defn base [layout-config {:keys [title pre-content content posts tags js]}]
   (let [col-width (if (or posts tags) 8 12)]
     (html
      [:html
@@ -134,11 +134,13 @@
       [:body
        (navbar)
        pre-content
-       [:div {:class "content"}
-        [:div {:class "container"}
-         [:div {:class "row"}
-          [:div {:id "primary" :class (str "col-md-" col-width)}
-           content]
-          (sidebar layout-config posts tags)]]]
+       [:div {:id "wrapper"}
+        [:div {:class "content"}
+         [:div {:class "container"}
+          [:div {:class "row"}
+           [:div {:id "primary" :class (str "col-md-" col-width)}
+            content]
+           (sidebar layout-config posts tags)]]]]
        (footer)
-       (body-js)]])))
+       (body-js)
+       js]])))
