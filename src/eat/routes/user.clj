@@ -12,6 +12,9 @@
 (defroutes tag-routes
   (GET "/tags/:id" [id] (layout/tag id)))
 
+(defroutes misc-routes
+  (GET "/disclaimer" _ (layout/disclaimer)))
+
 (defroutes logging-routes
   (GET "/login" req (layout/login req))
   (POST "/login" req (handle-login req))
@@ -22,4 +25,5 @@
    home-routes
    post-routes
    tag-routes
-   logging-routes))
+   logging-routes
+   misc-routes))
