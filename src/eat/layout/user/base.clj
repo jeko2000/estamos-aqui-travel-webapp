@@ -134,7 +134,7 @@
       [:body
        (navbar)
        pre-content
-       [:div {:class "content-wrapper"}
+       [:div {:class "content"}
         [:div {:class "container"}
          [:div {:class "row"}
           [:div {:id "primary" :class (str "col-md-" col-width)}

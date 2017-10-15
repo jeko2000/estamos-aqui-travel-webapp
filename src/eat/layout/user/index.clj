@@ -13,7 +13,7 @@
      [:li {:data-target "#carousel-header" :data-slide-to "4"}]]
     
     [:div {:class "carousel-inner" :role "listbox"}
-     [:div {:class "overlay"}
+     [:div {:class "overlay overlay-sm"}
       (image {:class "img img-responsive"} "/img/logo_large_png.png")]
      
      [:div {:class "item active"}
@@ -45,8 +45,8 @@
     #_[:br]
     [:div {:class "row"}
      #_(repeat 6
-             [:div {:class "col-xs-6 col-sm-4 col-md-4"}
-              (image {:class "img-thumbnail center-block"} "https://dummyimage.com/600x400/000/fff" "about")])]]])
+               [:div {:class "col-xs-6 col-sm-4 col-md-4"}
+                (image {:class "img-thumbnail center-block"} "https://dummyimage.com/600x400/000/fff" "about")])]]])
 
 (defn index-page [layout-config posts]
   (base layout-config

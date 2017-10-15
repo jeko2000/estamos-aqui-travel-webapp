@@ -16,7 +16,6 @@ body {
 }
 a:focus, a:hover{
     text-decoration: none;
-    color: #1796ee;
 }
 
 /* Overlay */
@@ -24,13 +23,24 @@ a:focus, a:hover{
     position: absolute;
     z-index: 2;
     max-height: 100%;
-    width:30%;
     height:100%;
     top:0;
     bottom: 0;
     left: 0;
     right: 0;
     margin: auto;
+}
+.overlay-sm {
+    width:30%;
+}
+.overlay-md {
+    width:50%;
+}
+.overlay-lg{
+    width:80%;
+}
+.overlay-max{
+    width:100%;
 }
 .overlay img{
     top:0;
@@ -103,6 +113,45 @@ a:focus, a:hover{
 #secondary{
     padding-top:20px;
 }
+.panel{
+    border:0;
+}
+.panel-default > .panel-heading{
+    padding: 10px;
+    text-align:center;
+    text-transform:uppercase;
+    background-color: #3c3d41;
+}
+.panel-heading h4{
+    font-size: 16px;
+    line-height: 22px;
+    color:white;
+}
+.panel-body{
+    padding: 10px;
+}
+.panel-body a{
+    color: #4e5056;
+    font-size: 14px;
+    line-height: 20px;
+    text-transform: uppercase;
+}
+.panel-body a:hover, .panel-body a:focus {
+    color: #1796ee;    
+}
+
+
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 5px 5px;
+    margin-bottom: -1px;
+    border: 0;
+}
+.list-group-item:last-child {
+    margin-bottom: 0;
+    border: 0;
+}
 .carousel img {
     min-width: 100%;
 }
@@ -122,10 +171,24 @@ a:focus, a:hover{
     padding: 0 10px;
     text-transform: uppercase;
 }
+.post-title-wrapper{
+    background: #000;
+    background: rgba(0, 0, 0, 0.5);
+}
+.post-title{
+    color:white;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px 5px;
+}
+.post-header{
+    position:relative;
+}
 .post-content img {
     display: block;
     max-width:100%;
 }
+
 .img-fill{
     display: block;
     max-width:100%;
@@ -280,7 +343,13 @@ article {
 #footer .instagram:hover{
     color: #f444e1;
 }
-@media screen and (max-width: 767px) {
+@media (max-width: 767px) {
+    .post-title{
+        padding-top:15px;
+        font-size: 20px;
+        line-height: 25px;
+    }
+    
     #footer {
         text-align: center;
     }
@@ -300,6 +369,32 @@ article {
         background-color: #3c3d41;
     }
 }
+@media (max-width : 319px) {
+    .post-title{
+        padding-top:5px;
+        font-size: 14px;
+        line-height: 16px;
+        margin-top: 10px;
+    }
+}
+@media (min-width : 320px) {
+    .post-title{
+        padding-top:10px;
+        font-size: 16px;
+        line-height: 18px;
+        margin-top: 10px;
+    }
+}
+
+@media (min-width : 480px) {
+    .post-title{
+        padding-top:5px;
+        font-size: 20px;
+        line-height: 30px;
+        margin-top: 70px;
+    }
+}
+
 @media (min-width: 768px) {
     .navbar-nav > li > a {
         /* (50px - line-height of 27px) / 2 = 12.5px */
@@ -310,3 +405,30 @@ article {
             text-align: right;
         }
     }
+    .post-title{
+        padding-top:10px;
+        font-size: 30px;
+        line-height: 35px;
+        margin-top:80px;
+        
+    }
+}
+@media only screen and (min-width : 992px) {
+    .post-title{
+        padding-top:10px;
+        font-size: 30px;
+        line-height: 35px;
+        margin-top:120px;
+        
+    }
+
+}
+@media (min-width: 1200px) {
+    .post-title{
+        padding-top:10px;
+        font-size: 55px;
+        line-height: 60px;
+        margin-top:180px;
+    }
+}
+        

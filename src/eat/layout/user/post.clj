@@ -5,12 +5,14 @@
 (defn post-header [{:keys [title_img title]}]
   (if title_img
     [:div {:class "post-header"}
-     (image {:class "img img-responsive"} title_img title)]))
+     (image {:class "img img-responsive"} title_img title)
+     [:div {:class "overlay overlay-lg text-center"}
+      [:div {:class "post-title-wrapper"}
+       [:h2 {:class "post-title"} title]]]]))
 
 (defn post-content [{:keys [url title tags date content author] :as post}] ;;Best so far
   [:div {:class "post-wrapper"}
    [:article
-    #_[:h2 {:class "text-uppercase"} title]
     [:div {:class "row"}
      [:div {:class "post-meta"}
       [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
