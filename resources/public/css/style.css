@@ -17,7 +17,6 @@ body {
 a:focus, a:hover{
     text-decoration: none;
 }
-
 /* Overlay */
 .overlay {
     position: absolute;
@@ -50,13 +49,12 @@ a:focus, a:hover{
 .navbar{
     min-height:72px;
 }
-
 .navbar-brand {
   transform: translateX(-50%);
   left: 50%;
   position: absolute;
   margin:0;
-  padding-top:5px;
+  padding-top:0;
 }
 .navbar-default .navbar-nav > li > a{
         font-size: 24px;

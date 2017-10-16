@@ -38,7 +38,7 @@
       [:span {:class "icon-bar"}]
       [:span {:class "icon-bar"}]]
      (link-to {:class "navbar-brand"} "/"
-                (image "/img/logo_small_png_tiny.png"))]
+                (image "/img/navlogo_color.png"))]
     
     [:div {:id "navbar" :class "collapse navbar-collapse" :role "navigation"}
      (unordered-list {:class "nav navbar-nav"}
