@@ -15,7 +15,7 @@
 
 (defn admin-nav [user]
   [:header {:class "navbar navbar-default navbar-fixed-top" :role "banner"}
-   [:div {:class "container"}
+   [:div {:class "container" :id "header"}
     [:div {:class "navbar-header"}
      [:button {:type "button" :class "navbar-toggle collapsed" :data-toggle "collapse" :data-target "#navbar" :aria-expanded "false" :aria-controls "navbar"}
       [:span {:class "sr-only"} "Toggle navigation"]
@@ -23,24 +23,25 @@
       [:span {:class "icon-bar"}]
       [:span {:class "icon-bar"}]]
      (link-to {:class "navbar-brand"} "/"
-              (image {:height "25"} "https://mdbootstrap.com/img/logo/mdb-transparent.png"))]
+                (image "/img/navlogo_color.png"))]
     
     [:div {:id "navbar" :class "collapse navbar-collapse" :role "navigation"}
+     (unordered-list {:class "nav navbar-nav"}
+                     [(link-to "/admin" "Admin")])
      (unordered-list {:class "nav navbar-nav navbar-right"}
-                     [(if user (link-to {:class "text-uppercase"} "admin/main" (str "Welcome, " user)))
-                      (f/form-to ["POST" "/logout"]
+                     [(f/form-to ["POST" "/logout"]
                                  (f/submit-button {:class "btn btn-primary"} "Logout"))])]]])
 
 (defn admin-header [create-content?]
   [:header {:id "header"}
    [:div {:class "container"}
     [:div {:class "row"}
-     [:div {:class "col-md-9"}
+     [:div {:class "col-md-6"}
       [:h1 " " 
        [:span {:class "glyphicon glyphicon-cog"}]" Dashboard " 
        [:small "Manage Your Site"]]]
      (if create-content?
-       [:div {:class "col-md-3 create"} (create-content-link)])]]])
+       [:div {:class "col-md-6 create text-right"} (create-content-link)])]]])
 
 (defn admin-breadcrum []
     [:section {:id "breadcrumb"}

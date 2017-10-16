@@ -17,7 +17,7 @@
    [:td title]
    [:td date]
    [:td (set->string tags)]
-   [:td (link-to {:class "btn btn-default"} (str "admin/edit" url) "Edit")]])
+   [:td (link-to {:class "btn btn-primary btn-lg center-block"} (str "admin/edit" url) "Edit")]])
 
 (defn sticky-footer-fix []
   [:script

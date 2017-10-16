@@ -50,14 +50,18 @@ a:focus, a:hover{
     min-height:72px;
 }
 .navbar-brand {
-  transform: translateX(-50%);
-  left: 50%;
-  position: absolute;
-  margin:0;
-  padding-top:0;
+    transform: translateX(-50%);
+    left: 50%;
+    position: absolute;
+    margin:0;
+    padding-top:0;
 }
 .navbar-default .navbar-nav > li > a{
-        font-size: 24px;
+    font-size: 24px;
+}
+.navbar-default .navbar-nav > li > form {
+    /* (72px - button height of 34px) / 2 = 19px */
+    padding-top:19px;
 }
 
 .navbar-default {
@@ -142,7 +146,7 @@ a:focus, a:hover{
 .panel-body{
     padding: 10px;
 }
-.panel-body a{
+.secondary .panel-body a{
     color: #4e5056;
     font-size: 14px;
     line-height: 20px;
@@ -449,4 +453,4 @@ article {
         margin-top:180px;
     }
 }
-        
+

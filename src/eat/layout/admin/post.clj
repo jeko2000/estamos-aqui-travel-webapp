@@ -1,7 +1,8 @@
 (ns eat.layout.admin.post
   (:require [eat.layout.admin.base :refer [admin-base]]
             [eat.layout.components :refer [set->string record->table-row yes-no-modal]]
-            [hiccup.form :as f]))
+            [hiccup.form :as f]
+            [hiccup.element :refer [link-to]]))
 
 (defn admin-post-form [post-to modal-id {:keys [id author md date preview preview_img title_img tags title url]}]
   (let [data-target (str "#" modal-id)]
@@ -47,7 +48,8 @@
                 (f/text-field {:placeholder "franctic, dragonfly, candlelight" :class "form-control"} "tags" (set->string tags))]
                [:div {:class "panel-footer"}
                 (if id [:button {:type "button" :class "btn btn-danger" :data-toggle "modal" :data-target data-target} "Delete"])
-                (f/submit-button {:class "btn btn-primary"} "Save changes")])))
+                (f/submit-button {:class "btn btn-primary pull-right"} "Save changes")
+                (link-to {:class "btn btn-default pull-right"} "/admin" "Cancel")])))
 
 (defn admin-post-main [post-to modal-id params]
   [:div {:class "row"}

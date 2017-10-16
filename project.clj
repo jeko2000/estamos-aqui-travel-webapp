@@ -1,4 +1,4 @@
-(defproject eat "0.2.16"
+(defproject eat "0.2.17"
   :description "The web application for http://estamosaquitravel.com"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [ring "1.6.2"]
