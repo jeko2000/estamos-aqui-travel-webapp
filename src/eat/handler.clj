@@ -4,7 +4,6 @@
             [eat.routes.user :refer [user-routes]]
             [compojure.core :refer [routes]]
             [compojure.route :as route]
-            [ring.middleware.reload :refer [wrap-reload]]
             [ring.middleware.params :refer [wrap-params]]
             [ring.middleware.multipart-params :refer [wrap-multipart-params]]
             [ring.middleware.flash :refer [wrap-flash]]
@@ -26,6 +25,5 @@
                  (wrap-authorization backend)
                  wrap-flash
                  wrap-session
-                 wrap-reload
                  wrap-params
                  wrap-multipart-params))
