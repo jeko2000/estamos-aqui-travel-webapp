@@ -40,7 +40,9 @@
       (f/form-to ["POST" post-to]
                  (f/submit-button {:class "btn btn-danger"} "Delete post"))]]]])
 
-;;yellow: #fbfb58
-;;pink: #f444e1
-;;blue: #1796ee
-;;black #000
+(defn image-gallery [images]
+  [:div {:class "image-gallery"}
+   (map (fn [{:keys [url image-res]}]
+          (link-to url
+                   (image {:class "img col-md-2 col-sm-3 col-xs-6"} image-res "alt"))) images)])
+
