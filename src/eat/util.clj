@@ -26,11 +26,18 @@
          (remove #(str/starts-with? (.getName %) ".")))
     '()))
 
-(defn normalize-title [s]
-  (-> s
+(defn title->url [title]
+    (-> title
       (str/lower-case)
       (str/replace #"\s+" "-")
-      (str/replace #"[^a-z0-9áéíóú-]" "")))
+      (str/replace #"á" "a")
+      (str/replace #"é" "e")
+      (str/replace #"í" "i")
+      (str/replace #"ó" "o")
+      (str/replace #"ú" "u")
+      (str/replace #"ñ" "n")      
+      (str/replace #"[^a-z0-9-]" "")
+      (->> (str "/posts/"))))
 
 (defn tag->uri [tag tags-output-prefix]
   (as-> tag $
