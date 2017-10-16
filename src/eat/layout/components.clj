@@ -21,7 +21,7 @@
 
 (defn sticky-footer-fix []
   [:script
-   "$(document).ready(function(){$('#wrapper').css({'padding-bottom':$('#footer').height()});});"])
+   "$(document).ready(function(){var pageHeight = $('body').height() + $('#header').height(),vpHeight = $(window).height();$('#footer').css('margin-top',parseInt($('#footer').css('margin-top'),10) + vpHeight - pageHeight);});"])
 
 (defn yes-no-modal [modal-id modal-text post-to]
   [:div {:class "modal fade" :id modal-id :tabindex "-1" :role "dialog" :aria-labelledby "modal"}

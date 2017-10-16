@@ -4,6 +4,9 @@
             [hiccup.page :refer [include-css include-js]]
             [hiccup.element :refer [unordered-list image link-to]]))
 
+(def github-link "https://github.com/jeko2000/estamos-aqui-travel-webapp")
+(def instagram-link "https://www.instagram.com/estamosaqui_travel")
+
 (defn head-tag [title]
   [:head
    [:meta {:charset "utf-8"}]
@@ -12,13 +15,21 @@
    [:meta {:name "description"
            :content "Estamos Aqui Travel provides well-crafted images, tips, and recommendations South American travel."}]
    [:title title]
-   (include-css "/css/bootstrap.min.css" "/css/style.css"
-                "https://fonts.googleapis.com/css?family=Roboto"
-                "/css/font-awesome-4.7.0/css/font-awesome.min.css")])
+   ;;cdn
+   (include-css "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+                "https://fonts.googleapis.com/css?family=Roboto")
+
+   ;;required locals
+   (include-css "/css/style.css"
+                "/css/font-awesome-4.7.0/css/font-awesome.min.css")
+
+   ;;local
+   ;;(include-css "/css/bootstrap.min.css")
+   ])
 
 (defn navbar []
   [:header {:class "navbar navbar-default navbar-fixed-top" :role "banner"}
-   [:div {:class "container"}
+   [:div {:class "container" :id "header"}
     [:div {:class "navbar-header"}
      [:button {:type "button" :class "navbar-toggle collapsed" :data-toggle "collapse" :data-target "#navbar" :aria-expanded "false" :aria-controls "navbar"}
       [:span {:class "sr-only"} "Toggle navigation"]
@@ -26,7 +37,7 @@
       [:span {:class "icon-bar"}]
       [:span {:class "icon-bar"}]]
      #_(link-to {:class "navbar-brand"} "/"
-              (image {:height "600" :class "center-block"} "/img/logo_large_png.png"))]
+                (image {:height "600" :class "center-block"} "/img/logo_large_png.png"))]
     
     [:div {:id "navbar" :class "collapse navbar-collapse" :role "navigation"}
      (unordered-list {:class "nav navbar-nav"}
@@ -57,7 +68,7 @@
 
 (defn footer []
   [:footer {:class "footer" :id "footer"}
-   [:div {:class "container"}
+   [:div {:class "container navbar-b"}
     [:div {:class "row"}
      [:div {:class "col-sm-3"}
       [:h2
@@ -76,13 +87,14 @@
      [:div {:class "col-sm-2"}
       [:h5 "Support"]
       (unordered-list 
-       [(link-to "/disclaimer" "Disclaimer")])]
+       [(link-to "/disclaimer" "Disclaimer")
+        (link-to github-link "Source code")])]
      [:div {:class "col-sm-2"}
       [:div {:class "social-networks"}
        (link-to {:class "instagram"}
-                "https://www.instagram.com/estamosaqui_travel"  [:i {:class "fa fa-instagram"}])
-     (link-to {:class "github"}
-                "https://github.com/jeko2000/estamos-aqui-travel-webapp" [:i {:class "fa fa-github"}])]]]]
+                instagram-link [:i {:class "fa fa-instagram"}])
+       (link-to {:class "github"}
+                github-link [:i {:class "fa fa-github"}])]]]]
    [:div {:class "footer-copyright"}
     [:p "© 2017 Copyright Estamos Aqui Travel"]]])
 
@@ -101,8 +113,8 @@
     preview]
    [:div {:class "preview-bottom"}
     #_[:div {:class "read-more"}
-     [:br]
-     (link-to  url "Read More")]]])
+       [:br]
+       (link-to  url "Read More")]]])
 
 (defn- display-post-group [layout-config [post-left & [post-mid post-right]]]
   [:div {:class "container"}
@@ -111,7 +123,7 @@
     (if post-mid (preview-post layout-config post-mid))
     (if post-right (preview-post layout-config post-right))    ]
    [:hr]])
-   
+
 (defn previews [layout-config posts heading]
   [:div {:id "post-previews"}
    [:h2 {:class "text-center text-uppercase"} heading]
@@ -121,10 +133,10 @@
      (map #(display-post-group layout-config %)
           (partition-all 3 posts))]]
    #_[:ul {:class "pager"}
-    [:li {:class "previous"}
-     [:a {:href "#"} "<- Older"]]
-    [:li {:class "next"}
-     [:a {:href "#"} "Next ->"]]]])
+      [:li {:class "previous"}
+       [:a {:href "#"} "<- Older"]]
+      [:li {:class "next"}
+       [:a {:href "#"} "Next ->"]]]])
 
 (defn base [layout-config {:keys [title pre-content content posts tags js]}]
   (let [col-width (if (or posts tags) 8 12)]
@@ -132,15 +144,15 @@
      [:html
       (head-tag title)
       [:body
-       (navbar)
-       pre-content
-       [:div {:id "wrapper"}
-        [:div {:class "content"}
+       [:div {:class "wrapper"}
+        (navbar)
+        pre-content
+        [:div {:class "content" :id "content"}
          [:div {:class "container"}
           [:div {:class "row"}
            [:div {:id "primary" :class (str "col-md-" col-width)}
             content]
-           (sidebar layout-config posts tags)]]]]
-       (footer)
-       (body-js)
-       js]])))
+           (sidebar layout-config posts tags)]]]
+        (footer)
+        (body-js)
+        js]]])))

@@ -1,5 +1,6 @@
 (ns eat.layout.user.disclaimer
-  (:require [eat.layout.user.base :refer [base]]))
+  (:require [eat.layout.user.base :refer [base]]
+            [eat.layout.components :refer [sticky-footer-fix]]))
 
 (defn privacy-content []
   [:div 
@@ -16,4 +17,5 @@
 (defn disclaimer-page [layout-config]
   (base layout-config
         {:title "Privacy Policy"
-         :content (disclaimer-main)}))
+         :content (disclaimer-main)
+         :js (sticky-footer-fix)}))
