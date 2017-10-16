@@ -12,7 +12,7 @@ body {
     line-height: 1.444;
     background-color: #ffffff;
     word-wrap: break-word;
-    margin-top:50px;
+    margin-top:72px;
 }
 a:focus, a:hover{
     text-decoration: none;
@@ -47,6 +47,10 @@ a:focus, a:hover{
     bottom: 0;
     margin: auto;
 }
+.navbar{
+    min-height:72px;
+}
+
 .navbar-brand {
   transform: translateX(-50%);
   left: 50%;
@@ -54,6 +58,10 @@ a:focus, a:hover{
   margin:0;
   padding-top:5px;
 }
+.navbar-default .navbar-nav > li > a{
+        font-size: 24px;
+}
+
 .navbar-default {
     background-color: #3c3d41;
     border-color: #3c3d41;
@@ -410,9 +418,9 @@ article {
 
 @media (min-width: 768px) {
     .navbar-nav > li > a {
-        /* (50px - line-height of 27px) / 2 = 12.5px */
-        padding-top: 12.5px;
-        padding-bottom: 12.5px;
+        /* (72px - line-height of 27px) / 2 = 22.5px */
+        padding-top: 22.5px;
+        padding-bottom: 22.5px;
         line-height: 27px;
         .post-meta-group-2{
             text-align: right;
@@ -432,7 +440,6 @@ article {
         font-size: 30px;
         line-height: 35px;
         margin-top:120px;
-        
     }
 
 }
