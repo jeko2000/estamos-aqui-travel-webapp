@@ -1,7 +1,7 @@
 (ns eat.db
   (:require [eat.db.core :refer [*db*]]
             [eat.layout.components :refer [string->set set->string]]
-            [eat.util :refer [normalize-title]]            
+            [eat.util :refer [title->url]]            
             [clojure.java.jdbc :as sql]
             [clojure.set :as set]
             [buddy.hashers :as hashers]
@@ -15,7 +15,7 @@
 (defn- serialize-post [{:keys [title md] :as post}]
   (-> post
       (assoc :content (md/to-html md))
-      (assoc :url (str "/posts/" (normalize-title title)))
+      (assoc :url (str "/posts/" (title->url title)))
       (dissoc :id)))
 
 (defn find-posts [db]
