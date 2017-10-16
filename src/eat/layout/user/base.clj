@@ -1,5 +1,6 @@
 (ns eat.layout.user.base
   (:require [eat.util :refer [tag->uri]]
+            [eat.layout.components :refer [hr]]
             [hiccup.core :refer [html]]
             [hiccup.page :refer [include-css include-js]]
             [hiccup.element :refer [unordered-list image link-to]]))
@@ -36,8 +37,8 @@
       [:span {:class "icon-bar"}]
       [:span {:class "icon-bar"}]
       [:span {:class "icon-bar"}]]
-     #_(link-to {:class "navbar-brand"} "/"
-                (image {:height "600" :class "center-block"} "/img/logo_large_png.png"))]
+     (link-to {:class "navbar-brand"} "/"
+                (image "/img/logo_small_png_tiny.png"))]
     
     [:div {:id "navbar" :class "collapse navbar-collapse" :role "navigation"}
      (unordered-list {:class "nav navbar-nav"}
@@ -121,17 +122,21 @@
    [:div {:class "row"}
     (preview-post layout-config post-left)
     (if post-mid (preview-post layout-config post-mid))
-    (if post-right (preview-post layout-config post-right))    ]
-   [:hr]])
+    (if post-right (preview-post layout-config post-right))]])
+
+
+(defn display-post-groups [layout-config posts]
+  (interpose (hr)
+             (map #(display-post-group layout-config %)
+                  (partition-all 3 posts)))) ;;Add to config
 
 (defn previews [layout-config posts heading]
   [:div {:id "post-previews"}
    [:h2 {:class "text-center text-uppercase"} heading]
-   [:hr]
+   [:br]
    [:div {:class "content"}
     [:div {:class "row display-flex"}
-     (map #(display-post-group layout-config %)
-          (partition-all 3 posts))]]
+     (display-post-groups layout-config posts)]]
    #_[:ul {:class "pager"}
       [:li {:class "previous"}
        [:a {:href "#"} "<- Older"]]

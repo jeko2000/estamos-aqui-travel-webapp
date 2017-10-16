@@ -1,5 +1,5 @@
 (ns eat.layout.components
-  (:require [hiccup.element :refer [link-to]]
+  (:require [hiccup.element :refer [link-to image]]
             [hiccup.form :as f]
             [clojure.string :as str]))
 
@@ -22,6 +22,9 @@
 (defn sticky-footer-fix []
   [:script
    "$(document).ready(function(){var pageHeight = $('body').height() + $('#header').height(),vpHeight = $(window).height();$('#footer').css('margin-top',parseInt($('#footer').css('margin-top'),10) + vpHeight - pageHeight);});"])
+
+(defn hr []
+  (image {:class "img img-responsive"} "/img/divider_small_png.png" "divider"))
 
 (defn yes-no-modal [modal-id modal-text post-to]
   [:div {:class "modal fade" :id modal-id :tabindex "-1" :role "dialog" :aria-labelledby "modal"}

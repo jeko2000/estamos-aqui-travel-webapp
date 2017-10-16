@@ -21,7 +21,7 @@
      [:div {:class "post-meta"}
       [:div {:class "col-md-12"}
        #_[:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
-        [:span {:class "glyphicon glyphicon-pencil"}] " " author]
+          [:span {:class "glyphicon glyphicon-pencil"}] " " author]
        [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
         [:span {:class "glyphicon glyphicon-time"}] " "
         date]]]]
@@ -68,7 +68,7 @@
          :pre-content (post-header curr-post)
          :content (list
                    (post-content curr-post)
-                   [:hr]
+                   [:br]
                    #_(comments)
                    #_(comment-box))
          :posts posts
