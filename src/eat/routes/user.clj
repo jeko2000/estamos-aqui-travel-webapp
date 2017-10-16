@@ -1,7 +1,8 @@
 (ns eat.routes.user
-  (:require [eat.auth :refer [handle-login handle-logout]]
+  (:require [eat.auth :as auth]
             [eat.layout :as layout]
-            [compojure.core :refer [GET POST defroutes routes]]))
+            [compojure.core :refer [GET POST defroutes routes]]
+            [ring.util.response :as response]))
 
 (defroutes home-routes
   (GET "/" [] (layout/index)))
@@ -16,9 +17,11 @@
   (GET "/disclaimer" _ (layout/disclaimer)))
 
 (defroutes logging-routes
-  (GET "/login" req (layout/login req))
-  (POST "/login" req (handle-login req))
-  (POST "/logout" req (handle-logout req)))
+  (GET "/login" req (if (auth/autheticated? req)
+                      (response/redirect "/admin")
+                      (layout/login req)))
+  (POST "/login" req (auth/handle-login req))
+  (POST "/logout" req (auth/handle-logout req)))
 
 (def user-routes
   (routes
