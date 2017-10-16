@@ -5,9 +5,7 @@
             [ring.middleware.reload :refer [wrap-reload]]))
 
 (defn -main []
-  (log/info  "Running main application")
   (start-server config handler))
 
 (defn -main-dev []
-  (println (java.util.Date.) "Running dev application")
-  (start-server (wrap-reload config) handler))
+  (start-server config (wrap-reload handler)))
