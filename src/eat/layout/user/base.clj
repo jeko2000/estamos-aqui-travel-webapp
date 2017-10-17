@@ -43,7 +43,7 @@
     [:div {:id "navbar" :class "collapse navbar-collapse" :role "navigation"}
      (unordered-list {:class "nav navbar-nav"}
                      [(link-to "/" "Home")
-                      (link-to "about-us.html" "About")])
+                      (link-to "/about-us" "About")])
      (unordered-list {:class "nav navbar-nav navbar-right"}                     
                      [(link-to "/login" [:span {:class "glyphicon glyphicon-log-in"}] " Login")])]]])
 

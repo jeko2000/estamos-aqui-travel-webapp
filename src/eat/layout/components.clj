@@ -46,3 +46,10 @@
           (link-to url
                    (image {:class "img col-md-2 col-sm-3 col-xs-6"} image-res "alt"))) images)])
 
+(defn post-header [{:keys [title_img title]}]
+  (if title_img
+    [:div {:class "post-header"}
+     (image {:class "img img-responsive"} title_img title)
+     [:div {:class "overlay overlay-lg text-center"}
+      [:div {:class "post-title-wrapper"}
+       [:h2 {:class "post-title"} title]]]]))

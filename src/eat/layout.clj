@@ -3,6 +3,7 @@
             [eat.layout.user.post :refer [post-page]]
             [eat.layout.user.tag :refer [tag-page]]
             [eat.layout.user.disclaimer :refer [disclaimer-page]]
+            [eat.layout.user.about-us :refer [about-us-page]]            
             [eat.layout.user.login :refer [login-page]]
             [eat.layout.user.error :refer [error-page]]
             [eat.config :refer [config]]
@@ -23,6 +24,9 @@
 
 (defn disclaimer []
   (disclaimer-page (:layout @config)))
+
+(defn about-us []
+  (about-us-page (:layout @config)))
 
 (defn admin []
   (admin-page (:layout @config) (map #(select-keys % [:title :date :tags :url]) (find-posts *db*))))
