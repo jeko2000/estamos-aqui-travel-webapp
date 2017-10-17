@@ -1,4 +1,4 @@
-(ns eat.layout.user.base
+p(ns eat.layout.user.base
   (:require [eat.util :refer [tag->uri]]
             [eat.layout.components :refer [hr]]
             [hiccup.core :refer [html]]
