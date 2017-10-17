@@ -5,7 +5,8 @@
             [ring.util.response :as response]))
 
 (defroutes home-routes
-  (GET "/" [] (layout/index)))
+  (GET "/" [] (layout/index))
+  (GET "/about-us" [] (layout/about-us)))
 
 (defroutes post-routes
   (GET "/posts/:id" [id] (layout/post (str "/posts/" id))))
