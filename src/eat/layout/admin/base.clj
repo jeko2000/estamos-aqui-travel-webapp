@@ -1,6 +1,7 @@
 (ns eat.layout.admin.base
   (:require [eat.layout.user.base :refer [head-tag body-js]]
-            [hiccup.element :refer [unordered-list image link-to]]
+            [eat.layout.components :refer [static-image]]
+            [hiccup.element :refer [unordered-list link-to]]
             [hiccup.core :refer [html]]
             [hiccup.form :as f]))
 
@@ -23,7 +24,7 @@
       [:span {:class "icon-bar"}]
       [:span {:class "icon-bar"}]]
      (link-to {:class "navbar-brand"} "/"
-                (image "/img/navlogo_color.png"))]
+                (static-image "img/navlogo_color.png" "navigation-logo"))]
     
     [:div {:id "navbar" :class "collapse navbar-collapse" :role "navigation"}
      (unordered-list {:class "nav navbar-nav"}

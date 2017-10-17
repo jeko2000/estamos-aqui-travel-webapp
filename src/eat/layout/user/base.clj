@@ -1,9 +1,9 @@
 (ns eat.layout.user.base
   (:require [eat.util :refer [tag->uri]]
-            [eat.layout.components :refer [hr]]
+            [eat.layout.components :refer [hr static-image]]
             [hiccup.core :refer [html]]
             [hiccup.page :refer [include-css include-js]]
-            [hiccup.element :refer [unordered-list image link-to]]))
+            [hiccup.element :refer [unordered-list link-to]]))
 
 (def github-link "https://github.com/jeko2000/estamos-aqui-travel-webapp")
 (def instagram-link "https://www.instagram.com/estamosaqui_travel")
@@ -38,7 +38,7 @@
       [:span {:class "icon-bar"}]
       [:span {:class "icon-bar"}]]
      (link-to {:class "navbar-brand"} "/"
-                (image "/img/navlogo_color.png"))]
+                (static-image "img/navlogo_color.png" "navigation-logo"))]
     
     [:div {:id "navbar" :class "collapse navbar-collapse" :role "navigation"}
      (unordered-list {:class "nav navbar-nav"}
@@ -75,7 +75,7 @@
       [:h2
        [:div {:class "logo-wrap"}
         (link-to "/"
-                 (image {:class "img img-resonsive"} "/img/logo_large_png_360.png"))]]]
+                 (static-image {:class "img img-resonsive"} "/img/logo_large_png_360.png" "large-footer-logo"))]]]
      [:div {:class "col-sm-2"}
       [:h5 "Get started"]
       (unordered-list 
@@ -108,7 +108,7 @@
   [:article {:class "preview-container col-md-4 col-sm-4 col-xs-4 text-center center-block"}
    (if preview_img
      (link-to url
-              (image {:class "img-responsive img-preview"} preview_img)))
+              (static-image {:class "img-responsive img-preview"} preview_img "preview-img")))
    [:h3 {:class "preview-title"} (link-to url title)]
    [:p {:class "preview-desc"}
     preview]

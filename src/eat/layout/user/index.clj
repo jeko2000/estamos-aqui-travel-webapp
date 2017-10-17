@@ -1,8 +1,8 @@
 (ns eat.layout.user.index
   (:require [eat.layout.user.base :refer [base previews]]
             [eat.api :refer [instagram-get-recent-images]]
-            [eat.layout.components :refer [image-gallery]]
-            [hiccup.element :refer [image link-to]]))
+            [eat.layout.components :refer [static-image image-gallery]]
+            [hiccup.element :refer [link-to]]))
 
 (defn carousel []
   [:div {:id "sub-header"}
@@ -16,20 +16,20 @@
     
     [:div {:class "carousel-inner" :role "listbox"}
      [:div {:class "overlay overlay-sm"}
-      (image {:class "img img-responsive"} "/img/logo_large_png.png")]
+      (static-image {:class "img img-responsive"} "img/logo_large_png.png" "large-logo")]
      
      [:div {:class "item active"}
-      (image {:class "img img-responsive"} "/img/carousel_1.jpg" "carousel_1")]    
+      (static-image {:class "img img-responsive"} "img/carousel_1.jpg" "carousel_1")]    
      [:div {:class "item"}
-      (image {:class "img img-responsive"} "/img/carousel_2.jpg" "carousel_2")]
+      (static-image {:class "img img-responsive"} "img/carousel_2.jpg" "carousel_2")]
      [:div {:class "item"}
-      (image {:class "img img-responsive"} "/img/carousel_3.jpg" "carousel_3")]    
+      (static-image {:class "img img-responsive"} "img/carousel_3.jpg" "carousel_3")]    
 
      [:div {:class "item"}
-      (image {:class "img img-responsive"} "/img/carousel_4.jpg" "carousel_4")]    
+      (static-image {:class "img img-responsive"} "img/carousel_4.jpg" "carousel_4")]    
 
      [:div {:class "item"}
-      (image {:class "img img-responsive"} "/img/carousel_5.jpg" "carousel_5")]    ]
+      (static-image {:class "img img-responsive"} "img/carousel_5.jpg" "carousel_5")]    ]
 
     [:a {:class "left carousel-control" :href "#carousel-header" :role "button" :data-slide "prev"}
      [:span {:class "glyphicon glyphicon-chevron-left" :aria-hidden "true"}]

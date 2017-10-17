@@ -12,4 +12,4 @@
                  [cheshire "5.8.0"]]
   :profiles {:dev {:main eat.core/-main-dev}}
   :main eat.core
-  :aot [eat.core])
+  :aout eat.core)

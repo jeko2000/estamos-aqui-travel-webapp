@@ -5,14 +5,15 @@
   (if-let [env-val (System/getenv env)]
     {(string->keyword env) env-val}))
 
-(def default-config
-  (delay
-   (if-let [conf (get-resource "default_config.edn")]
-     (-> conf slurp read-string)
-     (println "WARNING: failed to find default_config.edn"))))
+(defn read-external-config-file [filepath]
+  (if filepath
+    (let [file (java.io.File. filepath)]
+      (if (.exists file)
+        (-> file slurp read-string)))))
 
 (def config
   (delay
-   (merge @default-config
+   (merge (-> "default_config.edn" get-resource slurp read-string)
+          (-> "CONFIG" (System/getenv) read-external-config-file)
           (env->map "DATABASE_URL")
           (env->map "INSTAGRAM_ACCESS_TOKEN"))))

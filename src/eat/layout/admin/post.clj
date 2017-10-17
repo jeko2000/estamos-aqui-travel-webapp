@@ -37,11 +37,11 @@
 
                [:div {:class "form-group"}
                 (f/label "preview_img" "Post Preview Image")
-                (f/text-field {:placeholder "/img/my-favorite-bench.jpg" :class "form-control"} "preview_img" preview_img)]
+                (f/text-field {:placeholder "img/my-favorite-bench.jpg" :class "form-control"} "preview_img" preview_img)]
 
                [:div {:class "form-group"}
                 (f/label "title_img" "Post Title Image")
-                (f/text-field {:placeholder "/img/my-favorite-bench.jpg" :class "form-control"} "title_img" title_img)]
+                (f/text-field {:placeholder "img/my-favorite-bench.jpg" :class "form-control"} "title_img" title_img)]
 
                [:div {:class "form-group"}
                 (f/label "tags" "Meta Tags")
