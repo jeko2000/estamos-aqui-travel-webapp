@@ -14,4 +14,5 @@
 (def config
   (delay
    (merge @default-config
-          (env->map "DATABASE_URL"))))
+          (env->map "DATABASE_URL")
+          (env->map "INSTAGRAM_ACCESS_TOKEN"))))

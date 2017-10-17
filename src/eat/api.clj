@@ -1,13 +1,9 @@
 (ns eat.api
-  (:require [clj-http.client :as client]))
+  (:require [eat.config :refer [config]]
+            [clj-http.client :as client]))
 
 (def ^:dynamic *instagram-access-token*
-  (-> "profiles.clj"
-      slurp
-      read-string
-      :profiles/dev
-      :env
-      :instagram-access-token))
+  (-> (:instagram-access-token @config)))
 
 (defn- get-recent-media-vector [token count]
   (-> "https://api.instagram.com/v1/users/self/media/recent/?access_token=%s&count=%s"

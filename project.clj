@@ -11,4 +11,5 @@
                  [clj-http "3.7.0"]
                  [cheshire "5.8.0"]]
   :profiles {:dev {:main eat.core/-main-dev}}
-  :main eat.core)
+  :main eat.core
+  :aot [eat.core])

@@ -10,7 +10,7 @@
 
 (defn get-resource [resource]
   "Return file object from given RESOURCE"
-  (-> resource io/resource io/file))
+  (-> resource io/resource))
 
 (defn read-resource [resource]
   "Return string representing contents from RESOURCE. If RESOURCE cannot be found, return nil"
