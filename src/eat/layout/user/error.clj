@@ -1,5 +1,6 @@
 (ns eat.layout.user.error
   (:require [eat.layout.user.base :refer [base]]
+            [eat.layout.components :refer [sticky-footer-fix]]
             [hiccup.element :refer [link-to]]))
 
 (defn error-main [error status]
@@ -14,4 +15,5 @@
         {:title "Page not found"
          :content (error-main error status)
          :posts posts
-         :tags tags}))
+         :tags tags
+         :js (sticky-footer-fix)}))
