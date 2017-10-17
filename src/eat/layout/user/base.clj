@@ -132,7 +132,7 @@
 
 (defn previews [layout-config posts heading]
   [:div {:id "post-previews"}
-   [:h2 {:class "text-center text-uppercase"} heading]
+   [:h2 {:class "text-center text-uppercase subtitle"} heading]
    [:br]
    [:div {:class "content"}
     [:div {:class "row display-flex"}

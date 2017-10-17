@@ -156,7 +156,6 @@ a:focus, a:hover{
     color: #1796ee;    
 }
 
-
 .list-group-item {
     position: relative;
     display: block;
@@ -226,7 +225,7 @@ a:focus, a:hover{
     margin-left:auto;
 }
 
-#post-previews h2{
+.subtitle{
     font-size: 25px;
     line-height: 24px;
     text-transform: uppercase;
@@ -285,6 +284,10 @@ article {
 #comments li {
     list-style: none;
 }
+.image-gallery img{
+    padding: 5px;
+}
+
 /*****************************************/
 /* .footer {                             */
 /*     position: absolute;               */
@@ -300,7 +303,9 @@ article {
     background-color: #3c3d41;
     color: white;
     padding-top: 20px;
+    margin-top: 20px;
 }
+
 #footer .footer-copyright {
     background-color: #333333;
     padding-top: 3px;
