@@ -4,7 +4,7 @@
             [hiccup.element :refer [unordered-list link-to]]))
 
 (defn instagram-boost []
-  [:h3 "Did you find this information useful? Leave us a comment and follow us on"
+  [:h3 "Did you find this information useful? Leave us a comment and follow us on "
    (link-to "https://www.instagram.com/estamosaqui_travel/" "Instagram") " for announcements on upcoming posts!"])
 
 (defn post-content [{:keys [url title tags date content author] :as post}] ;;Best so far
