@@ -16,6 +16,8 @@
    [:meta {:name "description"
            :content "Estamos Aqui Travel provides well-crafted images, tips, and recommendations South American travel."}]
    [:title title]
+   [:link {:rel "shortcut icon" :type "image/png" :href "/static/img/favicon.png"}]
+   <link rel="shortcut icon" href="/images/specialicon.ico" type="image/x-icon" />
    ;;cdn
    (include-css "https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
                 "https://fonts.googleapis.com/css?family=Roboto")
