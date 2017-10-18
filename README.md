@@ -9,6 +9,8 @@ This project leverages from the following (and excellent) clojure libraries:
 * [Hiccup](https://github.com/weavejester/hiccup) for HTML templating
 * [Cegdown](https://github.com/Raynes/cegdown) for Markdown parser
 * [Buddy](https://github.com/funcool/buddy) for Authentication & password hashing
+* [Clj-http](https://github.com/dakrone/clj-http) for HTTP queries
+* [Cheshire](https://github.com/dakrone/cheshire) for JSON (en|de)coding
 
 ## License
 Distributed under the [Eclipse Public License - v 1.0](https://www.eclipse.org/legal/epl-v10.html).
