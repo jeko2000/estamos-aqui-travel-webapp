@@ -13,7 +13,7 @@
           (vals params)))
 
 (defn- save-upload! [{:keys [tempfile filename] :as file}]
-  (copy-file! tempfile "public/img" filename))
+  (copy-file! tempfile "/var/www/static/img/" filename))
 
 (defn- handle-image-uploads [{:strs [file]}]
   (if (and (> (:size file) 0)
