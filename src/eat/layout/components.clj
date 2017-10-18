@@ -1,7 +1,7 @@
 (ns eat.layout.components
   (:require [eat.config :refer [config]]
             [eat.util :refer [build-path]]
-            [hiccup.element :refer [link-to]]
+            [hiccup.element :refer [link-to image]]
             [hiccup.form :as f]
             [clojure.string :as str]))
 
@@ -34,11 +34,11 @@
   ([src alt]
    (static-image nil src alt)))
 
-(defn image-gallery [images]
+(defn external-image-gallery [images]
   [:div {:class "image-gallery"}
    (map (fn [{:keys [url image-res]}]
           (link-to url
-                   (static-image {:class "img col-md-2 col-sm-3 col-xs-6"} image-res "instagram-pic"))) images)])
+                   (image {:class "img col-md-2 col-sm-3 col-xs-6"} image-res "instagram-pic"))) images)])
 
 (defn post-header [{:keys [title_img title]}]
   (if title_img

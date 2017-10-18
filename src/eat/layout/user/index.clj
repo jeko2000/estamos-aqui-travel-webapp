@@ -1,7 +1,7 @@
 (ns eat.layout.user.index
   (:require [eat.layout.user.base :refer [base previews]]
             [eat.api :refer [instagram-get-recent-images]]
-            [eat.layout.components :refer [static-image image-gallery]]
+            [eat.layout.components :refer [static-image external-image-gallery]]
             [hiccup.element :refer [link-to]]))
 
 (defn carousel []
@@ -57,7 +57,7 @@
      [:h2 {:class "text-center text-uppercase subtitle"} "Follow us on Instagram"]
      [:br]
      [:div {:class "gallery-body"}
-      (image-gallery instagram-images)]]))
+      (external-image-gallery instagram-images)]]))
 
 (defn index-page [layout-config posts]
   (base layout-config
