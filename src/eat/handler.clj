@@ -15,7 +15,7 @@
   (routes
    user-routes
    admin-routes
-   (route/resources "/")
+   #_(route/resources "/")
    (route/not-found (layout/error {:error "Not Found"
                                    :status 404}))))
 

@@ -1,6 +1,6 @@
 (ns eat.layout.user.base
   (:require [eat.util :refer [tag->uri]]
-            [eat.layout.components :refer [hr static-image]]
+            [eat.layout.components :refer [hr static-image string->static-uri]]
             [hiccup.core :refer [html]]
             [hiccup.page :refer [include-css include-js]]
             [hiccup.element :refer [unordered-list link-to]]))
@@ -21,11 +21,11 @@
                 "https://fonts.googleapis.com/css?family=Roboto")
 
    ;;required locals
-   (include-css "/css/style.css"
-                "/css/font-awesome-4.7.0/css/font-awesome.min.css")
+   (include-css (string->static-uri "/css/style.css")
+                (string->static-uri "/css/font-awesome-4.7.0/css/font-awesome.min.css"))
 
    ;;local
-   ;;(include-css "/css/bootstrap.min.css")
+   ;;(include-css (string->static-uri "/css/bootstrap.min.css"))
    ])
 
 (defn navbar []
@@ -102,7 +102,7 @@
 (defn body-js []
   [:div
    (include-js "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"
-               "/js/bootstrap.min.js")])
+               (string->static-uri "/js/bootstrap.min.js"))])
 
 (defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview_img date author]}]
   [:article {:class "preview-container col-md-4 col-sm-4 col-xs-4 text-center center-block"}
