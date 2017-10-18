@@ -26,7 +26,7 @@
   (disclaimer-page (:layout @config)))
 
 (defn about-us []
-  (about-us-page (:layout @config)))
+  (about-us-page (:layout @config) (find-posts *db*)))
 
 (defn admin []
   (admin-page (:layout @config) (map #(select-keys % [:title :date :tags :url]) (find-posts *db*))))
