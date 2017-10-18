@@ -15,7 +15,7 @@
 (defn- serialize-post [{:keys [title md] :as post}]
   (-> post
       (assoc :content (md/to-html md))
-      (assoc :url (str "/posts/" (title->url title)))
+      (assoc :url (title->url title))
       (dissoc :id)))
 
 (defn find-posts [db]
