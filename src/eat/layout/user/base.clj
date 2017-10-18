@@ -105,7 +105,7 @@
                (string->static-uri "/js/bootstrap.min.js"))])
 
 (defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview_img date author]}]
-  [:article {:class "preview-container col-md-4 col-sm-4 col-xs-4 text-center center-block"}
+  [:article {:class "preview-container col-md-4 col-sm-6 col-xs-12 text-center center-block"}
    (if preview_img
      (link-to url
               (static-image {:class "img-responsive img-preview"} preview_img "preview-img")))
@@ -117,7 +117,7 @@
        [:br]
        (link-to  url "Read More")]]])
 
-(defn- display-post-group [layout-config [post-left & [post-mid post-right]]]
+#_(defn- display-post-group [layout-config [post-left & [post-mid post-right]]]
   [:div {:class "container"}
    [:div {:class "row"}
     (preview-post layout-config post-left)
@@ -125,7 +125,7 @@
     (if post-right (preview-post layout-config post-right))]])
 
 
-(defn display-post-groups [layout-config posts]
+#_(defn display-post-groups [layout-config posts]
   (interpose (hr)
              (map #(display-post-group layout-config %)
                   (partition-all 3 posts)))) ;;Add to config
@@ -136,7 +136,7 @@
    [:br]
    [:div {:class "content"}
     [:div {:class "row display-flex"}
-     (display-post-groups layout-config posts)]]
+     (map #(preview-post layout-config %) posts)]]
    #_[:ul {:class "pager"}
       [:li {:class "previous"}
        [:a {:href "#"} "<- Older"]]
