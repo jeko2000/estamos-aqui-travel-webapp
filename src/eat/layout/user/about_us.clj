@@ -1,6 +1,7 @@
 (ns eat.layout.user.about-us
   (:require [eat.layout.user.base :refer [base]]
-            [eat.layout.components :refer [post-header static-image]]))
+            [eat.layout.components :refer [post-header static-image]]
+            [eat.db :refer [find-tags]]))
 
 (defn about-us-content []
   [:div {:id "about-us-content"}
@@ -33,8 +34,10 @@
   [:div {:class "main"}
    (about-us-content)])
 
-(defn about-us-page [layout-config]
+(defn about-us-page [layout-config posts]
   (base layout-config
         {:title "About Us"
          :pre-content (post-header {:title_img "/img/aboutus_title.jpg" :title "About us"})
-         :content (about-us-main)}))
+         :content (about-us-main)
+         :posts posts
+         :tags (find-tags posts)}))
