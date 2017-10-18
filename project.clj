@@ -10,6 +10,6 @@
                  [org.postgresql/postgresql "42.1.4"]
                  [clj-http "3.7.0"]
                  [cheshire "5.8.0"]]
-  :profiles {:dev {:main eat.core/-main-dev}
+  :profiles {:dev {:main eat.dev}
              :uberjar {:aot :all}}
   :main eat.core)
