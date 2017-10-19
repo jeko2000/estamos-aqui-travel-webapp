@@ -15,7 +15,7 @@
 (defn- save-upload! [{:keys [tempfile filename] :as file}]
   (copy-file! tempfile "/var/www/static/img/" filename))
 
-(defn- handle-image-uploads [{:strs [file]}]
+(defn- handle-image-uploads [{:keys [file]}]
   (if (and (> (:size file) 0)
            (not (empty? (:filename file))))
     (let [uploads (if (vector? file) file (vector file))]

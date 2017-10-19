@@ -51,4 +51,5 @@
       keyword))
 
 (defn copy-file! [file path file-name]
+  (println "PATH" (build-path path file-name))
   (io/copy file (io/file (build-path path file-name))))

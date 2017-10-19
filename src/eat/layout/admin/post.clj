@@ -1,13 +1,14 @@
 (ns eat.layout.admin.post
   (:require [eat.layout.admin.base :refer [admin-base]]
             [eat.layout.components :refer [set->string record->table-row yes-no-modal]]
+            [ring.util.anti-forgery :refer [anti-forgery-field]]
             [hiccup.form :as f]
             [hiccup.element :refer [link-to]]))
 
 (defn admin-post-form [post-to modal-id {:keys [id author md date preview preview_img title_img tags title url]}]
   (let [data-target (str "#" modal-id)]
     (f/form-to {:enctype "multipart/form-data"} ["POST" post-to]
-
+               (anti-forgery-field)
                [:div {:class "form-group"}
                 (f/label "images" "Upload Images")
                 (f/file-upload {:multiple "true" :accept="image/*"} "file")]

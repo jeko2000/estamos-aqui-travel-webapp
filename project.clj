@@ -2,6 +2,7 @@
   :description "The web application for http://estamosaquitravel.com"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [ring "1.6.2"]
+                 [ring/ring-defaults "0.3.1"]                 
                  [compojure "1.6.0"]
                  [hiccup "1.0.5"]
                  [me.raynes/cegdown "0.1.1"]

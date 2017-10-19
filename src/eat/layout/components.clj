@@ -1,6 +1,7 @@
 (ns eat.layout.components
   (:require [eat.config :refer [config]]
             [eat.util :refer [build-path]]
+            [ring.util.anti-forgery :refer [anti-forgery-field]]
             [hiccup.element :refer [link-to image]]
             [hiccup.form :as f]
             [clojure.string :as str]))
@@ -67,4 +68,5 @@
       [:p modal-text]]
      [:div {:class "modal-footer"}
       (f/form-to ["POST" post-to]
+                 (anti-forgery-field)
                  (f/submit-button {:class "btn btn-danger"} "Delete post"))]]]])

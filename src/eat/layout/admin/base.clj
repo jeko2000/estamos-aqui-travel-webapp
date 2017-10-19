@@ -1,6 +1,7 @@
 (ns eat.layout.admin.base
   (:require [eat.layout.user.base :refer [head-tag body-js]]
             [eat.layout.components :refer [static-image]]
+            [ring.util.anti-forgery :refer [anti-forgery-field]]
             [hiccup.element :refer [unordered-list link-to]]
             [hiccup.core :refer [html]]
             [hiccup.form :as f]))
@@ -31,6 +32,7 @@
                      [(link-to "/admin" "Admin")])
      (unordered-list {:class "nav navbar-nav navbar-right"}
                      [(f/form-to ["POST" "/logout"]
+                                 (anti-forgery-field)
                                  (f/submit-button {:class "btn btn-primary"} "Logout"))])]]])
 
 (defn admin-header [create-content?]
