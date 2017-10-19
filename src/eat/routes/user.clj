@@ -4,9 +4,15 @@
             [compojure.core :refer [GET POST defroutes routes]]
             [ring.util.response :as response]))
 
+(defn handle-search [{:keys [query-params]}]
+  (if-let [unsafe-query (get query-params "q")]
+    (layout/user-search unsafe-query)
+    (response/redirect "/")))
+
 (defroutes home-routes
   (GET "/" [] (layout/index))
-  (GET "/about-us" [] (layout/about-us)))
+  (GET "/about-us" [] (layout/about-us))
+  (GET "/search" req (handle-search req)))
 
 (defroutes post-routes
   (GET "/posts/:id" [id] (layout/post (str "/posts/" id))))
