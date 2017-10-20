@@ -15,12 +15,15 @@
 (defn- save-upload! [{:keys [tempfile filename] :as file}]
   (copy-file! tempfile "/var/www/static/img/" filename))
 
+(defn- handle-image-upload [{:keys [size filename] :as file-obj}]
+  (if (and (> size 0)
+           (not (empty? filename)))
+    (save-upload! file-obj)))
+
 (defn- handle-image-uploads [{:keys [file]}]
-  (if (and (> (:size file) 0)
-           (not (empty? (:filename file))))
-    (let [uploads (if (vector? file) file (vector file))]
-      (doseq [upload uploads]
-        (save-upload! upload)))))
+  (let [uploads (if (vector? file) file (vector file))]
+    (doseq [upload uploads]
+      (handle-image-upload upload))))
 
 (defn handle-new-post! [{:keys [params]}]
   (insert-post! *db* (keywordize-map params))
