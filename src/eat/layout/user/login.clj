@@ -1,10 +1,12 @@
 (ns eat.layout.user.login
   (:require [eat.layout.user.base :refer [base]]
             [eat.layout.components :refer [sticky-footer-fix]]
+            [ring.util.anti-forgery :refer [anti-forgery-field]]
             [hiccup.form :as f]))
 
 (defn login-form []
   (f/form-to {:id "login" :class "well"} ["POST" "/login"]
+             (anti-forgery-field)
              [:div {:class "form-group"}
               (f/label "username" "User Name")
               (f/text-field {:class "form-control" :placeholder "Enter username"} "username")]

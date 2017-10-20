@@ -4,10 +4,7 @@
             [eat.routes.user :refer [user-routes]]
             [compojure.core :refer [routes]]
             [compojure.route :as route]
-            [ring.middleware.params :refer [wrap-params]]
-            [ring.middleware.multipart-params :refer [wrap-multipart-params]]
-            [ring.middleware.flash :refer [wrap-flash]]
-            [ring.middleware.session :refer [wrap-session]]
+            [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
             [buddy.auth.backends.session :refer [session-backend]]))
 
@@ -23,7 +20,4 @@
 (def handler (-> #'app-routes
                  (wrap-authentication backend)
                  (wrap-authorization backend)
-                 wrap-flash
-                 wrap-session
-                 wrap-params
-                 wrap-multipart-params))
+                 (wrap-defaults site-defaults)))
