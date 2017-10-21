@@ -7,7 +7,7 @@
             [ring.util.response :as response]))
 
 (defn handle-search [{:keys [params]}]
-  (let [safe-query (-> params (get "q") escape-html)]
+  (let [safe-query (-> params :q escape-html)]
     (if (clojure.string/blank? safe-query)
       (response/redirect "/")
       (let [result-posts (search safe-query)]
