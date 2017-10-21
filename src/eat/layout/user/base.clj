@@ -3,6 +3,7 @@
             [eat.layout.components :refer [hr static-image string->static-uri]]
             [hiccup.core :refer [html]]
             [hiccup.page :refer [include-css include-js]]
+            [hiccup.form :as f]
             [hiccup.element :refer [unordered-list link-to]]))
 
 (def github-link "https://github.com/jeko2000/estamos-aqui-travel-webapp")
@@ -29,9 +30,17 @@
    ;;(include-css (string->static-uri "/css/bootstrap.min.css"))
    ])
 
+
+(defn search-box []
+  (f/form-to {:class "navbar-form"} ["GET" "/search"]
+             [:div {:class "input-group" :id "search-input-group"}
+              (f/text-field {:class "form-control" :placeholder "Search"} "q" "")
+              [:span {:class "glyphicon glyphicon-search form-control-feedback" :aria-hidden true}]]))
+
 (defn navbar []
   [:header {:class "navbar navbar-default navbar-fixed-top" :role "banner"}
-   [:div {:class "container" :id "header"}
+   [:div {:class "container"
+          :id "header"}
     [:div {:class "navbar-header"}
      [:button {:type "button" :class "navbar-toggle collapsed" :data-toggle "collapse" :data-target "#navbar" :aria-expanded "false" :aria-controls "navbar"}
       [:span {:class "sr-only"} "Toggle navigation"]
@@ -46,7 +55,8 @@
                      [(link-to "/" "Home")
                       (link-to "/about-us" "About")])
      (unordered-list {:class "nav navbar-nav navbar-right"}                     
-                     [(link-to "/login" [:span {:class "glyphicon glyphicon-log-in"}] " Login")])]]])
+                     [#_(link-to "/login" [:span {:class "glyphicon glyphicon-log-in"}] " Login")
+                      (search-box)])]]])
 
 (defn sidebar [{:keys [sidebar-latest-post-count tags-output-prefix]} posts tags]
   (let [latest (take sidebar-latest-post-count posts)]

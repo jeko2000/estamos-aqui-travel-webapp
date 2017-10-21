@@ -10,7 +10,8 @@
                  [org.clojure/java.jdbc "0.7.3"]                 
                  [org.postgresql/postgresql "42.1.4"]
                  [clj-http "3.7.0"]
-                 [cheshire "5.8.0"]]
+                 [cheshire "5.8.0"]
+                 [clucy "0.4.0"]]
   :profiles {:dev {:main eat.dev}
              :uberjar {:aot :all}}
   :main eat.core)

@@ -1,12 +1,24 @@
 (ns eat.routes.user
   (:require [eat.auth :as auth]
             [eat.layout :as layout]
+            [eat.search :refer [search]]            
             [compojure.core :refer [GET POST defroutes routes]]
+            [hiccup.util :refer [escape-html]]            
             [ring.util.response :as response]))
+
+(defn handle-search [{:keys [params]}]
+  (let [safe-query (-> params (get "q") escape-html)]
+    (if (clojure.string/blank? safe-query)
+      (response/redirect "/")
+      (let [result-posts (search safe-query)]
+        (if (empty? result-posts)
+          (layout/user-search-no-results safe-query)
+          (layout/user-search safe-query result-posts))))))
 
 (defroutes home-routes
   (GET "/" [] (layout/index))
-  (GET "/about-us" [] (layout/about-us)))
+  (GET "/about-us" [] (layout/about-us))
+  (GET "/search" req (handle-search req)))
 
 (defroutes post-routes
   (GET "/posts/:id" [id] (layout/post (str "/posts/" id))))
