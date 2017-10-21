@@ -39,7 +39,6 @@
       pos?))
 
 (defn migrate! [db-spec]
-  (if-not (migrated? db-spec)
-    (sql/with-db-transaction [t-conn db-spec]
-      (doseq [migration migrations]
-        (migration t-conn)))))
+  (sql/with-db-transaction [t-conn db-spec]
+    (doseq [migration migrations]
+      (migration t-conn))))
