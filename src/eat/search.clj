@@ -26,6 +26,10 @@
   (doseq [post posts]
     (index-post! post)))
 
+(defn flush-and-index-all-posts! []
+  (reset-index!)
+  (index-posts! (find-posts *db*)))
+
 (defn unindex-post! [{:keys [title]}]
   (clucy/search-and-delete *index*
                            (str "title:" title)))
