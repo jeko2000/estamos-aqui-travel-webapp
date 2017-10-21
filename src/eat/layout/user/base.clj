@@ -30,14 +30,12 @@
    ;;(include-css (string->static-uri "/css/bootstrap.min.css"))
    ])
 
-(defn search-box []
-  [:form {:class "navbar-form navbar-left"}
-   [:div {:class "input-group"}
-    [:input {:class "form-control", :placeholder "Search", :type "text"}]
-    [:div {:class "input-group-btn"}
-     [:button {:class "btn btn-default", :type "submit"}
-      [:i {:class "glyphicon glyphicon-search"}]]]]] )
 
+(defn search-box []
+  (f/form-to {:class "navbar-form"} ["GET" "/search"]
+             [:div {:class "input-group" :id "search-input-group"}
+              (f/text-field {:class "form-control" :placeholder "Search"} "q" "")
+              [:span {:class "glyphicon glyphicon-search form-control-feedback" :aria-hidden true}]]))
 
 (defn navbar []
   [:header {:class "navbar navbar-default navbar-fixed-top" :role "banner"}
