@@ -32,7 +32,7 @@
 
 
 (defn search-box []
-  (f/form-to {:class "navbar-form"} ["GET" "/search"]
+  (f/form-to {:class "navbar-form"} [:get "/search"]
              [:div {:class "input-group" :id "search-input-group"}
               (f/text-field {:class "form-control" :placeholder "Search"} "q" "")
               [:span {:class "glyphicon glyphicon-search form-control-feedback" :aria-hidden true}]]))
