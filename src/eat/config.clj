@@ -1,8 +1,5 @@
 (ns eat.config
-  (:require [eat.util :refer [get-resource string->keyword]]
-            [eat.db.migrate :refer [migrated? migrate!]]
-            [eat.db.core :refer [*db*]]
-            [eat.search :refer [flush-and-index-all-posts!]]))
+  (:require [eat.util :refer [get-resource string->keyword]]))
 
 (defn- env->map [env]
   (if-let [env-val (System/getenv env)]
@@ -20,7 +17,3 @@
           (-> "CONFIG" (System/getenv) read-external-config-file)
           (env->map "DATABASE_URL")
           (env->map "INSTAGRAM_ACCESS_TOKEN"))))
-
-(defn init []
-  (or (migrated? *db*) (migrate! *db*))
-  (flush-and-index-all-posts!))
