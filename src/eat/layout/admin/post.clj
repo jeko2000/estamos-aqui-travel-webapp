@@ -7,7 +7,7 @@
 
 (defn admin-post-form [post-to modal-id {:keys [id author md date preview preview_img title_img tags title url]}]
   (let [data-target (str "#" modal-id)]
-    (f/form-to {:enctype "multipart/form-data"} ["POST" post-to]
+    (f/form-to {:enctype "multipart/form-data"} [:post post-to]
                (anti-forgery-field)
                [:div {:class "form-group"}
                 (f/label "images" "Upload Images")

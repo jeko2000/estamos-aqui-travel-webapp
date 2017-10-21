@@ -5,7 +5,7 @@
             [hiccup.form :as f]))
 
 (defn login-form []
-  (f/form-to {:id "login" :class "well"} ["POST" "/login"]
+  (f/form-to {:id "login" :class "well"} [:post "/login"]
              (anti-forgery-field)
              [:div {:class "form-group"}
               (f/label "username" "User Name")

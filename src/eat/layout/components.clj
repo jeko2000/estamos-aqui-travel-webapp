@@ -67,6 +67,6 @@
      [:div {:class "modal-body"}
       [:p modal-text]]
      [:div {:class "modal-footer"}
-      (f/form-to ["POST" post-to]
+      (f/form-to [:post post-to]
                  (anti-forgery-field)
                  (f/submit-button {:class "btn btn-danger"} "Delete post"))]]]])
