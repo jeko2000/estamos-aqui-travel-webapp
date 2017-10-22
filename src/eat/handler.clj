@@ -13,11 +13,11 @@
    user-routes
    admin-routes
    #_(route/resources "/")
-   (route/not-found (layout/error {:error "Not Found"
+   (route/not-found (layout/error {:error-title "Page Not Found"
                                    :status 404}))))
 
 (def backend (session-backend))
 (def handler (-> #'app-routes
+                 (wrap-defaults site-defaults)                 
                  (wrap-authentication backend)
-                 (wrap-authorization backend)
-                 (wrap-defaults site-defaults)))
+                 (wrap-authorization backend)))
