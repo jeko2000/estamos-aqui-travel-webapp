@@ -69,3 +69,11 @@
       (f/form-to [:post post-to]
                  (anti-forgery-field)
                  (f/submit-button {:class "btn btn-danger"} "Delete post"))]]]])
+
+(defn pager [{:keys [previous-anchor previous-link
+                     next-anchor next-link]}]
+  [:ul {:class "pager"}
+   (if previous-link
+     [:li {:class "previous"} (link-to previous-link previous-anchor)])
+   (if next-link
+     [:li {:class "next"} (link-to next-link next-anchor)])])

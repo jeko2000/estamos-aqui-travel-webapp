@@ -17,7 +17,7 @@
   (index-page (:layout @config) (find-posts *db*)))
 
 (defn post [url]
-  (let [post-obj (find-post-by-url *db* url)]
+  (let [post-obj (find-post-by-url-with-pager-links *db* url)]
     (post-page (:layout @config) post-obj (find-posts *db*))))
 
 (defn tag [target-tag]
