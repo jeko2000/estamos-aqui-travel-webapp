@@ -10,7 +10,7 @@
             [eat.layout.admin.index :refer [admin-page]]
             [eat.layout.admin.post :refer [admin-post-page]]
             [eat.config :refer [config]]
-            [eat.db :refer [find-post find-posts find-posts-with-tag find-post-by-url find-tags]]
+            [eat.db :refer [find-post find-posts find-posts-with-tag find-post-by-url-with-pager-links find-tags]]
             [eat.db.core :refer [*db*]]))
 
 (defn index []
@@ -39,7 +39,7 @@
   (admin-page (:layout @config) (map #(select-keys % [:title :date :tags :url]) (find-posts *db*))))
 
 (defn edit-post [url]
-  (let [post-obj (find-post-by-url *db* url)]
+  (let [post-obj (find-post-by-url-with-pager-links *db* url)]
     (admin-post-page (:layout @config) "/admin/edit-post" post-obj)))
 
 (defn new-post [req]
