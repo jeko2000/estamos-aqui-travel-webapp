@@ -1,8 +1,8 @@
 (ns eat.init
-  (:require [eat.db.migrate :refer [migrated? migrate!]]
+  (:require [eat.db.migrate :refer [migrate!-if-needed]]
             [eat.db.core :refer [*db*]]
             [eat.search :refer [flush-and-index-all-posts!]]))
 
 (defn init []
-  (or (migrated? *db*) (migrate! *db*))
+  (migrate!-if-needed *db*)
   (flush-and-index-all-posts!))

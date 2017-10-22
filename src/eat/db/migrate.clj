@@ -42,3 +42,7 @@
   (sql/with-db-transaction [t-conn db-spec]
     (doseq [migration migrations]
       (migration t-conn))))
+
+(defn migrate!-if-needed [db-spec]
+  (or (migrated? db-spec)
+      (migrate! db-spec)))
