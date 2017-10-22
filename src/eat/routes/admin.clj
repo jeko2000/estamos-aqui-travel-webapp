@@ -8,6 +8,14 @@
             [ring.util.response :as response]
             [buddy.auth.accessrules :refer [restrict]]))
 
+(defn unauthorized-handler [error-title]
+  (let [status 401]
+    (fn [req val]
+      {:status status
+       :headers {"Content-Type" "text/html"}
+       :body (layout/error {:status 401
+                            :error-title error-title})})))
+
 (defn keywordize-map [params]
   (zipmap (map keyword (keys params))
           (vals params)))
@@ -53,4 +61,5 @@
 
 (def admin-routes
   (context "/admin" []
-           (restrict restricted-routes {:handler authenticated?})))
+           (restrict restricted-routes {:handler authenticated?
+                                        :reject-handler (unauthorized-handler "Unauthorized")})))
