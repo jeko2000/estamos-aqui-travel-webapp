@@ -49,12 +49,12 @@
       [:span {:class "icon-bar"}]]
      (link-to {:class "navbar-brand"} "/"
                 (static-image "img/navlogo_color.png" "navigation-logo"))]
-    
+
     [:div {:id "navbar" :class "collapse navbar-collapse" :role "navigation"}
      (unordered-list {:class "nav navbar-nav"}
                      [(link-to "/" "Home")
                       (link-to "/about-us" "About")])
-     (unordered-list {:class "nav navbar-nav navbar-right"}                     
+     (unordered-list {:class "nav navbar-nav navbar-right"}
                      [#_(link-to "/login" [:span {:class "glyphicon glyphicon-log-in"}] " Login")
                       (search-box)])]]])
 
@@ -89,16 +89,16 @@
                  (static-image {:class "img img-resonsive"} "/img/logo_large_png_360.png" "large-footer-logo"))]]]
      [:div {:class "col-sm-2"}
       [:h5 "Get started"]
-      (unordered-list 
+      (unordered-list
        [(link-to "/" "Home")
         (link-to "/login" "Login")])]
      [:div {:class "col-sm-2"}
       [:h5 "About"]
-      (unordered-list 
+      (unordered-list
        [(link-to "/about-us" "About Us")])]
      [:div {:class "col-sm-2"}
       [:h5 "Support"]
-      (unordered-list 
+      (unordered-list
        [(link-to "/disclaimer" "Disclaimer")
         (link-to github-link "Source code")])]
      [:div {:class "col-sm-2"}

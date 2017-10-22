@@ -1,7 +1,7 @@
 (ns eat.layout.user.post
   (:require [eat.layout.user.base :refer [base]]
             [eat.layout.components :refer [post-header]]
-            [hiccup.element :refer [unordered-list link-to]]))
+            [hiccup.element :refer [link-to]]))
 
 (defn instagram-boost []
   [:h3 "Did you find this information useful? Leave us a comment and follow us on "

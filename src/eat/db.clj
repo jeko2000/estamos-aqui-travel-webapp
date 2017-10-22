@@ -1,9 +1,7 @@
 (ns eat.db
-  (:require [eat.db.core :refer [*db*]]
-            [eat.layout.components :refer [string->set set->string]]
+  (:require [eat.layout.components :refer [string->set]]
             [eat.util :refer [title->url]]            
             [clojure.java.jdbc :as sql]
-            [clojure.set :as set]
             [buddy.hashers :as hashers]
             [me.raynes.cegdown :as md]))
 
@@ -108,4 +106,4 @@
     (->> posts
          (map :tags)
          (remove nil?)         
-         (apply set/union))))
+         (apply clojure.set/union))))

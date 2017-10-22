@@ -30,7 +30,7 @@
   (GET "/disclaimer" _ (layout/disclaimer)))
 
 (defroutes logging-routes
-  (GET "/login" req (if (auth/autheticated? req)
+  (GET "/login" req (if (auth/authenticated? req)
                       (response/redirect "/admin")
                       (layout/login req)))
   (POST "/login" req (auth/handle-login req))

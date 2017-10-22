@@ -28,7 +28,6 @@
    [:td (set->string tags)]
    [:td (link-to {:class "btn btn-primary btn-lg center-block"} (str "admin/edit" url) "Edit")]])
 
-
 (defn static-image
   ([attr-map src alt]
    [:img (merge attr-map {:src (string->static-uri src) :alt alt})])

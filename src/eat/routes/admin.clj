@@ -3,7 +3,7 @@
             [eat.db :refer [update-post! insert-post! delete-post! find-post-by-url]]
             [eat.db.core :refer [*db*]]
             [eat.util :refer [copy-file!]]
-            [eat.auth :refer [autheticated?]]
+            [eat.auth :refer [authenticated?]]
             [compojure.core :refer [GET POST defroutes context]]
             [ring.util.response :as response]
             [buddy.auth.accessrules :refer [restrict]]))
@@ -53,4 +53,4 @@
 
 (def admin-routes
   (context "/admin" []
-           (restrict restricted-routes {:handler autheticated?})))
+           (restrict restricted-routes {:handler authenticated?})))
