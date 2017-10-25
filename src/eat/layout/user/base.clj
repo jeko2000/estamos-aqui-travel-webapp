@@ -10,8 +10,12 @@
 (def instagram-link "https://www.instagram.com/estamosaqui_travel")
 (def rss-atom-link "/feed.atom")
 
+(def google-analytics-tag
+  "<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-108714430-1\"></script><script>  window.dataLayer = window.dataLayer || [];  function gtag(){dataLayer.push(arguments);}  gtag('js', new Date());  gtag('config', 'UA-108714430-1');</script>")
+
 (defn head-tag [title]
   [:head
+   google-analytics-tag
    [:meta {:charset "utf-8"}]
    [:meta {:http-equiv "X-UA-Compatible" :content "IE=edge"}]
    [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
