@@ -11,7 +11,8 @@
                  [org.postgresql/postgresql "42.1.4"]
                  [clj-http "3.7.0"]
                  [cheshire "5.8.0"]
-                 [clucy "0.4.0"]]
+                 [clucy "0.4.0"]
+                 [org.clojure/data.xml "0.0.8"]]
   :profiles {:dev {:main eat.dev}
              :uberjar {:aot :all}}
   :main eat.core)

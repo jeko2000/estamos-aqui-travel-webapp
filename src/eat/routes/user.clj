@@ -27,7 +27,8 @@
   (GET "/tags/:id" [id] (layout/tag id)))
 
 (defroutes misc-routes
-  (GET "/disclaimer" _ (layout/disclaimer)))
+  (GET "/disclaimer" _ (layout/disclaimer))
+  (GET "/feed.atom" _ (layout/rss)))
 
 (defroutes logging-routes
   (GET "/login" req (if (auth/authenticated? req)

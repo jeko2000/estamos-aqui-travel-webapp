@@ -9,6 +9,7 @@
             [eat.layout.user.search :refer [search-page search-page-no-results]]
             [eat.layout.admin.index :refer [admin-page]]
             [eat.layout.admin.post :refer [admin-post-page]]
+            [eat.rss :refer [atom-feed]]
             [eat.config :refer [config]]
             [eat.db :refer [find-post find-posts find-posts-with-tag find-post-by-url find-tags]]
             [eat.db.core :refer [*db*]]))
@@ -50,3 +51,6 @@
 
 (defn error [options]
   (error-page (:layout @config) (assoc options :posts (find-posts *db*) :tags (find-tags (find-posts *db*)))))
+
+(defn rss []
+  (atom-feed (find-posts *db*)))
