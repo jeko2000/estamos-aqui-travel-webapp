@@ -8,6 +8,7 @@
 
 (def github-link "https://github.com/jeko2000/estamos-aqui-travel-webapp")
 (def instagram-link "https://www.instagram.com/estamosaqui_travel")
+(def rss-atom-link "/feed.atom")
 
 (defn head-tag [title]
   [:head
@@ -91,7 +92,8 @@
       [:h5 "Get started"]
       (unordered-list
        [(link-to "/" "Home")
-        (link-to "/login" "Login")])]
+        (link-to "/login" "Login")
+        (link-to "/feed.atom" "RSS")])]
      [:div {:class "col-sm-2"}
       [:h5 "About"]
       (unordered-list
@@ -101,12 +103,14 @@
       (unordered-list
        [(link-to "/disclaimer" "Disclaimer")
         (link-to github-link "Source code")])]
-     [:div {:class "col-sm-2"}
+     [:div {:class "col-sm-3"}
       [:div {:class "social-networks"}
        (link-to {:class "instagram"}
                 instagram-link [:i {:class "fa fa-instagram"}])
        (link-to {:class "github"}
-                github-link [:i {:class "fa fa-github"}])]]]]
+                github-link [:i {:class "fa fa-github"}])
+       (link-to {:class "atom"}
+                rss-atom-link [:i {:class "fa fa-rss"}])]]]]
    [:div {:class "footer-copyright"}
     [:p "© 2017 Copyright Estamos Aqui Travel"]]])
 
