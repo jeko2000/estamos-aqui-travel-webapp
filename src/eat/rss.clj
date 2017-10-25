@@ -5,7 +5,7 @@
 (defn- process-img-node [node]
   (let [curr-src (-> node :attrs :src)
         new-node (-> node
-                     (update-in [:attrs :src] #(str "https://estamosaquitravel.com/static" %))
+                     (update-in [:attrs :src] #(str "https://estamosaquitravel.com" %))
                      (assoc-in [:attrs :width] "100%")
                      (assoc-in [:attrs :height] "auto"))]
     new-node))
