@@ -17,7 +17,7 @@
       (dissoc :id)))
 
 (defn find-posts [db]
-  (let [posts (sql/query db ["select * from posts order by id desc"])]
+  (let [posts (sql/query db ["select * from posts order by date desc"])]
     (if-not (empty? posts)
       (map deserialize-post posts)
       posts)))
