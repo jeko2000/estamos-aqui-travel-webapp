@@ -25,9 +25,9 @@
       [:div {:class "col-md-12"}
        content
        (instagram-boost)
-       (pager {:previous-anchor "Previous Post" #_previous-post-title
+       (pager {:previous-anchor previous-post-title
                :previous-link previous-post-url
-               :next-anchor "Next Post" #_next-post-title
+               :next-anchor next-post-title
                :next-link next-post-url})]]]]])
 
 (defn comment-box []
