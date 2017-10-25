@@ -1,5 +1,18 @@
 (ns eat.rss
-  (:require [clojure.data.xml :as xml]))
+  (:require [clojure.data.xml :as xml]
+            [net.cgrand.enlive-html :as enlive]))
+
+(defn- process-img-node [node]
+  (let [curr-src (-> node :attrs :src)
+        new-node (-> node
+                     (update-in [:attrs :src] #(str "https://estamosaquitravel.com/static" %))
+                     (assoc-in [:attrs :width] "100%")
+                     (assoc-in [:attrs :height] "auto"))]
+    new-node))
+
+(defn update-img-meta [page]
+  (enlive/sniptest page
+                   [:p :img] process-img-node))
 
 (defn- entry [{:keys [title date author url content]}]
   [:entry
@@ -8,7 +21,7 @@
    [:id (str "urn:estamosaquitravel.com:feed:post" url)]   
    [:updated date]
    [:author author]
-   [:content {:type "html"} content]])
+   [:content {:type "html"} (update-img-meta content)]])
 
 (defn atom-feed [posts]
   (xml/emit-str
@@ -24,14 +37,5 @@
              :href "https://estamosaquitravel.com/feed.atom"}]
      [:rights "(c) 2017 Copyright, Estamos Aqui Travel"]
      (map entry posts)])))
-
-
-
-
-
-
-
-
-
 
 
