@@ -35,4 +35,6 @@
                            (str "title:" title)))
 
 (defn search [query]
-  (clucy/search *index* query (or (:max-search-results @config) 10) :default-field "md"))
+  (try
+    (clucy/search *index* query (or (:max-search-results @config) 10) :default-field "md")
+    (catch Exception e '())))
