@@ -73,23 +73,18 @@
 (defn pager [{:keys [previous-anchor previous-link
                      next-anchor next-link]}]
   [:div {:class "post-pager"}
+    [:br]
+    [:br]
    [:div {:class "row"}
-    [:br]
-    [:br]
     [:div {:class "col-md-6 col-sm-6 col-xs-6"}
      [:div {:class "previous-post"}
       (if previous-anchor
         [:div
          [:span "Previous Post"]
          (link-to {:style "display:block;"} previous-link previous-anchor)])]]
-    [:div {:class "col-md-6"}
+    [:div {:class "col-md-6 col-sm-6 col-xs-6"}
      [:div {:class "next-post text-right"}     
       (if next-anchor
         [:div
          [:span "Next Post"]
-         (link-to {:style "display:block;"} next-link next-anchor)])]]]]
-  #_[:ul {:class "pager"}
-   (if previous-link
-     [:li {:class "previous"} (link-to previous-link previous-anchor)])
-   (if next-link
-     [:li {:class "next"} (link-to next-link next-anchor)])])
+         (link-to {:style "display:block;"} next-link next-anchor)])]]]])
