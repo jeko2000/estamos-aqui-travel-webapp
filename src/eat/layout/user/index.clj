@@ -1,8 +1,7 @@
 (ns eat.layout.user.index
   (:require [eat.layout.user.base :refer [base previews]]
             [eat.api :refer [instagram-get-recent-images]]
-            [eat.layout.components :refer [static-image external-image-gallery]]
-            [hiccup.element :refer [link-to]]))
+            [eat.layout.components :refer [static-image external-image-gallery]]))
 
 (defn carousel []
   [:div {:id "sub-header"}

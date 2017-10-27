@@ -1,4 +1,4 @@
-(defproject eat "1.0.1"
+(defproject eat "1.0.2"
   :description "The web application for http://estamosaquitravel.com"
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [ring "1.6.2"]
@@ -10,7 +10,10 @@
                  [org.clojure/java.jdbc "0.7.3"]                 
                  [org.postgresql/postgresql "42.1.4"]
                  [clj-http "3.7.0"]
-                 [cheshire "5.8.0"]]
+                 [cheshire "5.8.0"]
+                 [clucy "0.4.0"]
+                 [org.clojure/data.xml "0.0.8"]
+                 [enlive "1.1.5"]]
   :profiles {:dev {:main eat.dev}
              :uberjar {:aot :all}}
   :main eat.core)

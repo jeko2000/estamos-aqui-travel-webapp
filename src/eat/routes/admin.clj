@@ -3,10 +3,18 @@
             [eat.db :refer [update-post! insert-post! delete-post! find-post-by-url]]
             [eat.db.core :refer [*db*]]
             [eat.util :refer [copy-file!]]
-            [eat.auth :refer [autheticated?]]
+            [eat.auth :refer [authenticated?]]
             [compojure.core :refer [GET POST defroutes context]]
             [ring.util.response :as response]
             [buddy.auth.accessrules :refer [restrict]]))
+
+(defn unauthorized-handler [error-title]
+  (let [status 401]
+    (fn [req val]
+      {:status status
+       :headers {"Content-Type" "text/html"}
+       :body (layout/error {:status 401
+                            :error-title error-title})})))
 
 (defn keywordize-map [params]
   (zipmap (map keyword (keys params))
@@ -53,4 +61,5 @@
 
 (def admin-routes
   (context "/admin" []
-           (restrict restricted-routes {:handler autheticated?})))
+           (restrict restricted-routes {:handler authenticated?
+                                        :reject-handler (unauthorized-handler "Unauthorized")})))

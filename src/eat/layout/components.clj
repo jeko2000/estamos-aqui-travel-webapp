@@ -28,7 +28,6 @@
    [:td (set->string tags)]
    [:td (link-to {:class "btn btn-primary btn-lg center-block"} (str "admin/edit" url) "Edit")]])
 
-
 (defn static-image
   ([attr-map src alt]
    [:img (merge attr-map {:src (string->static-uri src) :alt alt})])
@@ -67,6 +66,25 @@
      [:div {:class "modal-body"}
       [:p modal-text]]
      [:div {:class "modal-footer"}
-      (f/form-to ["POST" post-to]
+      (f/form-to [:post post-to]
                  (anti-forgery-field)
                  (f/submit-button {:class "btn btn-danger"} "Delete post"))]]]])
+
+(defn pager [{:keys [previous-anchor previous-link
+                     next-anchor next-link]}]
+  [:div {:class "post-pager"}
+    [:br]
+    [:br]
+   [:div {:class "row"}
+    [:div {:class "col-md-6 col-sm-6 col-xs-6"}
+     [:div {:class "previous-post"}
+      (if previous-anchor
+        [:div
+         [:span "Previous Post"]
+         (link-to {:style "display:block;"} previous-link previous-anchor)])]]
+    [:div {:class "col-md-6 col-sm-6 col-xs-6"}
+     [:div {:class "next-post text-right"}     
+      (if next-anchor
+        [:div
+         [:span "Next Post"]
+         (link-to {:style "display:block;"} next-link next-anchor)])]]]])

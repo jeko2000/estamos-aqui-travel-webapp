@@ -1,3 +1,5 @@
 {:server {:port 3000}
  :layout {}
- :static-resource-prefix "/static"}
+ :static-resource-prefix "/static"
+ :search-index-dir "/var/www/lucene"
+ :max-search-results 10}

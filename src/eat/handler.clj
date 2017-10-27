@@ -13,11 +13,23 @@
    user-routes
    admin-routes
    #_(route/resources "/")
-   (route/not-found (layout/error {:error "Not Found"
+   (route/not-found (layout/error {:error-title "Page Not Found"
                                    :status 404}))))
+
+(def custom-error-response
+  (let [status 403]
+    {:status  status
+     :headers {"Content-Type" "text/html"}
+     :body    (layout/error {:error-title "Invalid anti-forgery token"
+                             :status status})}))
+
+(def augmented-site-defaults
+  (-> site-defaults
+      (assoc-in [:security :anti-forgery]
+                {:error-response custom-error-response})))
 
 (def backend (session-backend))
 (def handler (-> #'app-routes
+                 (wrap-defaults site-defaults)
                  (wrap-authentication backend)
-                 (wrap-authorization backend)
-                 (wrap-defaults site-defaults)))
+                 (wrap-authorization backend)))

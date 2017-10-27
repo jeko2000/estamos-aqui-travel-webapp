@@ -1,13 +1,15 @@
 (ns eat.layout.user.post
   (:require [eat.layout.user.base :refer [base]]
-            [eat.layout.components :refer [post-header]]
-            [hiccup.element :refer [unordered-list link-to]]))
+            [eat.layout.components :refer [post-header pager]]
+            [hiccup.element :refer [link-to]]))
 
 (defn instagram-boost []
   [:h3 "Did you find this information useful? Leave us a comment and follow us on "
    (link-to "https://www.instagram.com/estamosaqui_travel/" "Instagram") " for announcements on upcoming posts!"])
 
-(defn post-content [{:keys [url title tags date content author] :as post}] ;;Best so far
+(defn post-content [{:keys [url title tags date content author
+                            previous-post-url previous-post-title
+                            next-post-url next-post-title] :as post}] ;;Best so far
   [:div {:class "post-wrapper"}
    [:article
     [:div {:class "row"}
@@ -22,7 +24,11 @@
      [:div {:clas "row"}
       [:div {:class "col-md-12"}
        content
-       (instagram-boost)]]]]])
+       (instagram-boost)
+       (pager {:previous-anchor previous-post-title
+               :previous-link previous-post-url
+               :next-anchor next-post-title
+               :next-link next-post-url})]]]]])
 
 (defn comment-box []
   [:div {:class "well"}

@@ -1,9 +1,7 @@
 (ns eat.db
-  (:require [eat.db.core :refer [*db*]]
-            [eat.layout.components :refer [string->set set->string]]
-            [eat.util :refer [title->url]]            
+  (:require [eat.layout.components :refer [string->set]]
+            [eat.util :refer [title->url]]
             [clojure.java.jdbc :as sql]
-            [clojure.set :as set]
             [buddy.hashers :as hashers]
             [me.raynes.cegdown :as md]))
 
@@ -19,7 +17,7 @@
       (dissoc :id)))
 
 (defn find-posts [db]
-  (let [posts (sql/query db ["select * from posts order by id desc"])]
+  (let [posts (sql/query db ["select * from posts order by date desc"])]
     (if-not (empty? posts)
       (map deserialize-post posts)
       posts)))
@@ -42,6 +40,33 @@
                         {:result-set-fn first})]
     (if-not (empty? post)
       (deserialize-post post)
+      post)))
+
+(defn find-next-post [db id]
+  (let [next-post (sql/query db [(str "select * from posts where id > " id " limit 1")]
+                             {:result-set-fn first})]
+    (if-not (empty? next-post)
+      (deserialize-post next-post)
+      next-post)))
+
+(defn find-previous-post [db id]
+  (let [previous-post (sql/query db [(str "select * from posts where id < " id " order by id desc limit 1")]
+                             {:result-set-fn first})]
+    (if-not (empty? previous-post)
+      (deserialize-post previous-post)
+      previous-post)))
+
+(defn find-post-by-url-with-pager-links [db url]
+  (let [post (sql/query db [(str "select * from posts where url = '" url "' limit 1")]
+                        {:result-set-fn first})]
+    (if-not (empty? post)
+      (let [curr-id (:id post)
+            next (find-next-post db curr-id)
+            previous (find-previous-post db curr-id)]
+        (cond-> post
+          true deserialize-post ;Always deserialize post
+          next (assoc :next-post-url (:url next) :next-post-title (:title next))
+          previous (assoc :previous-post-url (:url previous) :previous-post-title (:title previous))))
       post)))
 
 (defn insert-post! [db post]
@@ -107,5 +132,5 @@
   (let [posts (if (sequential? post-or-posts) post-or-posts (list post-or-posts))]
     (->> posts
          (map :tags)
-         (remove nil?)         
-         (apply set/union))))
+         (remove nil?)
+         (apply clojure.set/union))))

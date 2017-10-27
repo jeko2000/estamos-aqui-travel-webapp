@@ -3,13 +3,19 @@
             [eat.layout.components :refer [hr static-image string->static-uri]]
             [hiccup.core :refer [html]]
             [hiccup.page :refer [include-css include-js]]
+            [hiccup.form :as f]
             [hiccup.element :refer [unordered-list link-to]]))
 
 (def github-link "https://github.com/jeko2000/estamos-aqui-travel-webapp")
 (def instagram-link "https://www.instagram.com/estamosaqui_travel")
+(def rss-atom-link "/feed.atom")
+
+(def google-analytics-tag
+  "<script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-108714430-1\"></script><script>  window.dataLayer = window.dataLayer || [];  function gtag(){dataLayer.push(arguments);}  gtag('js', new Date());  gtag('config', 'UA-108714430-1');</script>")
 
 (defn head-tag [title]
   [:head
+   google-analytics-tag
    [:meta {:charset "utf-8"}]
    [:meta {:http-equiv "X-UA-Compatible" :content "IE=edge"}]
    [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
@@ -29,9 +35,17 @@
    ;;(include-css (string->static-uri "/css/bootstrap.min.css"))
    ])
 
+
+(defn search-box []
+  (f/form-to {:class "navbar-form"} [:get "/search"]
+             [:div {:class "input-group" :id "search-input-group"}
+              (f/text-field {:class "form-control" :placeholder "Search"} "q" "")
+              [:span {:class "glyphicon glyphicon-search form-control-feedback" :aria-hidden true}]]))
+
 (defn navbar []
   [:header {:class "navbar navbar-default navbar-fixed-top" :role "banner"}
-   [:div {:class "container" :id "header"}
+   [:div {:class "container"
+          :id "header"}
     [:div {:class "navbar-header"}
      [:button {:type "button" :class "navbar-toggle collapsed" :data-toggle "collapse" :data-target "#navbar" :aria-expanded "false" :aria-controls "navbar"}
       [:span {:class "sr-only"} "Toggle navigation"]
@@ -40,13 +54,14 @@
       [:span {:class "icon-bar"}]]
      (link-to {:class "navbar-brand"} "/"
                 (static-image "img/navlogo_color.png" "navigation-logo"))]
-    
+
     [:div {:id "navbar" :class "collapse navbar-collapse" :role "navigation"}
      (unordered-list {:class "nav navbar-nav"}
                      [(link-to "/" "Home")
                       (link-to "/about-us" "About")])
-     (unordered-list {:class "nav navbar-nav navbar-right"}                     
-                     [(link-to "/login" [:span {:class "glyphicon glyphicon-log-in"}] " Login")])]]])
+     (unordered-list {:class "nav navbar-nav navbar-right"}
+                     [#_(link-to "/login" [:span {:class "glyphicon glyphicon-log-in"}] " Login")
+                      (search-box)])]]])
 
 (defn sidebar [{:keys [sidebar-latest-post-count tags-output-prefix]} posts tags]
   (let [latest (take sidebar-latest-post-count posts)]
@@ -79,24 +94,27 @@
                  (static-image {:class "img img-resonsive"} "/img/logo_large_png_360.png" "large-footer-logo"))]]]
      [:div {:class "col-sm-2"}
       [:h5 "Get started"]
-      (unordered-list 
+      (unordered-list
        [(link-to "/" "Home")
-        (link-to "/login" "Login")])]
+        (link-to "/login" "Login")
+        (link-to "/feed.atom" "RSS")])]
      [:div {:class "col-sm-2"}
       [:h5 "About"]
-      (unordered-list 
+      (unordered-list
        [(link-to "/about-us" "About Us")])]
      [:div {:class "col-sm-2"}
       [:h5 "Support"]
-      (unordered-list 
+      (unordered-list
        [(link-to "/disclaimer" "Disclaimer")
         (link-to github-link "Source code")])]
-     [:div {:class "col-sm-2"}
+     [:div {:class "col-sm-3"}
       [:div {:class "social-networks"}
        (link-to {:class "instagram"}
                 instagram-link [:i {:class "fa fa-instagram"}])
        (link-to {:class "github"}
-                github-link [:i {:class "fa fa-github"}])]]]]
+                github-link [:i {:class "fa fa-github"}])
+       (link-to {:class "atom"}
+                rss-atom-link [:i {:class "fa fa-rss"}])]]]]
    [:div {:class "footer-copyright"}
     [:p "© 2017 Copyright Estamos Aqui Travel"]]])
 

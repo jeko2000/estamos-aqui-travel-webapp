@@ -31,7 +31,7 @@
      (unordered-list {:class "nav navbar-nav"}
                      [(link-to "/admin" "Admin")])
      (unordered-list {:class "nav navbar-nav navbar-right"}
-                     [(f/form-to ["POST" "/logout"]
+                     [(f/form-to [:post "/logout"]
                                  (anti-forgery-field)
                                  (f/submit-button {:class "btn btn-primary"} "Logout"))])]]])
 

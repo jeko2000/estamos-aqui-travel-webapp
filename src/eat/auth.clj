@@ -16,5 +16,5 @@
   (assoc (redirect "/")
          :session nil))
 
-(defn autheticated? [{:keys [session]}]
+(defn authenticated? [{:keys [session]}]
   (boolean (:identity session)))
