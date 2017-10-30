@@ -16,7 +16,34 @@
                  [cheshire "5.8.0"]
                  [clucy "0.4.0"]
                  [org.clojure/data.xml "0.0.8"]
-                 [enlive "1.1.5"]]
-  :profiles {:dev {:main eat.dev}
+                 [enlive "1.1.6"]]
+  :source-paths ["src/clj"]
+  :cljsbuild
+  {:builds [{:id "dev"
+             :source-paths ["src/cljs"]
+             :figwheel true
+             :compiler {:main eat.core
+                        :asset-path "/static/js/out"
+                        :output-to "/var/www/static/js/app.js"
+                        :output-dir "/var/www/static/js/out"
+                        :optimizations :none
+                        :source-map true
+                        :source-map-timestamp true
+                        :pretty-print true}}
+            {:id "min"
+             :source-paths ["src/cljs"]
+             :compiler {:output-to "/var/www/static/js/app.js"
+                        :main eat.core
+                        :optimizations :advanced
+                        :pretty-print false}}]}
+  :profiles {:dev {:main eat.dev
+                   :dependencies [[org.clojure/clojurescript "1.9.946"]
+                                  [com.cemerick/piggieback "0.2.2"]
+                                  [figwheel-sidecar "0.5.14"]]
+                   :plugins [[lein-figwheel "0.5.13"]
+                             [lein-cljsbuild "1.1.1"]]
+                   :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
+                   :clean-targets ^{:protect false} ["resources/public/js"
+                                                     :target-path]}
              :uberjar {:aot :all}}
   :main eat.core)
