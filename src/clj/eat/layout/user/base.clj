@@ -121,6 +121,7 @@
 (defn body-js []
   [:div
    (include-js "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+               (string->static-uri "/js/app.js")               
                (string->static-uri "/js/bootstrap.min.js"))])
 
 (defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview_img date author]}]
