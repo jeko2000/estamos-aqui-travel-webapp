@@ -15,6 +15,7 @@
                  [clj-http "3.7.0"]
                  [cheshire "5.8.0"]
                  [clucy "0.4.0"]
+                 [reagent "0.7.0"]
                  [org.clojure/data.xml "0.0.8"]
                  [enlive "1.1.6"]]
   :source-paths ["src/clj"]
