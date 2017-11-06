@@ -3,10 +3,6 @@
             [bouncer.validators :as v :refer [defvalidator]]))
 
 (defvalidator image-resource
-  "Validates value is a correct image-resource
-
-  It implements a simple check to verify if the value is a string
-  and it starts with /img/"
   {:default-message-format "%s must begin with /img/"}
   [value]
   (and (v/required value)
@@ -16,10 +12,10 @@
   (first
    (b/validate
     params
-    :title [v/required [v/min-count 5]]
+    :title [v/required [v/min-count 5 :message "title must have at least 5 characters"]]
     :author v/required
-    :date v/required
-    :md [v/required [v/min-count 10]]
+    :date [v/required [v/matches #"\d{4}-\d{2}-\d{2}" :message "date must have the form yyyy-mm-dd"]]
+    :md [v/required [v/min-count 10 :message "title must have at least 10 characters"]]
     :preview v/required
     :preview_img image-resource
     :title_img image-resource
