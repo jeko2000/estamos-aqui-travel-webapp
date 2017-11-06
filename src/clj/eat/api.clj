@@ -16,7 +16,7 @@
 (defn- get-image-url-from-media-item [resolution {:keys [link images]}]
   "The value for RESOLUTION must be one of :thumbnail, :low_resolution, or :standard_resolution"
   {:url link
-   :image-res (get-in images [resolution :url])})
+   :resolution (get-in images [resolution :url])})
 
 (defn instagram-get-recent-images [count resolution]
   (-> *instagram-access-token*
