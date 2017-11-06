@@ -39,12 +39,13 @@
 (defn admin []
   (admin-page (:layout @config) (map #(select-keys % [:title :date :tags :url]) (find-posts *db*))))
 
-(defn edit-post [url]
-  (let [post-obj (find-post-by-url-with-pager-links *db* url)]
-    (admin-post-page (:layout @config) "/admin/edit-post" post-obj)))
+(defn edit-post [{:keys [params flash]}]
+  (admin-post-page (:layout @config) "/admin/edit-post" (if (:errors flash)
+                                                          flash
+                                                          (find-post-by-url-with-pager-links *db* (str "/posts/" (:url params))))))
 
-(defn new-post [req]
-  (admin-post-page (:layout @config) "/admin/new-post"{}))
+(defn new-post [{:keys [flash]}]
+  (admin-post-page (:layout @config) "/admin/new-post" (if (:errors flash) flash {})))
 
 (defn login [{:keys [flash] :as req}]
   (login-page (:layout @config) flash))
