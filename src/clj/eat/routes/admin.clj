@@ -1,8 +1,9 @@
 (ns eat.routes.admin
   (:require [eat.layout :as layout]
-            [eat.db :refer [update-post! insert-post! delete-post! find-post-by-url]]
+            [eat.db :refer [update-post! insert-post! delete-post! find-post-by-url find-post]]
             [eat.db.core :refer [*db*]]
             [eat.util :refer [copy-file!]]
+            [eat.validation :refer [validate-post]]
             [eat.auth :refer [authenticated?]]
             [compojure.core :refer [GET POST defroutes context]]
             [ring.util.response :as response]
@@ -34,14 +35,23 @@
       (handle-image-upload upload))))
 
 (defn handle-new-post! [{:keys [params]}]
-  (insert-post! *db* (keywordize-map params))
-  (handle-image-uploads params)
-  (response/redirect "/admin"))
+  (if-let [errors (validate-post params)]
+    (-> (response/redirect "/admin/new-post")
+        (assoc :flash (assoc params :errors errors)))
+    (do
+      (insert-post! *db* (keywordize-map params))
+      (handle-image-uploads params)
+      (response/redirect "/admin"))))
 
 (defn handle-edit-post! [{:keys [params]}]
-  (update-post! *db* (keywordize-map params))
-  (handle-image-uploads params)
-  (response/redirect "/admin"))
+  (let [post-obj (find-post *db* (:id params))]
+    (if-let [errors (validate-post params)]
+      (-> (response/redirect (str "/admin/edit" (:url post-obj)))
+          (assoc :flash (assoc params :errors errors)))
+      (do
+        (update-post! *db* (keywordize-map params))
+        (handle-image-uploads params)
+        (response/redirect "/admin")))))
 
 (defn handle-delete-post! [{:keys [headers] :as req}]
   (let [post (as-> headers $
@@ -53,7 +63,7 @@
 
 (defroutes restricted-routes
   (GET "/" [] (layout/admin))
-  (GET "/edit/posts/:url" [url] (layout/edit-post (str "/posts/" url)))
+  (GET "/edit/posts/:url" req (layout/edit-post req))
   (GET "/new-post" [] layout/new-post)
   (POST "/edit-post" request (handle-edit-post! request))
   (POST "/new-post" request (handle-new-post! request))
