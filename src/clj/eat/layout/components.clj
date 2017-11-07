@@ -13,7 +13,9 @@
   (string->uri (build-path (:static-resource-prefix @config) s)))
 
 (defn set->string [source-set]
-  (str/join ", " source-set))
+  (if (set? source-set)
+    (str/join ", " source-set)
+    source-set))
 
 (defn string->set [tag-string]
   (-> tag-string
@@ -88,3 +90,8 @@
         [:div
          [:span "Next Post"]
          (link-to {:style "display:block;"} next-link next-anchor)])]]]])
+
+(defn validation-error [errors]
+  (if errors
+    [:div {:class "alert alert-danger"}
+     (str/join errors)]))

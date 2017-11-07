@@ -2,6 +2,15 @@
 
 This file should contain all important changes to the project
 
+## 1.0.3
+   - Implement asyncronous calls for instagram api
+   - Fix issue with index page where Recent Posts component defaults to all posts
+   - Add basic unit tests using clojure.test library
+   - Introduce cljs support through Reagent
+   - Leverage Bouncer library for validation
+   - Add validation to Edit and New Post forms
+   - Include license and url keys to project.clj
+
 ## 1.0.2
    - Add search functionality through Lucene wrapper
    - Add init ns/function to streamline initiation tasks

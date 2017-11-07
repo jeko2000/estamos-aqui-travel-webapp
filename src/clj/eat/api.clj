@@ -11,13 +11,13 @@
       (client/get {:as :json})
       (get-in [:body :data])))
 
-(defn- get-image-url-from-media-item [res-key {:keys [link images]}]
-  "The value for RES-KEY must be one of :thumbnail, :low_resolution, or :standard_resolution"
+(defn- get-image-url-from-media-item [resolution {:keys [link images]}]
+  "The value for RESOLUTION must be one of :thumbnail, :low_resolution, or :standard_resolution"
   {:url link
-   :image-res (get-in images [res-key :url])})
+   :resolution (get-in images [resolution :url])})
 
-(defn instagram-get-recent-images [count res-key]
+(defn instagram-get-recent-images [count resolution]
   (-> *instagram-access-token*
       (get-recent-media-vector count)
-      (->> (mapv #(get-image-url-from-media-item res-key %)))))
+      (->> (mapv #(get-image-url-from-media-item (keyword resolution) %)))))
 

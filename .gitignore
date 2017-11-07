@@ -12,3 +12,6 @@ pom.xml.asc
 /resources/public/img
 /resources/posts/
 profiles.clj
+\.\#*
+\#*
+figwheel_server.log
