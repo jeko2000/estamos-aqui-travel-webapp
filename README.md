@@ -1,16 +1,20 @@
 # Estamos Aqui Travel
 
-The web application for http://estamosaquitravel.com
+The web application for https://estamosaquitravel.com
 
 This project leverages from the following (and excellent) clojure libraries:
 
-* [Ring](https://github.com/ring-clojure/ring) for HTTP server abstraction
-* [Compojure](https://github.com/weavejester/compojure) for HTTP method & URI routing
-* [Hiccup](https://github.com/weavejester/hiccup) for HTML templating
-* [Cegdown](https://github.com/Raynes/cegdown) for Markdown parser
+* [Bouncer](https://github.com/leonardoborges/bouncer) for validation
 * [Buddy](https://github.com/funcool/buddy) for Authentication & password hashing
-* [Clj-http](https://github.com/dakrone/clj-http) for HTTP queries
+* [Cegdown](https://github.com/Raynes/cegdown) for Markdown parsing
 * [Cheshire](https://github.com/dakrone/cheshire) for JSON (en|de)coding
+* [Clj-http](https://github.com/dakrone/clj-http) for HTTP queries
+* [Clucy](https://github.com/weavejester/clucy) as thin wrapper over [Lucene](http://lucene.apache.org/)
+* [Compojure](https://github.com/weavejester/compojure) for HTTP method & URI routing
+* [Enlive](https://github.com/cgrand/enlive) as HTML transformation agent
+* [Hiccup](https://github.com/weavejester/hiccup) for HTML templating
+* [Reagent](https://github.com/reagent-project/reagent) as interface to [React](https://reactjs.org/)
+* [Ring](https://github.com/ring-clojure/ring) for HTTP server abstraction
 
 ## License
 Distributed under the [Eclipse Public License - v 1.0](https://www.eclipse.org/legal/epl-v10.html).
