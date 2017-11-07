@@ -2,9 +2,11 @@
   (:require [eat.layout :as layout]
             [eat.routes.admin :refer [admin-routes]]
             [eat.routes.user :refer [user-routes]]
+            [eat.routes.services :refer [service-routes]]
             [compojure.core :refer [routes]]
             [compojure.route :as route]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]
+            [ring.middleware.format :refer [wrap-restful-format]]
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
             [buddy.auth.backends.session :refer [session-backend]]))
 
@@ -12,6 +14,7 @@
   (routes
    user-routes
    admin-routes
+   (wrap-restful-format service-routes)
    #_(route/resources "/")
    (route/not-found (layout/error {:error-title "Page Not Found"
                                    :status 404}))))

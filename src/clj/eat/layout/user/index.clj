@@ -1,7 +1,6 @@
 (ns eat.layout.user.index
   (:require [eat.layout.user.base :refer [base previews]]
-            [eat.api :refer [instagram-get-recent-images]]
-            [eat.layout.components :refer [static-image external-image-gallery]]))
+            [eat.layout.components :refer [static-image]]))
 
 (defn carousel []
   [:div {:id "sub-header"}
@@ -49,15 +48,6 @@
                [:div {:class "col-xs-6 col-sm-4 col-md-4"}
                 (image {:class "img-thumbnail center-block"} "https://dummyimage.com/600x400/000/fff" "about")])]]])
 
-
-(defn instagram-gallery [count res-key]
-  (let [instagram-images (instagram-get-recent-images count res-key)]
-    [:div {:class "gallery-header"}
-     [:h2 {:class "text-center text-uppercase subtitle"} "Follow us on Instagram"]
-     [:br]
-     [:div {:class "gallery-body"}
-      (external-image-gallery instagram-images)]]))
-
 (defn index-page [layout-config posts]
   (let [latest-posts-count (:index-latest-posts-count layout-config 6)
         latest-posts (take latest-posts-count posts)]
@@ -68,4 +58,4 @@
                          (quick-links))
            :content (list
                      (previews layout-config latest-posts "Recent Posts")
-                     (instagram-gallery 6 :thumbnail))})))
+                     [:div {:id "instagram-wrapper"}])})))

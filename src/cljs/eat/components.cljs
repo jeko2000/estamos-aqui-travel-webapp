@@ -18,10 +18,11 @@
                    (image {:class "img col-md-2 col-sm-3 col-xs-6"} resolution "instagram-pic"))) images)])
 
 (defn instagram-gallery [instagram-images]
-  [:div {:class "gallery-header"}
-   [:h2 {:class "text-center text-uppercase subtitle"} "Follow us on Instagram"]
-   [:br]
-   [:div {:class "gallery-body"}
-    #_[:h2 "sampled"]
-    (external-image-gallery instagram-images)]])
+  (if instagram-images
+    [:div {:class "gallery-header"}
+     [:h2 {:class "text-center text-uppercase subtitle"} "Follow us on Instagram"]
+     [:br]
+     [:div {:class "gallery-body"}
+      #_[:h2 "sampled"]
+      (external-image-gallery instagram-images)]]))
 

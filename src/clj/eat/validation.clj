@@ -20,3 +20,10 @@
     :preview_img image-resource
     :title_img image-resource
     :tags v/required)))
+
+(defn validate-instagram [params]
+  (first
+   (b/validate
+    params
+    :count v/required
+    :resolution [v/required [v/member #{"thumbnail" "low_resolution" "standard_resolution"}]])))
