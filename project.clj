@@ -20,6 +20,7 @@
                  [cljs-ajax "0.7.3"]
                  [ring-middleware-format "0.7.2"]
                  [org.clojure/data.xml "0.0.8"]
+                 [org.clojure/tools.reader "1.1.0"]
                  [enlive "1.1.6"]]
   :source-paths ["src/clj"]
   :cljsbuild
@@ -36,10 +37,9 @@
                         :pretty-print true}}
             {:id "min"
              :source-paths ["src/cljs"]
-             :compiler {:output-to "/var/www/static/js/app.js"
-                        :main eat.core
-                        :optimizations :advanced
-                        :pretty-print false}}]}
+             :compiler {:main eat.core
+                        :output-to "/var/www/static/js/app.js"
+                        :optimizations :advanced}}]}
   :profiles {:dev {:main eat.dev
                    :dependencies [[org.clojure/clojurescript "1.9.946"]
                                   [com.cemerick/piggieback "0.2.2"]
