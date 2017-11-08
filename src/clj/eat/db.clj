@@ -18,6 +18,12 @@
       (dissoc :id)))
 
 (defn find-posts [db]
+  (let [posts (sql/query db ["select * from posts where active = 't' order by date desc"])]
+    (if-not (empty? posts)
+      (map deserialize-post posts)
+      posts)))
+
+(defn find-active-and-innactive-posts [db]
   (let [posts (sql/query db ["select * from posts order by date desc"])]
     (if-not (empty? posts)
       (map deserialize-post posts)

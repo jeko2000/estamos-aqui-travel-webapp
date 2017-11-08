@@ -11,7 +11,7 @@
             [eat.layout.admin.post :refer [admin-post-page]]
             [eat.rss :refer [atom-feed]]
             [eat.config :refer [config]]
-            [eat.db :refer [find-post find-posts find-posts-with-tag find-post-by-url-with-pager-links find-tags]]
+            [eat.db :refer [find-post find-posts find-active-and-innactive-posts find-posts-with-tag find-post-by-url-with-pager-links find-tags]]
             [eat.db.core :refer [*db*]]))
 
 (defn index []
@@ -37,7 +37,7 @@
       (search-page-no-results (:layout @config) safe-query))
 
 (defn admin []
-  (admin-page (:layout @config) (find-posts *db*)))
+  (admin-page (:layout @config) (find-active-and-innactive-posts *db*)))
 
 (defn edit-post [{:keys [params flash]}]
   (admin-post-page (:layout @config) "/admin/edit-post" (if (:errors flash)
