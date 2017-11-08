@@ -37,7 +37,7 @@
       (search-page-no-results (:layout @config) safe-query))
 
 (defn admin []
-  (admin-page (:layout @config) (map #(select-keys % [:title :date :tags :url]) (find-posts *db*))))
+  (admin-page (:layout @config) (find-posts *db*)))
 
 (defn edit-post [{:keys [params flash]}]
   (admin-post-page (:layout @config) "/admin/edit-post" (if (:errors flash)

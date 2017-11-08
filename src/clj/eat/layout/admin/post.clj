@@ -5,7 +5,7 @@
             [hiccup.form :as f]
             [hiccup.element :refer [link-to]]))
 
-(defn admin-post-form [post-to modal-id {:keys [id author md date preview preview_img title_img tags title url errors] :as params}]
+(defn admin-post-form [post-to modal-id {:keys [id active author md date preview preview_img title_img tags title url errors] :as params}]
   (let [data-target (str "#" modal-id)]
     (f/form-to {:enctype "multipart/form-data"} [:post post-to]
                (anti-forgery-field)
@@ -15,6 +15,10 @@
 
                (if id
                  (f/hidden-field  "id" id))
+
+               [:div {:class "form-group"}
+                (f/label "active" "Is Active? ")
+                (f/check-box "active" (boolean active))]
 
                [:div {:class "form-group"}
                 (f/label "title" "Post Title")
