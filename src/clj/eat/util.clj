@@ -53,3 +53,6 @@
 (defn copy-file! [file path file-name]
   (println "PATH" (build-path path file-name))
   (io/copy file (io/file (build-path path file-name))))
+
+(defn string->boolean [s]
+  (boolean (#{"true" "t" "1" "True" "TRUE" "yes"} s)))

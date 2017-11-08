@@ -1,6 +1,6 @@
 (ns eat.db
   (:require [eat.layout.components :refer [string->set]]
-            [eat.util :refer [title->url]]
+            [eat.util :refer [title->url string->boolean]]
             [clojure.java.jdbc :as sql]
             [buddy.hashers :as hashers]
             [me.raynes.cegdown :as md]))
@@ -10,10 +10,11 @@
   (-> post
       (update :tags string->set)))
 
-(defn- serialize-post [{:keys [title md] :as post}]
+(defn- serialize-post [{:keys [title md active] :as post}]
   (-> post
       (assoc :content (md/to-html md))
       (assoc :url (title->url title))
+      (update :active string->boolean)
       (dissoc :id)))
 
 (defn find-posts [db]
@@ -70,11 +71,11 @@
       post)))
 
 (defn insert-post! [db post]
-  (let [post-obj (select-keys post [:title :author :date :md :preview :preview_img :title_img :tags])]
+  (let [post-obj (select-keys post [:title :author :date :md :preview :preview_img :title_img :tags :active])]
     (sql/insert! db :posts (serialize-post post-obj))))
 
 (defn update-post! [db post]
-  (let [post-obj (select-keys post [:id :title :author :date :md :preview :preview_img :title_img :tags])]
+  (let [post-obj (select-keys post [:id :title :author :date :md :preview :preview_img :title_img :tags :active])]
     (sql/update! db :posts (serialize-post post-obj) [(str "id = " (:id post-obj))])))
 
 (defn delete-post! [db id]
