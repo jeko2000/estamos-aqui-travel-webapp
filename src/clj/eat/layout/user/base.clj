@@ -171,7 +171,6 @@
        [:a {:href "#"} "Next ->"]]]])
 
 (defn base [layout-config {:keys [title pre-content content posts tags js exports]}]
-  (println "BASE: " title ", EXPORTS " exports)
   (let [col-width (if (or posts tags) 8 12)]
     (html
      [:html
