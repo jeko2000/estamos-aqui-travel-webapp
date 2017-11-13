@@ -7,28 +7,32 @@
             [eat.layout.user.login :refer [login-page]]
             [eat.layout.user.error :refer [error-page]]
             [eat.layout.user.search :refer [search-page search-page-no-results]]
+            [eat.layout.user.author :refer [author-page]]
             [eat.layout.admin.index :refer [admin-page]]
             [eat.layout.admin.post :refer [admin-post-page]]
             [eat.rss :refer [atom-feed]]
             [eat.config :refer [config]]
-            [eat.db :refer [find-post find-posts find-posts-with-tag find-post-by-url-with-pager-links find-tags]]
+            [eat.db :as db]
             [eat.db.core :refer [*db*]]))
 
 (defn index []
-  (index-page (:layout @config) (find-posts *db*)))
+  (index-page (:layout @config) (db/find-posts *db*)))
 
 (defn post [url]
-  (let [post-obj (find-post-by-url-with-pager-links *db* url)]
-    (post-page (:layout @config) post-obj (find-posts *db*))))
+  (let [post-obj (db/find-post-by-url-with-pager-links *db* url)]
+    (post-page (:layout @config) post-obj (db/find-posts *db*))))
 
 (defn tag [target-tag]
-  (tag-page (:layout @config) target-tag (find-posts-with-tag *db* target-tag)))
+  (tag-page (:layout @config) target-tag (db/find-posts-with-tag *db* target-tag)))
+
+(defn author [author]
+  (author-page (:layout @config) author (db/find-posts-by-author *db* author)))
 
 (defn disclaimer []
   (disclaimer-page (:layout @config)))
 
 (defn about-us []
-  (about-us-page (:layout @config) (find-posts *db*)))
+  (about-us-page (:layout @config) (db/find-posts *db*)))
 
 (defn user-search [safe-query result-posts]
   (search-page (:layout @config) safe-query result-posts))
@@ -37,12 +41,12 @@
       (search-page-no-results (:layout @config) safe-query))
 
 (defn admin []
-  (admin-page (:layout @config) (map #(select-keys % [:title :date :tags :url]) (find-posts *db*))))
+  (admin-page (:layout @config) (map #(select-keys % [:title :date :tags :url]) (db/find-posts *db*))))
 
 (defn edit-post [{:keys [params flash]}]
   (admin-post-page (:layout @config) "/admin/edit-post" (if (:errors flash)
                                                           flash
-                                                          (find-post-by-url-with-pager-links *db* (str "/posts/" (:url params))))))
+                                                          (db/find-post-by-url-with-pager-links *db* (str "/posts/" (:url params))))))
 
 (defn new-post [{:keys [flash]}]
   (admin-post-page (:layout @config) "/admin/new-post" (if (:errors flash) flash {})))
@@ -51,7 +55,7 @@
   (login-page (:layout @config) flash))
 
 (defn error [options]
-  (error-page (:layout @config) (assoc options :posts (find-posts *db*) :tags (find-tags (find-posts *db*)))))
+  (error-page (:layout @config) (assoc options :posts (db/find-posts *db*) :tags (db/find-tags (db/find-posts *db*)))))
 
 (defn rss []
-  (atom-feed (find-posts *db*)))
+  (atom-feed (db/find-posts *db*)))
