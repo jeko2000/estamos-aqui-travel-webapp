@@ -37,8 +37,9 @@
 
 (defroutes home-routes
   (GET "/" [] (layout/index))
+  (GET "/search" req (handle-search req))
   (GET "/about-us" [] (layout/about-us))
-  (GET "/search" req (handle-search req)))
+  (GET "/disclaimer" _ (layout/disclaimer)))
 
 (defroutes post-routes
   (GET "/posts/:id" [id] (layout/post (str "/posts/" id))))
@@ -46,8 +47,10 @@
 (defroutes tag-routes
   (GET "/tags/:id" [id] (layout/tag id)))
 
+(defroutes author-routes
+  (GET "/authors/:id" [id] (layout/author id)))
+
 (defroutes misc-routes
-  (GET "/disclaimer" _ (layout/disclaimer))
   (GET "/feed.atom" _ (layout/rss)))
 
 (defroutes export-routes
@@ -65,6 +68,7 @@
    home-routes
    post-routes
    tag-routes
+   author-routes
    logging-routes
    export-routes
    misc-routes))
