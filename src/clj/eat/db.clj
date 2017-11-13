@@ -28,6 +28,12 @@
       (map deserialize-post posts)
       posts)))
 
+(defn find-posts-by-author [db author]
+  (let [posts (sql/query db [(str "select * from posts where author ilike '%" author "%' order by date desc")])]
+    (if-not (empty? posts)
+      (map deserialize-post posts)
+      posts)))
+
 (defn find-post [db id]
   (let [post (sql/query db [(str "select * from posts where id = " id " limit 1")]
                         {:result-set-fn first})]
