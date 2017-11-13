@@ -1,6 +1,6 @@
 (ns eat.db
   (:require [eat.layout.components :refer [string->set]]
-            [eat.util :refer [title->url]]
+            [eat.util :refer [title->url string->boolean]]
             [clojure.java.jdbc :as sql]
             [buddy.hashers :as hashers]
             [me.raynes.cegdown :as md]))
@@ -10,13 +10,20 @@
   (-> post
       (update :tags string->set)))
 
-(defn- serialize-post [{:keys [title md] :as post}]
+(defn- serialize-post [{:keys [title md active] :as post}]
   (-> post
       (assoc :content (md/to-html md))
       (assoc :url (title->url title))
+      (update :active string->boolean)
       (dissoc :id)))
 
 (defn find-posts [db]
+  (let [posts (sql/query db ["select * from posts where active = 't' order by date desc"])]
+    (if-not (empty? posts)
+      (map deserialize-post posts)
+      posts)))
+
+(defn find-active-and-innactive-posts [db]
   (let [posts (sql/query db ["select * from posts order by date desc"])]
     (if-not (empty? posts)
       (map deserialize-post posts)
@@ -24,6 +31,12 @@
 
 (defn find-posts-with-tag [db target-tag]
   (let [posts (sql/query db [(str "select * from posts where tags like '%" target-tag "%' order by id desc")])]
+    (if-not (empty? posts)
+      (map deserialize-post posts)
+      posts)))
+
+(defn find-posts-by-author [db author]
+  (let [posts (sql/query db [(str "select * from posts where author ilike '%" author "%' order by date desc")])]
     (if-not (empty? posts)
       (map deserialize-post posts)
       posts)))
@@ -70,11 +83,11 @@
       post)))
 
 (defn insert-post! [db post]
-  (let [post-obj (select-keys post [:title :author :date :md :preview :preview_img :title_img :tags])]
+  (let [post-obj (select-keys post [:title :author :date :md :preview :preview_img :title_img :tags :active])]
     (sql/insert! db :posts (serialize-post post-obj))))
 
 (defn update-post! [db post]
-  (let [post-obj (select-keys post [:id :title :author :date :md :preview :preview_img :title_img :tags])]
+  (let [post-obj (select-keys post [:id :title :author :date :md :preview :preview_img :title_img :tags :active])]
     (sql/update! db :posts (serialize-post post-obj) [(str "id = " (:id post-obj))])))
 
 (defn delete-post! [db id]

@@ -2,6 +2,14 @@
 
 This file should contain all important changes to the project
 
+## 1.0.4
+   - Add ability for users to export posts as pdf files
+   - Add gradient to the blog's navbar
+   - Update admin validator to allow an optional '/' when assigning preview images
+   - Allow for admins to activate/deactivate posts
+   - Add author pages rendered under /authors/:author routes
+   - Implement git releases on project
+
 ## 1.0.3
    - Implement asyncronous calls for instagram api
    - Fix issue with index page where Recent Posts component defaults to all posts

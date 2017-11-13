@@ -71,4 +71,8 @@
                    #_(comments)
                    #_(comment-box))
          :posts posts
-         :tags (:tags curr-post)}))
+         :tags (:tags curr-post)
+         :exports (list [:li {:class "list-group-item"}
+                         (link-to (str (:url curr-post) "/export")
+                                  [:span {:class "fa fa-file-pdf-o"}]
+                                  " Export to PDF ")])}))

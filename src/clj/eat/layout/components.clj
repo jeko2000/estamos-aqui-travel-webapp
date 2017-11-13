@@ -23,8 +23,14 @@
       (str/split #"\s+")
       (set)))
 
-(defn record->table-row [{:keys [title date tags url]}]
+(defn toggle [active]
+  (if active
+    [:span {:class "glyphicon glyphicon-ok"}]
+    [:span {:class "glyphicon glyphicon-remove"}]))
+
+(defn record->table-row [{:keys [title date tags url active]}]
   [:tr
+   [:td (toggle active)]
    [:td title]
    [:td date]
    [:td (set->string tags)]

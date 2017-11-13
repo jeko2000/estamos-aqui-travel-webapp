@@ -53,7 +53,7 @@
       [:span {:class "icon-bar"}]
       [:span {:class "icon-bar"}]]
      (link-to {:class "navbar-brand"} "/"
-                (static-image "img/navlogo_color.png" "navigation-logo"))]
+              (static-image "img/navlogo_color.png" "navigation-logo"))]
 
     [:div {:id "navbar" :class "collapse navbar-collapse" :role "navigation"}
      (unordered-list {:class "nav navbar-nav"}
@@ -63,7 +63,7 @@
                      [#_(link-to "/login" [:span {:class "glyphicon glyphicon-log-in"}] " Login")
                       (search-box)])]]])
 
-(defn sidebar [{:keys [sidebar-latest-post-count tags-output-prefix]} posts tags]
+(defn sidebar [{:keys [sidebar-latest-post-count tags-output-prefix]} posts tags exports]
   (let [latest (take sidebar-latest-post-count posts)]
     [:div {:id "secondary" :class "col-md-4" :role "complementary"}
      (if posts
@@ -81,7 +81,14 @@
          [:h4 "Tags"]]
         [:div {:class "panel-body"}
          (unordered-list {:class "list-inline"}
-                         (map #(link-to (tag->uri % tags-output-prefix) %) tags))]])]))
+                         (map #(link-to (tag->uri % tags-output-prefix) %) tags))]])
+     (if exports
+       [:div {:class "panel panel-default"}
+        [:div {:class "panel-heading"}
+         [:h4 "Exports"]]
+        [:div {:class "panel-body"}
+         [:ul {:class "list-group"}
+          exports]]])]))
 
 (defn footer []
   [:footer {:class "footer" :id "footer"}
@@ -138,17 +145,17 @@
        (link-to  url "Read More")]]])
 
 #_(defn- display-post-group [layout-config [post-left & [post-mid post-right]]]
-  [:div {:class "container"}
-   [:div {:class "row"}
-    (preview-post layout-config post-left)
-    (if post-mid (preview-post layout-config post-mid))
-    (if post-right (preview-post layout-config post-right))]])
+    [:div {:class "container"}
+     [:div {:class "row"}
+      (preview-post layout-config post-left)
+      (if post-mid (preview-post layout-config post-mid))
+      (if post-right (preview-post layout-config post-right))]])
 
 
 #_(defn display-post-groups [layout-config posts]
-  (interpose (hr)
-             (map #(display-post-group layout-config %)
-                  (partition-all 3 posts)))) ;;Add to config
+    (interpose (hr)
+               (map #(display-post-group layout-config %)
+                    (partition-all 3 posts)))) ;;Add to config
 
 (defn previews [layout-config posts heading]
   [:div {:id "post-previews"}
@@ -163,7 +170,7 @@
       [:li {:class "next"}
        [:a {:href "#"} "Next ->"]]]])
 
-(defn base [layout-config {:keys [title pre-content content posts tags js]}]
+(defn base [layout-config {:keys [title pre-content content posts tags js exports]}]
   (let [col-width (if (or posts tags) 8 12)]
     (html
      [:html
@@ -177,7 +184,7 @@
           [:div {:class "row"}
            [:div {:id "primary" :class (str "col-md-" col-width)}
             content]
-           (sidebar layout-config posts tags)]]]
+           (sidebar layout-config posts tags exports)]]]
         (footer)
         (body-js)
         js]]])))

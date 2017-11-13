@@ -33,6 +33,6 @@
 
 (def backend (session-backend))
 (def handler (-> #'app-routes
-                 (wrap-defaults site-defaults)
+                 (wrap-defaults augmented-site-defaults)
                  (wrap-authentication backend)
                  (wrap-authorization backend)))
