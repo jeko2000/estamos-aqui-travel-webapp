@@ -21,7 +21,8 @@
                  [ring-middleware-format "0.7.2"]
                  [org.clojure/data.xml "0.0.8"]
                  [org.clojure/tools.reader "1.1.0"]
-                 [enlive "1.1.6"]]
+                 [enlive "1.1.6"]
+                 [clj-pdf "2.2.30"]]
   :source-paths ["src/clj"]
   :cljsbuild
   {:builds [{:id "dev"
