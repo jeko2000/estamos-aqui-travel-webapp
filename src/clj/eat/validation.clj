@@ -6,7 +6,7 @@
   {:default-message-format "%s must begin with /img/"}
   [value]
   (and (v/required value)
-       (v/matches value #"^/img/")))
+       (v/matches value #"^/?img/")))
 
 (defn validate-post [params]
   (first
