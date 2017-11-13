@@ -24,25 +24,50 @@
     [:password :text "NOT NULL"]
     [:created :timestamp "DEFAULT CURRENT_TIMESTAMP"]]))
 
+(def migrations-table
+  (sql/create-table-ddl
+   :migrations
+   [[:name :varchar "NOT NULL"]
+    [:created_at :timestamp
+     "NOT NULL"  "DEFAULT CURRENT_TIMESTAMP"]]))
+
+;;Migrations
 (defn initial-schema [db-spec]
   (sql/db-do-commands db-spec
                       [posts-table
                        users-table]))
 
+(defn add-active-post-field [db-spec]
+  (sql/db-do-commands db-spec
+                      ["ALTER TABLE posts ADD COLUMN active BOOLEAN"
+                       "UPDATE posts SET active = 't'"
+                       "ALTER TABLE posts ALTER COLUMN active SET NOT NULL"
+                       "ALTER TABLE posts ALTER COLUMN active SET DEFAULT TRUE"]))
+
 (def migrations
-  [initial-schema])
+  [#'initial-schema
+   #'add-active-post-field])
 
-(defn migrated? [db-spec]
-  (-> (sql/query db-spec ["select count(*) from information_schema.columns where table_name='posts'"])
-      first
-      :count
-      pos?))
+(defn run-and-record-migration! [migration db-spec]
+  (let [name (-> migration meta :name str)
+        created_at (java.sql.Timestamp. (System/currentTimeMillis))]
+    (println "Running migration:" name)
+    (try (migration db-spec)
+         (catch Exception _))
+    (sql/insert! db-spec
+                 :migrations
+                 {:name name
+                  :created_at created_at})))
 
-(defn migrate! [db-spec]
-  (sql/with-db-transaction [t-conn db-spec]
-    (doseq [migration migrations]
-      (migration t-conn))))
+(defn find-migrations-already-run [db-spec]
+  (sql/query db-spec ["select name from migrations"]
+             {:row-fn :name
+              :result-set-fn set}))
 
-(defn migrate!-if-needed [db-spec]
-  (or (migrated? db-spec)
-      (migrate! db-spec)))
+(defn migrate! [db]
+  (try (sql/db-do-commands db migrations-table)
+       (catch Exception _))
+  (let [run-migrations (find-migrations-already-run db)]
+    (doseq [migration migrations
+            :when (not (run-migrations (str (:name (meta migration)))))]
+      (run-and-record-migration! migration db))))
