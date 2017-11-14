@@ -8,6 +8,7 @@
             [eat.layout.user.error :refer [error-page]]
             [eat.layout.user.search :refer [search-page search-page-no-results]]
             [eat.layout.user.author :refer [author-page]]
+            [eat.layout.user.all-posts :refer [all-posts-page]]
             [eat.layout.admin.index :refer [admin-page]]
             [eat.layout.admin.post :refer [admin-post-page]]
             [eat.rss :refer [atom-feed]]
@@ -21,6 +22,9 @@
 (defn post [url]
   (let [post-obj (db/find-post-by-url-with-pager-links *db* url)]
     (post-page (:layout @config) post-obj (db/find-posts *db*))))
+
+(defn all-posts []
+  (all-posts-page (:layout @config) (db/find-posts *db*)))
 
 (defn tag [target-tag]
   (tag-page (:layout @config) target-tag (db/find-posts-with-tag *db* target-tag)))
