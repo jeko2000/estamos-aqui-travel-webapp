@@ -42,7 +42,8 @@
   (GET "/disclaimer" _ (layout/disclaimer)))
 
 (defroutes post-routes
-  (GET "/posts/:id" [id] (layout/post (str "/posts/" id))))
+  (GET "/posts/:id" [id] (layout/post (str "/posts/" id)))
+  (GET "/posts" [] (layout/all-posts)))
 
 (defroutes tag-routes
   (GET "/tags/:id" [id] (layout/tag id)))
