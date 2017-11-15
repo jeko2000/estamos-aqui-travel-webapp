@@ -26,7 +26,6 @@
         (assoc-in [:headers "Content-Type"] "application/pdf"))))
 
 (defn handle-post-pdf [url]
-  (println "URL: " url)
   (if-let [post (db/find-post-by-url *db* url)]
     (try
       (let [out (java.io.ByteArrayOutputStream.)]
