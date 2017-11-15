@@ -2,6 +2,13 @@
 
 This file should contain all important changes to the project
 
+## 1.0.5
+   - Refactor all view logic away from layout and onto route files
+   - Create an all-posts page to serve as an archive showing all written posts to date
+   - Update post page layout to include link to post's author
+   - Leverage http-response library
+   - Build reusable branded button component
+
 ## 1.0.4
    - Add ability for users to export posts as pdf files
    - Add gradient to the blog's navbar
