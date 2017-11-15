@@ -15,9 +15,9 @@
     [:div {:class "row"}
      [:div {:class "post-meta"}
       [:div {:class "col-md-12"}
-       #_[:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
-          [:span {:class "glyphicon glyphicon-pencil"}] " " author]
        [:div {:class "post-meta-group-1 col-sm-6 col-md-6"}
+        [:span {:class "glyphicon glyphicon-pencil"}] " " (link-to (str "/authors/" author) author)]
+       [:div {:class "post-meta-group-1 col-sm-6 col-md-6 text-right"}
         [:span {:class "glyphicon glyphicon-time"}] " "
         date]]]]
     [:div {:class "post-content"}
