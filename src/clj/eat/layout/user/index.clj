@@ -1,6 +1,6 @@
 (ns eat.layout.user.index
   (:require [eat.layout.user.base :refer [base previews]]
-            [eat.layout.components :refer [static-image]]))
+            [eat.layout.components :refer [static-image branded-button]]))
 
 (defn carousel []
   [:div {:id "sub-header"}
@@ -58,4 +58,5 @@
                          (quick-links))
            :content (list
                      (previews layout-config latest-posts "Recent Posts")
+                     (branded-button "/posts" "ALL POSTS >")
                      [:div {:id "instagram-wrapper"}])})))

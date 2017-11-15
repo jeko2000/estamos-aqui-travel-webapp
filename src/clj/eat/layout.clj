@@ -8,6 +8,7 @@
             [eat.layout.user.error :refer [error-page]]
             [eat.layout.user.search :refer [search-page search-page-no-results]]
             [eat.layout.user.author :refer [author-page]]
+            [eat.layout.user.all-posts :refer [all-posts-page]]
             [eat.layout.admin.index :refer [admin-page]]
             [eat.layout.admin.post :refer [admin-post-page]]
             [eat.rss :refer [atom-feed]]
@@ -21,6 +22,9 @@
 
 (defn tag [target-tag posts-with-tag]
   (tag-page (:layout @config) target-tag posts-with-tag))
+
+(defn all-posts [posts]
+  (all-posts-page (:layout @config) posts))
 
 (defn author [target-author posts-by-author]
   (author-page (:layout @config) target-author posts-by-author))
