@@ -7,12 +7,12 @@
             [eat.db :refer [find-post-by-url]]
             [compojure.core :refer [GET POST defroutes routes]]
             [hiccup.util :refer [escape-html]]
-            [ring.util.response :as response]))
+            [ring.util.http-response :refer [ok found]]))
 
 (defn handle-search [{:keys [params]}]
   (let [safe-query (-> params :q escape-html)]
     (if (clojure.string/blank? safe-query)
-      (response/redirect "/")
+      (found "/")
       (let [result-posts (search safe-query)]
         (if (empty? result-posts)
           (layout/user-search-no-results safe-query)
@@ -20,10 +20,10 @@
 
 (defn write-response [pdf-bytes]
   (with-open [in (java.io.ByteArrayInputStream. pdf-bytes)]
-    (-> (response/response in)
-        (response/header "Content-Disposition" "filename=document.pdf")
-        (response/header "Content-Length" (count pdf-bytes))
-        (response/content-type "application/pdf"))))
+    (-> (ok in)
+        (assoc-in [:headers "Content-Disposition"] "filename=document.pdf")
+        (assoc-in [:headers "Content-Length"] (count pdf-bytes))
+        (assoc-in [:headers "Content-Type"] "application/pdf"))))
 
 (defn handle-post-pdf [url]
   (if-let [post (find-post-by-url *db* url)]
@@ -58,7 +58,7 @@
 
 (defroutes logging-routes
   (GET "/login" req (if (auth/authenticated? req)
-                      (response/redirect "/admin")
+                      (found "/admin")
                       (layout/login req)))
   (POST "/login" req (auth/handle-login req))
   (POST "/logout" req (auth/handle-logout req)))

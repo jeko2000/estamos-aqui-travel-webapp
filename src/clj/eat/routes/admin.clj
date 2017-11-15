@@ -6,7 +6,7 @@
             [eat.validation :refer [validate-post]]
             [eat.auth :refer [authenticated?]]
             [compojure.core :refer [GET POST defroutes context]]
-            [ring.util.response :as response]
+            [ring.util.http-response :refer [found]]
             [buddy.auth.accessrules :refer [restrict]]))
 
 (defn unauthorized-handler [error-title]
@@ -36,22 +36,22 @@
 
 (defn handle-new-post! [{:keys [params]}]
   (if-let [errors (validate-post params)]
-    (-> (response/redirect "/admin/new-post")
+    (-> (found "/admin/new-post")
         (assoc :flash (assoc params :errors errors)))
     (do
       (insert-post! *db* (keywordize-map params))
       (handle-image-uploads params)
-      (response/redirect "/admin"))))
+      (found "/admin"))))
 
 (defn handle-edit-post! [{:keys [params]}]
   (let [post-obj (find-post *db* (:id params))]
     (if-let [errors (validate-post params)]
-      (-> (response/redirect (str "/admin/edit" (:url post-obj)))
+      (-> (found (str "/admin/edit" (:url post-obj)))
           (assoc :flash (assoc params :errors errors)))
       (do
         (update-post! *db* (keywordize-map params))
         (handle-image-uploads params)
-        (response/redirect "/admin")))))
+        (found "/admin")))))
 
 (defn handle-delete-post! [{:keys [headers] :as req}]
   (let [post (as-> headers $
@@ -59,7 +59,7 @@
                (clojure.string/replace $ #".*/edit" "")
                (find-post-by-url *db* $))]
     (delete-post! *db* (:id post))
-    (response/redirect "/admin")))
+    (found "/admin")))
 
 (defroutes restricted-routes
   (GET "/" [] (layout/admin))
