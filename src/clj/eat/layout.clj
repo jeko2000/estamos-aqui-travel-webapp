@@ -11,28 +11,25 @@
             [eat.layout.admin.index :refer [admin-page]]
             [eat.layout.admin.post :refer [admin-post-page]]
             [eat.rss :refer [atom-feed]]
-            [eat.config :refer [config]]
-            [eat.db :as db]
-            [eat.db.core :refer [*db*]]))
+            [eat.config :refer [config]]))
 
-(defn index []
-  (index-page (:layout @config) (db/find-posts *db*)))
+(defn index [posts]
+  (index-page (:layout @config) posts))
 
-(defn post [url]
-  (let [post-obj (db/find-post-by-url-with-pager-links *db* url)]
-    (post-page (:layout @config) post-obj (db/find-posts *db*))))
+(defn post [post-obj posts]
+  (post-page (:layout @config) post-obj posts))
 
-(defn tag [target-tag]
-  (tag-page (:layout @config) target-tag (db/find-posts-with-tag *db* target-tag)))
+(defn tag [target-tag posts-with-tag]
+  (tag-page (:layout @config) target-tag posts-with-tag))
 
-(defn author [author]
-  (author-page (:layout @config) author (db/find-posts-by-author *db* author)))
+(defn author [target-author posts-by-author]
+  (author-page (:layout @config) target-author posts-by-author))
 
 (defn disclaimer []
   (disclaimer-page (:layout @config)))
 
-(defn about-us []
-  (about-us-page (:layout @config) (db/find-posts *db*)))
+(defn about-us [posts]
+  (about-us-page (:layout @config) posts))
 
 (defn user-search [safe-query result-posts]
   (search-page (:layout @config) safe-query result-posts))
@@ -40,22 +37,20 @@
 (defn user-search-no-results [safe-query]
       (search-page-no-results (:layout @config) safe-query))
 
-(defn admin []
-  (admin-page (:layout @config) (db/find-active-and-innactive-posts *db*)))
+(defn admin [all-posts]
+  (admin-page (:layout @config) all-posts))
 
-(defn edit-post [{:keys [params flash]}]
-  (admin-post-page (:layout @config) "/admin/edit-post" (if (:errors flash)
-                                                          flash
-                                                          (db/find-post-by-url-with-pager-links *db* (str "/posts/" (:url params))))))
+(defn edit-post [post-obj]
+  (admin-post-page (:layout @config) "/admin/edit-post" post-obj))
 
-(defn new-post [{:keys [flash]}]
-  (admin-post-page (:layout @config) "/admin/new-post" (if (:errors flash) flash {})))
+(defn new-post [post-obj]
+  (admin-post-page (:layout @config) "/admin/new-post" post-obj))
 
 (defn login [{:keys [flash] :as req}]
   (login-page (:layout @config) flash))
 
 (defn error [options]
-  (error-page (:layout @config) (assoc options :posts (db/find-posts *db*) :tags (db/find-tags (db/find-posts *db*)))))
+  (error-page (:layout @config) options))
 
-(defn rss []
-  (atom-feed (db/find-posts *db*)))
+(defn rss [posts]
+  (atom-feed posts))
