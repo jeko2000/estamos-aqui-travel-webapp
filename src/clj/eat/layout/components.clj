@@ -101,3 +101,7 @@
   (if errors
     [:div {:class "alert alert-danger"}
      (str/join errors)]))
+
+(defn branded-button [url anchor]
+  [:div {:class "text-center"}
+   (link-to {:class "btn btn-branded"} url anchor)])

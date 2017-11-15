@@ -44,6 +44,7 @@
 (defroutes post-routes
   (GET "/posts/:id" [id] (let [post-obj (db/find-post-by-url-with-pager-links *db* (str "/posts/" id))]
                            (layout/post post-obj (db/find-posts *db*)))))
+  (GET "/posts" [] (layout/all-posts (db/find-posts *db*)))
 
 (defroutes tag-routes
   (GET "/tags/:id" [id] (layout/tag id (db/find-posts-with-tag *db* id))))
