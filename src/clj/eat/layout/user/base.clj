@@ -20,7 +20,7 @@
    [:meta {:http-equiv "X-UA-Compatible" :content "IE=edge"}]
    [:meta {:name "viewport" :content "width=device-width, initial-scale=1"}]
    [:meta {:name "description"
-           :content "Estamos Aqui Travel provides well-crafted images, tips, and recommendations South American travel."}]
+           :content "Estamos Aquí Travel documents the travels of a Colombian-American couple making their way through South America...and beyond."}]
    [:title title]
    [:link {:rel "shortcut icon" :type "image/png" :href "/static/img/favicon.png"}]
    ;;cdn
@@ -128,7 +128,7 @@
 (defn body-js []
   [:div
    (include-js "https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"
-               (string->static-uri "/js/app.js")               
+               (string->static-uri "/js/app.js")
                (string->static-uri "/js/bootstrap.min.js"))])
 
 (defn- preview-post [{:keys [tags-output-prefix]} {:keys [url title tags preview preview_img date author]}]
