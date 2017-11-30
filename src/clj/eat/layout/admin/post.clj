@@ -70,7 +70,8 @@
 
                [:div {:class "panel-footer"}
                 (if id [:button {:type "button" :class "btn btn-danger" :data-toggle "modal" :data-target data-target} "Delete"])
-                (f/submit-button {:class "btn btn-primary pull-right"} "Save changes")
+                (f/submit-button {:class "btn btn-primary pull-right" :name "submit-post"} "Save changes")
+                (f/submit-button {:class "btn btn-default pull-right" :name "preview-post"} "Preview")
                 (link-to {:class "btn btn-default pull-right"} "/admin" "Cancel")])))
 
 (defn admin-post-main [post-to modal-id params]
