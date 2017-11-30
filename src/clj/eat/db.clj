@@ -6,11 +6,11 @@
             [me.raynes.cegdown :as md]))
 
 ;;Posts
-(defn- deserialize-post [post]
+(defn deserialize-post [post]
   (-> post
       (update :tags string->set)))
 
-(defn- serialize-post [{:keys [title md active] :as post}]
+(defn serialize-post [{:keys [title md active] :as post}]
   (-> post
       (assoc :content (md/to-html md))
       (assoc :url (title->url title))
@@ -64,7 +64,7 @@
 
 (defn find-previous-post [db id]
   (let [previous-post (sql/query db [(str "select * from posts where id < " id " order by id desc limit 1")]
-                             {:result-set-fn first})]
+                                 {:result-set-fn first})]
     (if-not (empty? previous-post)
       (deserialize-post previous-post)
       previous-post)))
