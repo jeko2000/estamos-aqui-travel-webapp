@@ -1,4 +1,4 @@
-(defproject eat "1.0.5"
+(defproject eat "1.0.6"
   :description "The web application for http://estamosaquitravel.com"
   :url "https://estamosaquitravel.com"
   :license {:name "Eclipse Public License"
