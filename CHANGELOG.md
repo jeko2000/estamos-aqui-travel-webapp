@@ -2,6 +2,11 @@
 
 This file should contain all important changes to the project
 
+## 1.0.6
+   - Hotfix issue where All Posts page failed to show all posts
+   - Add a way to preview a post under the admin routes
+   - Update site's description
+
 ## 1.0.5
    - Refactor all view logic away from layout and onto route files
    - Create an all-posts page to serve as an archive showing all written posts to date
