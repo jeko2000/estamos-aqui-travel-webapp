@@ -37,24 +37,36 @@
     (doseq [upload uploads]
       (handle-image-upload upload))))
 
+(defn handle-preview-post [params]
+  (-> (found (str "/preview/post"))
+      (assoc :flash (-> params db/serialize-post db/deserialize-post))))
+
 (defn handle-new-post! [{:keys [params]}]
   (if-let [errors (validate-post params)]
     (-> (found "/admin/new-post")
         (assoc :flash (assoc params :errors errors)))
-    (do
-      (db/insert-post! *db* (keywordize-map params))
-      (handle-image-uploads params)
-      (found "/admin"))))
+    (cond
+      (:submit-post params)
+      (do
+        (db/insert-post! *db* (keywordize-map params))
+        (handle-image-uploads params)
+        (found "/admin"))
+      (:preview-post params)
+      (handle-preview-post params))))
 
 (defn handle-edit-post! [{:keys [params]}]
   (let [post-obj (db/find-post *db* (:id params))]
     (if-let [errors (validate-post params)]
       (-> (found (str "/admin/edit" (:url post-obj)))
           (assoc :flash (assoc params :errors errors)))
-      (do
-        (db/update-post! *db* (keywordize-map params))
-        (handle-image-uploads params)
-        (found "/admin")))))
+      (cond
+        (:submit-post params)
+        (do
+          (db/update-post! *db* (keywordize-map params))
+          (handle-image-uploads params)
+          (found "/admin"))
+        (:preview-post params)
+        (handle-preview-post params)))))
 
 (defn handle-delete-post! [{:keys [headers] :as req}]
   (let [post (as-> headers $
